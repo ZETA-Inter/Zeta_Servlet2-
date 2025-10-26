@@ -88,7 +88,7 @@ public class Main {
 //            System.out.println(regex.formatarTelefone(telefone));
             AdmDAO admDAO = new AdmDAO();
             AssinaturaDAO assinaturaDAO = new AssinaturaDAO();
-            System.out.println(assinaturaDAO.buscar());
+            System.out.println(admDAO.buscar());
         }catch (Exception e){
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();

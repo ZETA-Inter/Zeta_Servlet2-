@@ -1,6 +1,7 @@
 package com.zeta_servlet.controller;
 
 import com.zeta_servlet.ExceptionHandler.ExceptionHandler;
+import com.zeta_servlet.Utils.Regex;
 import com.zeta_servlet.daos.AdmDAO;
 import com.zeta_servlet.model.Adm;
 import jakarta.servlet.ServletException;
@@ -18,14 +19,20 @@ public class AlterarAdm extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             AdmDAO admDAO = new AdmDAO();
+            Regex regex = new Regex();
             String email = request.getParameter("email");
             String senha = request.getParameter("senha");
             int id = Integer.parseInt(request.getParameter("id"));
-            Adm adm = new Adm(email, id, senha);
-            admDAO.updateEmail(adm, email);
-            admDAO.updateSenha(adm, senha);
-            System.out.println(1+"alterarCompleto");
-            request.getRequestDispatcher("/menuAdm").forward(request, response);
+            if (regex.validarEmail(email) && regex.validarSenha(senha)) {
+                Adm adm = new Adm(email, id, senha);
+                admDAO.updateEmail(adm, email);
+                admDAO.updateSenha(adm, senha);
+                System.out.println(1 + "alterarCompleto");
+                request.getRequestDispatcher("/menuAdm").forward(request, response);
+            }
+            else{
+                request.getRequestDispatcher("WEB-INF/jsp/erroAlterarAdm.jsp").forward(request, response);
+            }
 
         }catch (Exception e){
             request.getRequestDispatcher("/menuAdm").forward(request, response);

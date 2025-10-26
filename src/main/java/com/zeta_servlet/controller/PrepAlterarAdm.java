@@ -25,10 +25,10 @@ public class PrepAlterarAdm extends HttpServlet {
             Adm adm = liA.get(i);
             request.setAttribute("adm", adm);
             System.out.println(1+"alterar");
-            request.getRequestDispatcher("WEB-INF/ADMINISTRADOR/alterarAdministrador.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/jsp/alterarAdministrador.jsp").forward(request, response);
 
         }catch (Exception e){
-            request.getRequestDispatcher("WEB-INF/ADMINISTRADOR/menuAdministrador.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/jsp/menuAdministrador.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
             request.setAttribute("option", -1);

@@ -8,29 +8,24 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(value = "/menuAdm")
-public class MenuAdm extends HttpServlet {
+@WebServlet(value = "/home")
+public class Home extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            AdmDAO admDAO = new AdmDAO();
-            List<Adm> liA;
-            liA=admDAO.buscar();
-            request.setAttribute("list", liA);
-            System.out.println(1+"menu");
-            request.getRequestDispatcher("WEB-INF/jsp/menuAdministrador.jsp").forward(request, response);
-        }catch (Exception e){
+            request.getRequestDispatcher("WEB-INF/jsp/home.jsp").forward(request, response);
+            System.out.println("redirecionando a home");
+        } catch (Exception e) {
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            request.setAttribute("option", -1);
             System.out.println(-1);
-            request.getRequestDispatcher("WEB-INF/jsp/menuAdministrador.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/jsp/home.jsp").forward(request, response);
 
         }
     }
-
 }

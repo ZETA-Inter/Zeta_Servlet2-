@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/adicionarAdministrador.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="../assets/LOGO%20ZETA%20-%205.png" type="image/x-icon">
+    <title>CRUD</title>
+</head>
+<body>
+    <nav class="nav-bar">
+        <img src="../assets/LOGO%20ZETA%20-%205.png" alt="Logo" id="logoMenu">
+        <ul>
+            <li><form action="/ZETA_Servlet/home" method="post"><button type="submit"><img src="../assets/crudHome.svg" alt="home">Home</button></form></li>
+            <li><form action="/ZETA_Servlet/menuAdm" method="post"><button type="submit"><img src="../assets/crudAdm.svg" alt="Adm">Administrador</button></form></li>
+            <li><a href="${pageContext.request.contextPath}/menuAssinatura.html"><img src="../assets/crudAss.svg" alt="Assinatura">Assinatura</a></li>
+            <li><a href="${pageContext.request.contextPath}/menuProdutor.html"><img src="../assets/crudProd.svg" alt="Produtor">Produtor</a></li>
+            <li><a href="${pageContext.request.contextPath}/menuAtividade.html"><img src="../assets/crudAtiv.svg" alt="Atividade">Atividade</a></li>
+            <li><a href="${pageContext.request.contextPath}/menuAula.html"><img src="../assets/crudAula.svg" alt="Aula">Aula</a></li>
+            <li><a href=""><img src="../assets/crudDash.svg" alt="Dashboards">Dashboards</a></li>
+            <li><a href="#"><img src="../assets/exit.svg" alt="exit">Sair</a></li>
+        </ul>
+    </nav>
+    <form action="adicionarAdm" method="post" id="adicionar">
+        <h1>Administrador</h1>
+        <label for="">Email</label>
+        <input type="email" name="email" id="email" placeholder="Digite o email do administrador">
+        <label for="">Senha</label>
+        <input type="password" name="senha" id="senha" placeholder="Digite a senha do administrador">
+        <button type="submit">Adicionar</button>
+    </form>
+</body>
+</html>

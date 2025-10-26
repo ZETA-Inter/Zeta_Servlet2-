@@ -28,21 +28,21 @@ public class Login extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", email);
                 session.setAttribute("role", "admin");
-                request.getRequestDispatcher("HOME/home.html").forward(request, response);
+                request.getRequestDispatcher("/home").forward(request, response);
 
 
             }
             else {
                 request.setAttribute("option", i);
                 System.out.println(i);
-                request.getRequestDispatcher("WEB-INF/resultadoLogin.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/jsp/resultadoLogin.jsp").forward(request, response);
             }
         }catch (Exception e){
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
             request.setAttribute("option", -1);
             System.out.println(-1);
-            request.getRequestDispatcher("WEB-INF/resultadoLogin.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/jsp/resultadoLogin.jsp").forward(request, response);
 
         }
     }
@@ -57,7 +57,7 @@ public class Login extends HttpServlet {
                     return 1;
                 }
                 else {
-                    System.out.println(0);
+                    System.out.println(0+"errado");
                     return 0;
                 }
 

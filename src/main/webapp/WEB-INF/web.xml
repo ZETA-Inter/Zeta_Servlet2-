@@ -5,21 +5,21 @@
          version="5.0">
     <error-page>
         <error-code>404</error-code>
-        <location>/erro404.html</location>
+        <location>/html/erro404.html</location>
     </error-page>
 
     <error-page>
         <error-code>505</error-code>
-        <location>/erro505.html</location>
+        <location>/html/erro505.html</location>
     </error-page>
 
     <error-page>
         <error-code>405</error-code>
-        <location>/erro405.html</location>
+        <location>/html/erro405.html</location>
     </error-page>
 
     <error-page>
         <error-code>500</error-code>
-        <location>/erro500.html</location>
+        <location>/html/erro500.html</location>
     </error-page>
 </web-app>

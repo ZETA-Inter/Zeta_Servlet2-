@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tabela com Rolagem Horizontal Forçada</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f8f9fa;
+        padding: 20px;
+    }
+
+    .tabela-container {
+        width: 100%;
+        overflow-x: scroll; /* sempre mostra a barra horizontal */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: #fff;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 180%; /* força a tabela a ser mais larga que a tela */
+        min-width: 1200px; /* largura mínima fixa */
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    th {
+        background-color: #007bff;
+        color: white;
+        position: sticky;
+        top: 0;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #e9ecef;
+    }
+</style>
+</head>
+<body>
+
+<h2>Tabela com Rolagem Horizontal Sempre Ativa</h2>
+<div class="tabela-container">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Sobrenome</th>
+                <th>Email</th>
+                <th>Cargo</th>
+                <th>Departamento</th>
+                <th>Data de Admissão</th>
+                <th>Salário</th>
+                <th>Local</th>
+                <th>Projeto Atual</th>
+                <th>Supervisor</th>
+                <th>Extensão</th>
+                <th>Turno</th>
+                <th>Horas Semanais</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>001</td><td>Ana</td><td>Silva</td><td>ana.silva@empresa.com</td><td>Analista</td><td>TI</td><td>12/03/2020</td><td>R$ 5.000</td><td>São Paulo<
+

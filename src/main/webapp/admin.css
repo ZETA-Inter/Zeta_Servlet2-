@@ -1,0 +1,244 @@
+body {
+    margin: 0;
+    top: 0;
+    padding: 0;
+    font-family: 'Poppins', serif;
+    width: 100%;
+    overflow: hidden;
+}
+
+.main{
+    width: 100%;
+
+}
+.site-header {
+    margin-top: -70px;
+    position: fixed;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    z-index: 1000; 
+}
+
+.is-active{
+    font-size: 20px;
+}
+
+.brand {
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: #1d3750; 
+    white-space: nowrap;
+}
+
+.nav {
+    margin-left: 650px;
+    margin-top: 30px;
+    color: #000;
+    font-size: 20px;
+    display: flex;
+    gap: 40px; 
+}
+
+.nav-list {
+    display: flex;
+    align-items: center;
+    gap: 50px; 
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+}
+
+.nav-list a {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    font-family: Arial;
+    font-size: 22px;
+    font-weight: lighter;
+    color: #111;
+    transition: color .2s ease;
+}
+
+.logo{
+    margin-top: 30px;
+    width: 82.748px;
+    height: 80.198px;
+    color: #043253;
+    font-size: 25px;
+    font-weight: 500px;
+    display: flex;
+    gap: 16px;
+}
+
+.logo>img {
+    margin-bottom: 10px;
+    margin-left: 140px;
+}
+
+.logo> .brand {  
+    margin-top: 28%;
+}
+
+main {
+    margin-top: -30px;
+}
+
+
+
+#Adm{
+    font-size: 80px;
+    color: #0CC0DF;
+    font-family: 'Poppins', serif;
+    font-style: normal;
+    font-weight: lighter;
+    margin-bottom: 20px;
+    transform: translateY(60%);
+}
+
+.admContent{
+    position: relative;
+    font-size: 25px;
+    text-align: left;
+    font-weight: lighter;
+    margin-left: 141.6px;
+    margin-top: 85px;
+}
+
+.loginAdmin{
+    margin-top: 50px;
+}
+
+#Login{
+    margin-top: 100px;
+}
+
+
+.loginAdmin > #senhaAdmin{
+    box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.415);
+    width: 350px;
+    border: white solid 2px;
+    border-radius: 25px;
+    padding: 8px;
+    padding-left: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.loginAdmin > #emailLogin{
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.415);
+    width: 350px;
+    margin-top: 30px;
+    border: white solid 2px;
+    border-radius: 25px;
+    padding: 8px;
+    padding-left: 40px;
+    margin-bottom: 30px;
+    text-decoration: none;
+    color: #000;
+}
+
+label > img{
+    height: 20px;
+    width: 25px;
+    align-items: center;
+}
+
+
+input {
+    align-items: center;
+    border: 0px;
+    padding: 10px;
+    font-size: 20px;
+    color: #333;
+    outline: none;
+    font-family: 'Poppins', serif;
+}
+
+#Login{
+    box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.415);
+    color: black;
+    background-color: white;
+    width: 180px;
+    padding: 10px;
+    border-radius: 30px;
+    border: white solid;
+    font-size: 20px;
+    font-weight: lighter;
+    font-style: initial;
+    font-family: 'Poppins', serif;
+    letter-spacing: 2px;
+
+}
+
+.entraesq{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#Entrar{
+    background-color: #0077B6;
+    color: white;
+    width: 140px;
+    padding: 10px;
+    border-radius: 30px;
+    border: #0077B6 solid;
+    font-size: 18px;
+    font-weight: lighter;
+    font-style: initial;
+    font-family: 'Poppins', serif;
+    margin-right: 980px;
+    letter-spacing: 2px;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+#esqsenha{
+    width: 250px;
+    font-size: 18px;
+    text-indent: 5px;
+    padding-right: 5px;
+}
+
+#Entrar:hover{
+    background-color: #043253;
+    border: #043253 solid;
+    color: rgb(227, 226, 226);
+}
+
+.elipseAz{
+    position: absolute;
+    left: 72%;
+    top: 6%;
+    height: 660px;
+}
+
+.elipseAzul{
+    position: absolute;
+    left: 75%;
+    top: 7%;
+    height: 660px;
+}
+
+.elipseBranca{
+    position: absolute;
+    left: 78%;
+    top: 8%;
+    height: 660px;
+}
+
+.boiAdmin{
+    position: absolute;
+    left: 80%;
+    top: 28%;
+    height: 260px;
+}
+

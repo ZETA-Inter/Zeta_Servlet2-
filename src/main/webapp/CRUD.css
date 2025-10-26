@@ -1,0 +1,159 @@
+body {
+    margin: 0;
+    top: 0;
+    padding: 0;
+    font-family: 'Poppins', serif;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.container {
+    display: flex;
+    gap: 650px;
+    margin: 0 auto;
+    margin-top: 34px;
+}
+.logo {
+    width: 82.748px;
+    height: 80.198px;
+    color: #043253;
+    font-size: 25px;
+    font-weight: 500px;
+    display: flex;
+    gap: 16px;
+}
+.logo>img {
+    margin-bottom: 10px;
+    margin-left: 127px;
+}
+.logo>span {
+    margin-top: 28%;
+}
+nav > .menu > input{
+    display: none;
+}
+nav > .menu > label > a{
+    color: #000;
+    text-decoration: none;
+}
+nav > .menu > label {
+    cursor: pointer;
+    width: max-content;
+    position: relative;
+    margin-left: 570px;
+}
+.nav {
+    margin-top: 30px;
+    color: #000;
+    font-size: 20px;
+    display: flex;
+    gap: 50px;
+}
+nav > .menu {
+    display: inline-block;
+}
+nav > .menu > label::after{
+    content: "";
+    position: absolute;
+    left: -10%;
+    bottom: 0;
+    height: 3px;
+    width: 120%;
+    background: darkgray;
+    transform:scaleX(0);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    
+}
+nav > .menu > label::before{
+    content: "";
+    position: absolute;
+    left: -10%;
+    bottom: 0;
+    height: 3px;
+    width: 120%;
+    background: #0CC0DF;
+    transform:scaleX(0);
+    transform-origin: center;
+    transition: transform 0.5s ease;
+}
+nav > .menu > label:hover::after {
+    opacity: 0.4;
+    transform: scaleX(0.86);
+}
+nav > .menu > input:checked + label::before{
+    transform: scaleX(0.86);
+}
+nav > .menu > input:checked + label::after{
+    background: transparent; 
+}
+
+.sidebar {
+    position: fixed;
+    top: 25%;
+    left: 8.3%;
+    width: 70px;
+    height: 62%;
+    background-color: #0076B6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    gap: 30px;
+    border-radius: 35px;
+}
+.icon {
+    padding: 4px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.icon img {
+    width: 24px;
+    height: 24px;
+}
+.icon:hover {
+    background-color: #004C74;
+    padding: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 25px;
+    transform: scale(1.05);
+}
+
+#ZETA{
+    font-weight: 100;
+    font-size: 200px;
+    color: #043253;
+    text-align: center;
+    margin-top: 80px;
+    margin-left: -280px;
+}
+
+.BemVindo > h2{
+    color: #18a4e1;
+    text-align: center;
+    margin-top: -130px;
+    font-weight: lighter;
+    font-size: 30px;
+}
+
+.logoB > img{
+    height: 300px;
+    margin-left: 920px;
+    transform: translateY(-130%);
+}
+
+.element > img{
+    margin-left: 870px;
+    transform: translateY(-320%);
+}
+
+.decor > img{
+    height: 150px;
+    margin-left: 1180px;
+    transform: translateY(-380%);
+    position: absolute;
+}

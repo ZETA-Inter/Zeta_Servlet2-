@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="adicionarProdutor.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="./assets/LOGO ZETA - 5.png" type="image/x-icon">
+    <title>CRUD</title>
+</head>
+<body>
+    <nav class="nav-bar">
+        <img src="/assets/LOGO ZETA - 5.png" alt="Logo" id="logoMenu">
+        <ul>
+            <li><a href="../HOME/home.html"><img src="/assets/crudHome.svg" alt="Home">Home</a></li> 
+            <li><a href="../ADMINISTRADOR/menuAdministrador.html"><img src="/assets/crudAdm.svg" alt="Adm">Administrador</a></li> 
+            <li><a href="../ASSINATURA/menuAssinatura.html"><img src="/assets/crudAss.svg" alt="Assinatura">Assinatura</a></li>
+            <li><a href="../PRODUTOR/menuProdutor.html"><img src="/assets/crudProd.svg" alt="Produtor">Produtor</a></li>
+            <li><a href="../ATIVIDADE/menuAtividade.html"><img src="/assets/crudAtiv.svg" alt="Atividade">Atividade</a></li>
+            <li><a href="/AULA/menuAula.html"><img src="/assets/crudAula.svg" alt="Aula">Aula</a></li>
+            <li><a href="../"><img src="/assets/crudDash.svg" alt="Dashboards">Dashboards</a></li>
+            <li><a href="#"><img src="/assets/exit.svg" alt="exit">Sair</a></li>
+        </ul>
+    </nav>
+    <form action="">
+        <h1>Produtor</h1>
+        <label for="">CPF</label>
+        <input type="text" name="cpf" id="cpf" placeholder="Ex: XXX.XXX.XXX-XX" required>
+        <label for="">Data de Nascimento</label>
+        <input type="date" name="dtNascimento" id="dtNascimento" placeholder="" required>
+        <label for="">Email</label>
+        <input type="email" name="email" id="email" placeholder="exemplo@seudominio.com">
+        <label for="">Senha</label>
+        <input type="password" name="senha" id="senha" placeholder="Digite a senha">
+        <label for="">Pontos</label>
+        <input type="number" name="pontos" id="pontos" placeholder="Digite quantos pontos">
+        <button type="submit">Próximo</button>
+    </form>
+</body>
+</html>

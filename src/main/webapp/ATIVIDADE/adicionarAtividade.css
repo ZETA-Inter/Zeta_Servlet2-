@@ -1,0 +1,137 @@
+body{
+    padding: 0;
+    top: 0;
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.nav-bar {
+    width:300px;
+    background-color: #043253;
+    border-radius: 0px 25px 25px 0px;
+    height: 740px;
+    box-shadow: rgb(128, 128, 128) 1px 5px 30px 5px;
+}
+
+.nav-bar ul{
+    width:100%;
+    height:auto;
+    margin:0;
+    padding:0;
+}
+
+.nav-bar ul img {
+    width: 40px;
+    height: 40px;
+}
+
+.nav-bar li{
+    list-style: none;
+    width:86.7%;
+}
+
+.nav-bar li a { 
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-decoration:none; 
+    color:#ffffff;
+    background-color:#043253;
+    width: 100%;
+    font-family:'Poppins';
+    font-size: 18px;
+    padding-left: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: left;
+}
+
+.nav-bar li a:hover{
+    background-color:#18A4E1;
+} 
+.nav-bar li a{
+    transition: all .5s ease;
+}
+
+#logoMenu{
+    width: 200px;
+    margin-left: 40px;
+}
+
+
+form{
+    box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.3);
+    border-radius: 50px;
+    width: 620px;
+    height: 560px;
+    margin: 0 auto;
+    gap: 2px;
+    padding: 20px;
+    display: grid;
+    font-family: 'Poppins';
+    color: #043253;
+}
+form > h1{
+    margin-top: -3px;
+    text-align: center;
+}
+
+.alternativa,#idAula,#pontos,#pergunta{
+    padding: 15px;
+    border-radius: 15px;
+    border-style: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    font-family: 'Poppins';
+    color: #043253;
+    width: 540px;
+    margin: auto;
+    margin-top: -40px;
+}
+
+h5{
+    margin: 0 auto;
+    color: #18A4E1;
+    margin-bottom: -20px;
+}
+
+form > div > label > .alternativa,#pontos,#pergunta{
+    display: flex;
+    flex-direction: column;
+    width: 235px;
+    margin-top: 10px;
+}
+
+form > div > label {
+    display: inline-block;
+    margin-left: 30px;
+}
+
+#label_idAula{
+    margin-left: 0;
+}
+
+
+form > label{
+    margin-top: -30px;
+    padding: 30px;
+    margin-left: 20px;
+}
+
+form > button{
+    border-radius: 18px;
+    background-color: #043253;
+    border-style: none;
+    color: #ffffff;
+    width: 200px;
+    font-size: larger;
+    height: 45px;
+    font-family: 'Poppins';
+    margin: 0 auto;
+    transition: all .5s ease;
+}
+
+form > button:hover{
+    background-color: #18A4E1;
+}

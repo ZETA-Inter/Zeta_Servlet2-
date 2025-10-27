@@ -1,6 +1,7 @@
 package com.zeta_servlet.controller;
 
 import com.zeta_servlet.ExceptionHandler.ExceptionHandler;
+import com.zeta_servlet.Utils.Regex;
 import com.zeta_servlet.daos.AdmDAO;
 import com.zeta_servlet.model.Adm;
 import jakarta.servlet.ServletException;
@@ -10,7 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(value = "/adicionarAdm")
 public class AdicionarAdm extends HttpServlet {
@@ -18,14 +18,16 @@ public class AdicionarAdm extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             AdmDAO admDAO = new AdmDAO();
+            Regex regex = new Regex();
             String email = request.getParameter("email");
             String senha = request.getParameter("senha");
-            Adm adm = new Adm(email, 0, senha);
-            admDAO.inserir(adm);
-            System.out.println(1+"criarAdm");
-            request.getRequestDispatcher("/menuAdm").forward(request, response);
+                Adm adm = new Adm(email, 0, senha);
+                admDAO.inserir(adm);
+                System.out.println(1 + "criarAdm");
+                request.getRequestDispatcher("/menuAdm").forward(request, response);
+
         }catch (Exception e){
-            request.getRequestDispatcher("/menuAdm").forward(request, response);
+            request.getRequestDispatcher("html/erroCriarAdm.html").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
             request.setAttribute("option", -1);

@@ -30,7 +30,7 @@
         <label for=""><img src="assets/lupa.svg"></label>
         <input type="text" name="buscar" id="bsucar" placeholder="Buscar" >
     </form>
-    <table>
+    <table id="title">
         <thead>
         <tr>
             <td>ID</td>
@@ -39,35 +39,40 @@
             <td></td>
         </tr>
         </thead>
-        <tbody>
-        <%
-            List<Adm> lisA = (List<Adm>) request.getAttribute("list");
-            System.out.println(lisA);
-            for (int i = 0; i < lisA.size(); i++) {
-            String email = lisA.get(i).getEmail();
-            String senha = lisA.get(i).getSenha();
-            int id = lisA.get(i).getId();
-
-        %>
-        <tr>
-            <td><%= id%></td>
-            <td><%= email%></td>
-            <td><%= senha%></td>
-            <td><form action="alterarAdm" id="alterar">
-                <input type="hidden" value="<%= i%>" name="i">
-            <button type="submit"><img src="assets/alterar.svg"></button>
-            </form>
-
-            <form action="deletarAdm" method="post" id="deletar">
-                <input type="hidden" value="<%= id%>" name="id">
-                <button type="submit"><img src="assets/deletar.svg"></button>
-            </form></td>
-
-        </tr>
-        <%
-            }%>
-        </tbody>
     </table>
+    <div id="tabela">
+        <table>
+            <tbody>
+            <%
+                List<Adm> lisA = (List<Adm>) request.getAttribute("list");
+                System.out.println(lisA);
+                for (int i = 0; i < lisA.size(); i++) {
+                    String email = lisA.get(i).getEmail();
+                    String senha = lisA.get(i).getSenha();
+                    int id = lisA.get(i).getId();
+
+            %>
+            <tr>
+                <td><%= id%></td>
+                <td><%= email%></td>
+                <td><%= senha%></td>
+                <td><form action="alterarAdm" id="alterar">
+                    <input type="hidden" value="<%= i%>" name="i">
+                    <button type="submit"><img src="assets/alterar.svg"></button>
+                </form>
+
+                    <form action="deletarAdm" method="post" id="deletar">
+                        <input type="hidden" value="<%= id%>" name="id">
+                        <button type="submit"><img src="assets/deletar.svg"></button>
+                    </form></td>
+
+            </tr>
+            <%
+                }%>
+            </tbody>
+        </table>
+    </div>
+
     <a href="${pageContext.request.contextPath}/html/adicionarAdministrador.html">
         <div id="adicionar">
             <p>+ Adicionar Adm</p>

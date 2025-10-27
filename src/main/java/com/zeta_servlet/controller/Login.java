@@ -24,9 +24,10 @@ public class Login extends HttpServlet {
             int i = autenticar(email, senha);
             if (i>0) {
                 request.setAttribute("option", i);
-                System.out.println(i);
+                System.out.println(i+"IF");
                 HttpSession session = request.getSession();
-                session.setAttribute("user", email);
+                session.setAttribute("email", email);
+                session.setAttribute("senha", email);
                 session.setAttribute("role", "admin");
                 request.getRequestDispatcher("/home").forward(request, response);
 
@@ -34,14 +35,14 @@ public class Login extends HttpServlet {
             }
             else {
                 request.setAttribute("option", i);
-                System.out.println(i);
+                System.out.println(i+"IF");
                 request.getRequestDispatcher("WEB-INF/jsp/resultadoLogin.jsp").forward(request, response);
             }
         }catch (Exception e){
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
             request.setAttribute("option", -1);
-            System.out.println(-1);
+            System.out.println(-1+"IF");
             request.getRequestDispatcher("WEB-INF/jsp/resultadoLogin.jsp").forward(request, response);
 
         }

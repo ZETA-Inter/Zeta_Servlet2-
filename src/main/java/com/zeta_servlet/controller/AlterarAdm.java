@@ -22,24 +22,22 @@ public class AlterarAdm extends HttpServlet {
             Regex regex = new Regex();
             String email = request.getParameter("email");
             String senha = request.getParameter("senha");
+            System.out.println(request.getParameter("id"));
             int id = Integer.parseInt(request.getParameter("id"));
-            if (regex.validarEmail(email) && regex.validarSenha(senha)) {
+                System.out.println("passou");
                 Adm adm = new Adm(email, id, senha);
                 admDAO.updateEmail(adm, email);
                 admDAO.updateSenha(adm, senha);
                 System.out.println(1 + "alterarCompleto");
                 request.getRequestDispatcher("/menuAdm").forward(request, response);
-            }
-            else{
-                request.getRequestDispatcher("WEB-INF/jsp/erroAlterarAdm.jsp").forward(request, response);
-            }
+
 
         }catch (Exception e){
             request.getRequestDispatcher("/menuAdm").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
             request.setAttribute("option", -1);
-            System.out.println(-1);
+            System.out.println(-1+"IF");
 
         }
     }

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZETA - Bem-estar Animal</title>
-    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css">
     <link rel="shortcut icon" href="./assets/LOGO ZETA - 5.png" type="image/x-icon">
     <link
             href="https://fonts.googleapis.com/css2?family=Spartan:wght@300;400;500;600;700&family=Poppins:wght@300;400;500&display=swap"

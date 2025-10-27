@@ -12,8 +12,8 @@
     <nav class="nav-bar">
         <img src="../assets/LOGO%20ZETA%20-%205.png" alt="Logo" id="logoMenu">
         <ul>
-            <li><form action="/ZETA_Servlet/home" method="post"><button type="submit"><img src="../assets/crudHome.svg" alt="home">Home</button></form></li>
-            <li><form action="/ZETA_Servlet/menuAdm" method="post"><button type="submit"><img src="../assets/crudAdm.svg" alt="Adm">Administrador</button></form></li>
+            <li><form action="../home" method="post"><button type="submit"><img src="../assets/crudHome.svg" alt="home">Home</button></form></li>
+            <li><form action="../menuAdm" method="post"><button type="submit"><img src="../assets/crudAdm.svg" alt="Adm">Administrador</button></form></li>
             <li><a href="${pageContext.request.contextPath}/menuAssinatura.html"><img src="../assets/crudAss.svg" alt="Assinatura">Assinatura</a></li>
             <li><a href="${pageContext.request.contextPath}/menuProdutor.html"><img src="../assets/crudProd.svg" alt="Produtor">Produtor</a></li>
             <li><a href="${pageContext.request.contextPath}/menuAtividade.html"><img src="../assets/crudAtiv.svg" alt="Atividade">Atividade</a></li>
@@ -22,12 +22,12 @@
             <li><form action="logout" method="post" id="fAdm"><button type="submit"><img src="assets/exit.svg" alt="exit">Sair</button></form></li>
         </ul>
     </nav>
-    <form action="/ZETA_Servlet/adicionarAdm" method="post" id="adicionar">
+    <form action="../adicionarAdm" method="post" id="adicionar">
         <h1>Administrador</h1>
         <label for="">Email</label>
-        <input type="email" name="email" id="email" placeholder="Digite o email do administrador">
+        <input type="email" name="email" id="email" placeholder="Digite o email do administrador" autocomplete="off">
         <label for="">Senha</label>
-        <input type="password" name="senha" id="senha" placeholder="Digite a senha do administrador">
+        <input type="password" name="senha" id="senha" placeholder="Digite a senha do administrador" autocomplete="off">
         <button type="submit">Adicionar</button>
     </form>
 </body>

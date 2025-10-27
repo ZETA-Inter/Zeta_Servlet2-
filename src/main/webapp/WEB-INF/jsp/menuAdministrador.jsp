@@ -21,7 +21,8 @@
         <li><a href="${pageContext.request.contextPath}/menuAtividade.html"><img src="assets/crudAtiv.svg" alt="Atividade">Atividade</a></li>
         <li><a href="${pageContext.request.contextPath}/menuAula.html"><img src="assets/crudAula.svg" alt="Aula">Aula</a></li>
         <li><a href="../.."><img src="assets/crudDash.svg" alt="Dashboards">Dashboards</a></li>
-        <li><a href="#"><img src="assets/exit.svg" alt="exit">Sair</a></li>
+        <li><form action="logout" method="post" id="fAdm"><button type="submit"><img src="assets/exit.svg" alt="exit">Sair</button></form></li>
+
     </ul>
 </nav>
 <div id="consultar">
@@ -30,19 +31,20 @@
         <label for=""><img src="assets/lupa.svg"></label>
         <input type="text" name="buscar" id="bsucar" placeholder="Buscar" >
     </form>
-    <table id="title">
-        <thead>
-        <tr>
-            <td>ID</td>
-            <td>Email</td>
-            <td>Senha</td>
-            <td></td>
+    <table id="title" style="padding: 0; margin: 0; border-radius: 12px">
+        <thead style="border-radius: 12px">
+        <tr style="border-radius: 12px">
+            <td class="name-title" style="text-align: left">ID</td>
+            <td class="name-title" style="text-align: center">Email</td>
+            <td class="name-title"></td>
+            <td class="name-title"></td>
+            <td class="name-title" style="text-align: left;">Senha</td>
         </tr>
         </thead>
     </table>
     <div id="tabela">
-        <table>
-            <tbody>
+        <table style="padding: 0; margin: 0;">
+            <tbody style="border-radius: 12px">
             <%
                 List<Adm> lisA = (List<Adm>) request.getAttribute("list");
                 System.out.println(lisA);
@@ -52,8 +54,8 @@
                     int id = lisA.get(i).getId();
 
             %>
-            <tr>
-                <td><%= id%></td>
+            <tr style="padding: 0; border-radius: 12px">
+                <td style="padding: 0;"><%= id%></td>
                 <td><%= email%></td>
                 <td><%= senha%></td>
                 <td><form action="alterarAdm" id="alterar">
@@ -74,7 +76,7 @@
     </div>
 
     <a href="${pageContext.request.contextPath}/html/adicionarAdministrador.html">
-        <div id="adicionar">
+        <div id="adicionar" style="margin-top: 20px">
             <p>+ Adicionar Adm</p>
         </div>
     </a>

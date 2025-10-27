@@ -27,7 +27,8 @@
         <li><a href="/ATIVIDADE/menuAtividade.html"><img src="assets/crudAtiv.svg" alt="Atividade">Atividade</a></li>
         <li><a href="/html/menuAula.html"><img src="assets/crudAula.svg" alt="Aula">Aula</a></li>
         <li><a href="#"><img src="assets/crudDash.svg" alt="Dashboards">Dashboards</a></li>
-        <li><a href="#"><img src="assets/exit.svg" alt="exit">Sair</a></li>
+        <li><form action="logout" method="post" id="fAdm"><button type="submit"><img src="assets/exit.svg" alt="exit">Sair</button></form></li>
+
     </ul>
 </nav>
 

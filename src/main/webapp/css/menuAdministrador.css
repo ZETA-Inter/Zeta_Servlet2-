@@ -200,7 +200,11 @@ a:active {
     margin: 0;
     max-height: 250px;
 }
+
 thead{
-    margin: 0;
+    padding-bottom: 0;
     overflow: hidden;
+}
+#title > thead > td{
+    padding: 0;
 }

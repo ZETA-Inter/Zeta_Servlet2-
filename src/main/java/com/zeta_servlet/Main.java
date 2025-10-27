@@ -1,4 +1,5 @@
 package com.zeta_servlet;
+import com.zeta_servlet.Utils.Filtro;
 import com.zeta_servlet.Utils.Regex;
 import com.zeta_servlet.daos.AdmDAO;
 import com.zeta_servlet.daos.AssinaturaDAO;
@@ -87,8 +88,10 @@ public class Main {
 //            System.out.println(regex.formatarCpf(cpf));
 //            System.out.println(regex.formatarTelefone(telefone));
             AdmDAO admDAO = new AdmDAO();
-            AssinaturaDAO assinaturaDAO = new AssinaturaDAO();
-            System.out.println(admDAO.buscar());
+            Filtro filtro = new Filtro();
+            List<Adm> adms = admDAO.buscar();
+            String index="2";
+            System.out.println(filtro.buscarPorTexto(adms, index));
         }catch (Exception e){
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();

@@ -1,10 +1,12 @@
 package com.zeta_servlet.Utils;
 import com.zeta_servlet.ExceptionHandler.ExceptionHandler;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Filtro {
 
-    private static <T> boolean contemTexto(T objeto, String textoBusca) {
+    public static  <T> boolean contemTexto(T objeto, String textoBusca) {
         if (objeto == null) return false;
 
         try {
@@ -28,5 +30,21 @@ public class Filtro {
         }
 
         return false;
+    }
+
+    public <T> List<T> buscarPorTexto(List<T> lista, String textoBusca) {
+        List<T> resultado = new ArrayList<>();
+
+        if (lista == null || textoBusca == null || textoBusca.trim().isEmpty()) {
+            return resultado;
+        }
+
+        for (T objeto : lista) {
+            if (contemTexto(objeto, textoBusca)) {
+                resultado.add(objeto);
+            }
+        }
+
+        return resultado;
     }
 }

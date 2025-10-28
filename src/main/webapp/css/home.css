@@ -44,11 +44,11 @@ body{
     width:86.7%;
 }
 
-.nav-bar li a { 
+.nav-bar li a {
     display: flex;
     align-items: center;
     gap: 20px;
-    text-decoration:none; 
+    text-decoration:none;
     color:#ffffff;
     background-color:#043253;
     width: 100%;
@@ -74,11 +74,17 @@ body{
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: left;
-    border: none; /* Removes the default border */
+    border: none;
     outline: none;
     cursor: pointer;
 }
-
+.nav-bar li form{
+    width: 300px;
+}
+button{
+    outline: none;
+    cursor: pointer;
+}
 .nav-bar li form button:hover{
     background-color:#18A4E1;
 }

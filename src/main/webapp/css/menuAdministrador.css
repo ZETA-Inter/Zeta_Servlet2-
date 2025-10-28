@@ -78,6 +78,9 @@ body{
     outline: none;
     cursor: pointer;
 }
+.nav-bar li form{
+    width: 300px;
+}
 button{
     outline: none;
     cursor: pointer;
@@ -94,6 +97,7 @@ button{
 .nav-bar li form button{
     transition: all .5s ease;
 }
+
 
 #logoMenu{
     width: 200px;

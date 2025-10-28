@@ -7,6 +7,9 @@ body {
     overflow-x: hidden;
     overflow-y: hidden;
 }
+.nav-bar li form{
+    width: 300px;
+}
 .container {
     display: flex;
     gap: 650px;

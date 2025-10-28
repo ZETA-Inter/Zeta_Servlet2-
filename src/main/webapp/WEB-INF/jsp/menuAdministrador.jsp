@@ -34,19 +34,18 @@
             <input type="text" name="index" id="campoBusca" placeholder="Buscar, ou inserir código de busca (ex: email:, id:)" >
         </div>
     </div>
-    <table id="title" style="padding: 0; margin: 0; border-radius: 12px">
-        <thead style="border-radius: 12px">
-        <tr style="border-radius: 12px">
-            <td class="name-title" style="text-align: left">ID</td>
-            <td class="name-title" style="text-align: center">Email</td>
-            <td class="name-title"></td>
-            <td class="name-title"></td>
-            <td class="name-title" style="text-align: left;">Senha</td>
-        </tr>
-        </thead>
+
     </table>
     <div id="tabela">
         <table style="padding: 0; margin: 0;">
+            <thead style="border-radius: 12px; position: sticky; z-index: 20; top: 0;">
+            <tr style="border-radius: 12px">
+                <td class="name-title" style="text-align: center">ID</td>
+                <td class="name-title" style="text-align: center">Email</td>
+                <td class="name-title" style="text-align: center;">Senha</td>
+                <td class="name-title" style="text-align: center;"></td>
+            </tr>
+            </thead>
             <tbody style="border-radius: 12px">
             <%
                 List<Adm> lisA = (List<Adm>) request.getAttribute("list");
@@ -85,14 +84,12 @@
     </a>
 </div>
 <script>
-    //para configurar a tabela adicione os valores aqui:
     const CONFIG_TABELA = {
         campos: {
             'id': 0,
             'email': 1,
             'senha': 2
         },
-        //colunas com ações, o padrão é sempre 1
         colunasAcoes: 1
     };
 
@@ -130,8 +127,8 @@
             const tabela = document.getElementById('tabela');
             if (!tabela) return;
 
-            const linhas = tabela.getElementsByTagName('tr');
-            if (!linhas) return;
+            const linhas = obterLinhasDados(tabela);
+            if (!linhas || linhas.length === 0) return;
 
             const termo = termoBusca.trim();
 
@@ -150,12 +147,12 @@
                 const indiceColuna = CONFIG_TABELA.campos[campo];
 
                 if (indiceColuna !== undefined) {
-                    executarBuscaColuna(indiceColuna, valor);
+                    executarBuscaColuna(linhas, indiceColuna, valor);
                 } else {
-                    executarBuscaGeral(termo);
+                    executarBuscaGeral(linhas, termo);
                 }
             } else {
-                executarBuscaGeral(termo);
+                executarBuscaGeral(linhas, termo);
             }
 
             aplicarCoresLinhas();
@@ -165,11 +162,33 @@
         }
     }
 
-    function executarBuscaColuna(indiceColuna, valorBusca) {
+    function obterLinhasDados(tabela) {
         try {
-            const tabela = document.getElementById('tabela');
-            const linhas = tabela.getElementsByTagName('tr');
+            const todasLinhas = tabela.getElementsByTagName('tr');
+            const linhasDados = [];
 
+            for (let i = 0; i < todasLinhas.length; i++) {
+                const linha = todasLinhas[i];
+
+                if (linha.closest('thead')) continue;
+
+                if (linha.querySelector('th') || linha.classList.contains('header')) continue;
+
+                if (linha.querySelector('td')) {
+                    linhasDados.push(linha);
+                }
+            }
+
+            return linhasDados;
+
+        } catch (error) {
+            console.log('Erro ao buscar linhas:', error);
+            return [];
+        }
+    }
+
+    function executarBuscaColuna(linhas, indiceColuna, valorBusca) {
+        try {
             for (let i = 0; i < linhas.length; i++) {
                 const linha = linhas[i];
                 const celulas = linha.getElementsByTagName('td');
@@ -194,10 +213,8 @@
         }
     }
 
-    function executarBuscaGeral(termoBusca) {
+    function executarBuscaGeral(linhas, termoBusca) {
         try {
-            const tabela = document.getElementById('tabela');
-            const linhas = tabela.getElementsByTagName('tr');
             const termo = termoBusca.toLowerCase();
 
             for (let i = 0; i < linhas.length; i++) {
@@ -257,7 +274,9 @@
     function aplicarCoresLinhas() {
         try {
             const tabela = document.getElementById('tabela');
-            const linhas = tabela.getElementsByTagName('tr');
+            if (!tabela) return;
+
+            const linhas = obterLinhasDados(tabela);
             let contadorLinhasVisiveis = 0;
 
             for (let i = 0; i < linhas.length; i++) {
@@ -305,8 +324,9 @@
     function mostrarTodasLinhas() {
         try {
             const tabela = document.getElementById('tabela');
-            const linhas = tabela.getElementsByTagName('tr');
+            if (!tabela) return;
 
+            const linhas = obterLinhasDados(tabela);
             for (let i = 0; i < linhas.length; i++) {
                 linhas[i].style.display = '';
             }

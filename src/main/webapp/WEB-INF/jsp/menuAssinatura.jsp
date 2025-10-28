@@ -1,11 +1,12 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.zeta_servlet.model.Adm" %>
+<%@ page import="com.zeta_servlet.model.Assinatura" %>
+<%@ page import="java.math.BigDecimal" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/menuAdministrador.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/menuAssinatura.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="assets/LOGO%20ZETA%20-%205.png" type="image/x-icon">
 
@@ -27,7 +28,7 @@
     </ul>
 </nav>
 <div id="consultar">
-    <h1>Administrador</h1>
+    <h1>Assinatura</h1>
     <div id="query">
         <div id="buscas">
             <label for="campoBusca"><img src="assets/lupa.svg"></label>
@@ -41,31 +42,40 @@
             <thead style="border-radius: 12px; position: sticky; z-index: 20; top: 0;">
             <tr style="border-radius: 12px">
                 <td class="name-title" style="text-align: center">ID</td>
-                <td class="name-title" style="text-align: center">Email</td>
-                <td class="name-title" style="text-align: center;">Senha</td>
+                <td class="name-title" style="text-align: center">tpPlano</td>
+                <td class="name-title" style="text-align: center;">benefQtdCursos</td>
+                <td class="name-title" style="text-align: center;">benefDescPlno</td>
+                <td class="name-title" style="text-align: center;">precoFixo</td>
+                <td class="name-title" style="text-align: center;">precoQtdProdutores</td>
                 <td class="name-title" style="text-align: center;"></td>
             </tr>
             </thead>
             <tbody style="border-radius: 12px">
             <%
-                List<Adm> lisA = (List<Adm>) request.getAttribute("list");
-                System.out.println(lisA);
-                for (int i = 0; i < lisA.size(); i++) {
-                    String email = lisA.get(i).getEmail();
-                    String senha = lisA.get(i).getSenha();
-                    int id = lisA.get(i).getId();
+                List<Assinatura> lisAs = (List<Assinatura>) request.getAttribute("list");
+                System.out.println(lisAs);
+                for (int i = 0; i < lisAs.size(); i++) {
+                    int id = lisAs.get(i).getId();
+                    String tpPlano = lisAs.get(i).getTpPlano();
+                    int benefQtdCursos = lisAs.get(i).getBenefQtdCursos();
+                    String benefDescPlno = lisAs.get(i).getBenefDescPlno();
+                    BigDecimal precoFixo = lisAs.get(i).getPrecoFixo();
+                    BigDecimal precoQtdProdutores = lisAs.get(i).getPrecoQtdProdutores();
 
             %>
             <tr style="padding: 0; border-radius: 12px">
                 <td style="padding: 0;"><%= id%></td>
-                <td><%= email%></td>
-                <td><%= senha%></td>
-                <td><form action="alterarAdm" id="alterar">
+                <td><%= tpPlano%></td>
+                <td><%= benefQtdCursos%></td>
+                <td><%= benefDescPlno%></td>
+                <td><%= precoFixo%></td>
+                <td><%= precoQtdProdutores%></td>
+                <td><form action="alterarAss" id="alterar">
                     <input type="hidden" value="<%= i%>" name="i">
                     <button type="submit"><img src="assets/alterar.svg"></button>
                 </form>
 
-                    <form action="deletarAdm" method="post" id="deletar">
+                    <form action="deletarAss" method="post" id="deletar">
                         <input type="hidden" value="<%= id%>" name="id">
                         <button type="submit"><img src="assets/deletar.svg"></button>
                     </form></td>
@@ -77,9 +87,9 @@
         </table>
     </div>
 
-    <a href="${pageContext.request.contextPath}/html/adicionarAdministrador.html">
+    <a href="${pageContext.request.contextPath}/html/adicionarAssinatura.html">
         <div id="adicionar" style="margin-top: 20px">
-            <p>+ Adicionar Adm</p>
+            <p>+Adicionar</p>
         </div>
     </a>
 </div>
@@ -87,10 +97,13 @@
     const CONFIG_TABELA = {
         campos: {
             'id': 0,
-            'email': 1,
-            'senha': 2
+            'tpplano': 1,
+            'benefqtdcursos': 2,
+            'benefdescplno': 3,
+            'precofixo': 4,
+            'precoqtdprodutores': 5
         },
-        colunasAcoes: 1
+        colunasAcoes: 2
     };
 
     function iniciarBusca() {

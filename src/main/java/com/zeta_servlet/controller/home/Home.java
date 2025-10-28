@@ -1,17 +1,13 @@
-package com.zeta_servlet.controller;
+package com.zeta_servlet.controller.home;
 
 import com.zeta_servlet.ExceptionHandler.ExceptionHandler;
-import com.zeta_servlet.daos.AdmDAO;
-import com.zeta_servlet.model.Adm;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(value = "/home")
 public class Home extends HttpServlet {

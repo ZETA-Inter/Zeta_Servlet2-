@@ -22,7 +22,7 @@
     <ul>
         <li><form action="home" method="post"><button type="submit"><img src="assets/crudHome.svg" alt="home">Home</button></form></li>
         <li><form action="menuAdm" method="post"><button type="submit"><img src="assets/crudAdm.svg" alt="Adm">Administrador</button></form></li>
-        <li><a href="/ASSINATURA/menuAssinatura.html"><img src="assets/crudAss.svg" alt="Assinatura">Assinatura</a></li>
+        <li><form action="menuAss" method="post"><button type="submit"><img src="assets/crudAss.svg" alt="Assinatura">Assinatura</button></form></li>
         <li><a href="/PRODUTOR/menuProdutor.html"><img src="assets/crudProd.svg" alt="Produtor">Produtor</a></li>
         <li><a href="/ATIVIDADE/menuAtividade.html"><img src="assets/crudAtiv.svg" alt="Atividade">Atividade</a></li>
         <li><a href="/html/menuAula.html"><img src="assets/crudAula.svg" alt="Aula">Aula</a></li>

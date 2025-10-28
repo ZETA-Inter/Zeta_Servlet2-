@@ -154,7 +154,7 @@ table{
     overflow: hidden;
     width: 100%;
     overflow-y: auto;
-    max-height: 100px;
+    max-height: 150px;
     border-radius: 10px;
     margin-bottom: 40px;
     background-color: rgba(252, 247, 241, 1);
@@ -166,7 +166,7 @@ table:not(#title){
     overflow: hidden;
     width: 100%;
     overflow-y: auto;
-    max-height: 100px;
+    max-height: 150px;
     border-radius: 10px;
     margin-bottom: 40px;
     background-color: rgba(252, 247, 241, 1);

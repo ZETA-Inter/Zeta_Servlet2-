@@ -15,7 +15,7 @@
     <ul>
         <li><form action="home" method="post"><button type="submit"><img src="assets/crudHome.svg" alt="home">Home</button></form></li>
         <li><form action="menuAdm" method="post"><button type="submit"><img src="assets/crudAdm.svg" alt="Adm">Administrador</button></form></li>
-        <li><a href="${pageContext.request.contextPath}/PRODUTOR/menuProdutor.html"><img src="assets/crudProd.svg" alt="Produtor">Produtor</a></li>
+        <li><form action="menuAss" method="post"><button type="submit"><img src="assets/crudAss.svg" alt="Assinatura">Assinatura</button></form></li>
         <li><a href="${pageContext.request.contextPath}/ATIVIDADE/menuAtividade.html"><img src="assets/crudAtiv.svg" alt="Atividade">Atividade</a></li>
         <li><a href="${pageContext.request.contextPath}/menuAula.html"><img src="assets/crudAula.svg" alt="Aula">Aula</a></li>
         <li><a href="../.."><img src="assets/crudDash.svg" alt="Dashboards">Dashboards</a></li>

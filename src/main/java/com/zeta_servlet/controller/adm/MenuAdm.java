@@ -1,4 +1,4 @@
-package com.zeta_servlet.controller;
+package com.zeta_servlet.controller.adm;
 
 import com.zeta_servlet.ExceptionHandler.ExceptionHandler;
 import com.zeta_servlet.daos.AdmDAO;
@@ -12,25 +12,23 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(value = "/deletarAdm")
-public class DeletarAdm extends HttpServlet {
+@WebServlet(value = "/menuAdm")
+public class MenuAdm extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             AdmDAO admDAO = new AdmDAO();
-            int i = Integer.parseInt(request.getParameter("id"));
-            System.out.println(i);
-            System.out.println(1+"deletar");
-            admDAO.remover(i);
-            request.getRequestDispatcher("/menuAdm").forward(request, response);
-
-
+            List<Adm> liA;
+            liA=admDAO.buscar();
+            request.setAttribute("list", liA);
+            System.out.println(1+"menu");
+            request.getRequestDispatcher("WEB-INF/jsp/menuAdministrador.jsp").forward(request, response);
         }catch (Exception e){
-            request.getRequestDispatcher("/menuAdm").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
             request.setAttribute("option", -1);
             System.out.println(-1);
+            request.getRequestDispatcher("WEB-INF/jsp/menuAdministrador.jsp").forward(request, response);
 
         }
     }

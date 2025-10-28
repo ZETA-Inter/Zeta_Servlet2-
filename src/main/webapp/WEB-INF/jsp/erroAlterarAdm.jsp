@@ -14,7 +14,8 @@
     <img src="assets/LOGO%20ZETA%20-%205.png" alt="Logo" id="logoMenu">
     <ul>
         <li><a href="home"><img src="assets/crudHome.svg" alt="Home">Home</a></li>
-        <li><a href="${pageContext.request.contextPath}/ASSINATURA/menuAssinatura.html"><img src="assets/crudAss.svg" alt="Assinatura">Assinatura</a></li>
+        <li><form action="menuAdm" method="post"><button type="submit"><img src="assets/crudAdm.svg" alt="Adm">Administrador</button></form></li>
+        <li><form action="menuAss" method="post"><button type="submit"><img src="assets/crudAss.svg" alt="Assinatura">Assinatura</button></form></li>
         <li><a href="${pageContext.request.contextPath}/PRODUTOR/menuProdutor.html"><img src="assets/crudProd.svg" alt="Produtor">Produtor</a></li>
         <li><a href="${pageContext.request.contextPath}/ATIVIDADE/menuAtividade.html"><img src="assets/crudAtiv.svg" alt="Atividade">Atividade</a></li>
         <li><a href="${pageContext.request.contextPath}/menuAula.html"><img src="assets/crudAula.svg" alt="Aula">Aula</a></li>

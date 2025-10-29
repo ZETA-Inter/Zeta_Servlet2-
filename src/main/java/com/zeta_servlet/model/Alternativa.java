@@ -14,6 +14,12 @@ public class Alternativa {
         this.correto = correto;
     }
 
+    public Alternativa(String alternativa, int id_atividade, boolean correto) {
+        this.alternativa = alternativa;
+        this.id_atividade = id_atividade;
+        this.correto = correto;
+    }
+
     public int getId() {
         return id;
     }

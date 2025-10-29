@@ -11,6 +11,11 @@ public class Pergunta {
         this.id_atividade = id_atividade;
     }
 
+    public Pergunta(String pergunta, int id_atividade){
+        this.pergunta = pergunta;
+        this.id_atividade = id_atividade;
+    }
+
     public int getId() {
         return id;
     }

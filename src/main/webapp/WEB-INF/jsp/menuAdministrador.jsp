@@ -48,6 +48,7 @@
             </thead>
             <tbody style="border-radius: 12px">
             <%
+                @SuppressWarnings("unchecked")
                 List<Adm> lisA = (List<Adm>) request.getAttribute("list");
                 System.out.println(lisA);
                 for (int i = 0; i < lisA.size(); i++) {

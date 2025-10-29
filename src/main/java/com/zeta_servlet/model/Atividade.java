@@ -27,6 +27,19 @@ public class Atividade {
         }
     }
 
+    public Atividade(double pontuacao, int id_aula, List<Pergunta> perguntas, List<Alternativa> alternativas) {
+        this.pontuacao = pontuacao;
+        this.id_aula = id_aula;
+        this.perguntas = perguntas;
+        this.alternativas = alternativas;
+        for (int i = 0; i < perguntas.size(); i++) {
+            perguntas.get(i).setId_atividade(this.id);
+        }
+        for (int i = 0; i < alternativas.size(); i++) {
+            alternativas.get(i).setId_atividade(this.id);
+        }
+    }
+
     public int getId() {
         return id;
     }

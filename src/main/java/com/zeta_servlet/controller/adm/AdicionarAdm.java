@@ -21,11 +21,16 @@ public class AdicionarAdm extends HttpServlet {
             Regex regex = new Regex();
             String email = request.getParameter("email");
             String senha = request.getParameter("senha");
+            if (regex.validarEmail(email) && regex.validarSenha(senha)) {
                 Adm adm = new Adm(email, 0, senha);
                 admDAO.inserir(adm);
                 System.out.println(1 + "criarAdm");
                 request.getRequestDispatcher("/menuAdm").forward(request, response);
-
+            }
+            else{
+                System.out.println("Invalido");
+                request.getRequestDispatcher("html/InvalidoAdm.html").forward(request, response);
+            }
         }catch (Exception e){
             request.getRequestDispatcher("html/erroCriarAdm.html").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);

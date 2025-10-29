@@ -33,9 +33,11 @@ public class Alternativa {
     }
 
     public String toString() {
-        return "Alternativa{" +
-                "id=" + id +
-                ", alternativa='" + alternativa + '\'' +
-                ", id_atividade=" + id_atividade;
+        return
+                "   \nId: " + id +"\n"+
+                "   Alternativa: " + alternativa +"\n"+
+                "   Id_atividade: " + id_atividade+"\n"+
+                        "   "+"=".repeat(30);
+
     }
 }

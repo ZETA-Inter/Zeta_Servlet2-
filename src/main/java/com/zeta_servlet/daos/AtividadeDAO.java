@@ -24,18 +24,17 @@ public class AtividadeDAO extends CRUD{
         try {
 
             conn = conexao.conectar(); // abre a conexão com o banco
-            String consulta = "insert into Atividade(pontuacao, id_aula, fk_imagens_url) values(?, ?, ?)";
+            String consulta = "insert into Atividade(pontuacao, id_aula) values(?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(consulta);
             //Setando valores dos parametros
             pstmt.setDouble(1, atv.getPontuacao());
             pstmt.setInt(2, atv.getId_aula());
-            pstmt.setString(3, atv.getImagens_url());
 
             // querys dos outros valores
 
             //query alternativas
             for (int i = 0; i < atv.getAlternativas().size(); i++) {
-                String consultaFlash = "insert into alternativa(alternativa, id_ativade, correto) values(?, ?, ?)";
+                String consultaFlash = "insert into alternativa(alternativa, id_ativade, correta) values(?, ?, ?)";
                 PreparedStatement pstmtFlash = conn.prepareStatement(consultaFlash);
                 pstmt.setString(1, atv.getAlternativas().get(i).getAlternativa());
                 pstmt.setInt(2, atv.getAlternativas().get(i).getId_atividade());
@@ -95,28 +94,6 @@ public class AtividadeDAO extends CRUD{
         }
     }
 
-//    altera a imagem da atividade
-    public int updateImagensUrl(Atividade atv, String url) {
-        Conexao conexao = new Conexao();
-        Connection coon = conexao.conectar();
-        try {
-            PreparedStatement pstm = coon.prepareStatement("UPDATE atividade SET fk_Imagens_url = ? WHERE id = ?;");
-            pstm.setString(1, url);
-            pstm.setInt(2, atv.getId());
-            if (pstm.executeUpdate()>0){
-                return 1;
-
-            }  return 0;
-        }
-        catch (Exception e){
-            ExceptionHandler eh = new ExceptionHandler(e);
-            eh.printExeption();
-            return -1;
-        }
-        finally {
-            conexao.desconectar(coon);
-        }
-    }
 
 //    remove uma atividade
     public boolean remover(int id) {return super.remover(id, "atividade");}
@@ -129,29 +106,20 @@ public class AtividadeDAO extends CRUD{
         List<Pergunta> liP = new ArrayList<>();
 
         ResultSet rsetAT = null;
-        ResultSet rsetAL = null;
-        ResultSet rsetP = null;
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
         try {
 
-            rsetAT = buscarR("atividade");
+            String busca = "select * from atividade a join alternativa al on al.id_atividade = a.id join pergunta p on p.id_atividade = a.id";
+            PreparedStatement pstm = conn.prepareStatement(busca);
+            rsetAT = pstm.executeQuery();
 
-            while (rsetAT.next()) {
-                int id = rsetAT.getInt("id");
-
-                rsetAL = buscarPorIdR(id, "alternativa");
-                while (rsetAL.next()) {
-                    Alternativa alternativa = new Alternativa(rsetAL.getInt("id"), rsetAL.getString("alternativa"), rsetAL.getInt("id_atividade"), rsetAL.getBoolean("correto"));
+            while (rsetAT.next()){
+                    Alternativa alternativa = new Alternativa(rsetAT.getInt("id"), rsetAT.getString("alternativa"), rsetAT.getInt("id_atividade"), rsetAT.getBoolean("correta"));
                     liAL.add(alternativa);
-                }
-
-                rsetP = buscarPorIdR(id, "pergunta");
-                while (rsetP.next()){
-                    Pergunta pergunta = new Pergunta(rsetP.getInt("id"), rsetP.getString("pergunta"), rsetP.getInt("id_atividade"));
+                    Pergunta pergunta = new Pergunta(rsetAT.getInt("id"), rsetAT.getString("pergunta"), rsetAT.getInt("id_atividade"));
                     liP.add(pergunta);
-                }
-                Atividade atividade = new Atividade(rsetAT.getInt("id"), rsetAT.getDouble("pontuacao"), rsetAT.getInt("id_aula"), rsetAT.getString("fk_Imagens_url"), liP, liAL);
+                Atividade atividade = new Atividade(rsetAT.getInt("id"), rsetAT.getDouble("pontuacao"), rsetAT.getInt("id_aula"), liP, liAL);
                 liAT.add(atividade);
             }
 
@@ -181,30 +149,21 @@ public class AtividadeDAO extends CRUD{
         List<Pergunta> liP = new ArrayList<>();
 
         ResultSet rsetAT = null;
-        ResultSet rsetAL = null;
-        ResultSet rsetP = null;
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
         try {
-            String busca = "SELECT * FROM atividade WHERE id = ?";
+            String busca = "select * from atividade a join alternativa al on al.id_atividade = a.id join pergunta p on p.id_atividade = a.id where a.id = ?";
             PreparedStatement pstm = conn.prepareStatement(busca);
             pstm.setInt(1, id);
             rsetAT = pstm.executeQuery();
 
 
-            while (rsetAT.next()) {
-                rsetAL = buscarPorIdR(id, "alternativa");
-                while (rsetAL.next()) {
-                    Alternativa alternativa = new Alternativa(rsetAL.getInt("id"), rsetAL.getString("alternativa"), rsetAL.getInt("id_atividade"), rsetAL.getBoolean("correto"));
-                    liAL.add(alternativa);
-                }
-
-                rsetP = buscarPorIdR(id, "pergunta");
-                while (rsetP.next()){
-                    Pergunta pergunta = new Pergunta(rsetP.getInt("id"), rsetP.getString("pergunta"), rsetP.getInt("id_atividade"));
-                    liP.add(pergunta);
-                }
-                Atividade atividade = new Atividade(rsetAT.getInt("id"), rsetAT.getDouble("pontuacao"), rsetAT.getInt("id_aula"), rsetAT.getString("fk_Imagens_url"), liP, liAL);
+            while (rsetAT.next()){
+                Alternativa alternativa = new Alternativa(rsetAT.getInt("id"), rsetAT.getString("alternativa"), rsetAT.getInt("id_atividade"), rsetAT.getBoolean("correta"));
+                liAL.add(alternativa);
+                Pergunta pergunta = new Pergunta(rsetAT.getInt("id"), rsetAT.getString("pergunta"), rsetAT.getInt("id_atividade"));
+                liP.add(pergunta);
+                Atividade atividade = new Atividade(rsetAT.getInt("id"), rsetAT.getDouble("pontuacao"), rsetAT.getInt("id_aula"), liP, liAL);
                 liAT.add(atividade);
             }
 
@@ -235,32 +194,22 @@ public class AtividadeDAO extends CRUD{
         List<Pergunta> liP = new ArrayList<>();
 
         ResultSet rsetAT = null;
-        ResultSet rsetAL = null;
-        ResultSet rsetP = null;
+
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
         try {
-            String busca = "SELECT * FROM atividade WHERE pontuacao = ?";
+            String busca = "select * from atividade a join alternativa al on al.id_atividade = a.id join pergunta p on p.id_atividade = a.id where a.pontuacao = ?";
             PreparedStatement pstm = conn.prepareStatement(busca);
             pstm.setDouble(1, pontuacao);
             rsetAT = pstm.executeQuery();
 
 
-            while (rsetAT.next()) {
-                int id = rsetAT.getInt("id");
-
-                rsetAL = buscarPorIdR(id, "alternativa");
-                while (rsetAL.next()) {
-                    Alternativa alternativa = new Alternativa(rsetAL.getInt("id"), rsetAL.getString("alternativa"), rsetAL.getInt("id_atividade"), rsetAL.getBoolean("correto"));
-                    liAL.add(alternativa);
-                }
-
-                rsetP = buscarPorIdR(id, "pergunta");
-                while (rsetP.next()){
-                    Pergunta pergunta = new Pergunta(rsetP.getInt("id"), rsetP.getString("pergunta"), rsetP.getInt("id_atividade"));
-                    liP.add(pergunta);
-                }
-                Atividade atividade = new Atividade(rsetAT.getInt("id"), rsetAT.getDouble("pontuacao"), rsetAT.getInt("id_aula"), rsetAT.getString("fk_Imagens_url"), liP, liAL);
+            while (rsetAT.next()){
+                Alternativa alternativa = new Alternativa(rsetAT.getInt("id"), rsetAT.getString("alternativa"), rsetAT.getInt("id_atividade"), rsetAT.getBoolean("correta"));
+                liAL.add(alternativa);
+                Pergunta pergunta = new Pergunta(rsetAT.getInt("id"), rsetAT.getString("pergunta"), rsetAT.getInt("id_atividade"));
+                liP.add(pergunta);
+                Atividade atividade = new Atividade(rsetAT.getInt("id"), rsetAT.getDouble("pontuacao"), rsetAT.getInt("id_aula"), liP, liAL);
                 liAT.add(atividade);
             }
 
@@ -296,27 +245,18 @@ public class AtividadeDAO extends CRUD{
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
         try {
-            String busca = "SELECT * FROM atividade WHERE id_aula = ?";
+            String busca = "select * from atividade a join alternativa al on al.id_atividade = a.id join pergunta p on p.id_atividade = a.id where a.id_aula = ?";
             PreparedStatement pstm = conn.prepareStatement(busca);
             pstm.setInt(1, idAula);
             rsetAT = pstm.executeQuery();
 
 
-            while (rsetAT.next()) {
-                int id = rsetAT.getInt("id");
-
-                rsetAL = buscarPorIdR(id, "alternativa");
-                while (rsetAL.next()) {
-                    Alternativa alternativa = new Alternativa(rsetAL.getInt("id"), rsetAL.getString("alternativa"), rsetAL.getInt("id_atividade"), rsetAL.getBoolean("correto"));
-                    liAL.add(alternativa);
-                }
-
-                rsetP = buscarPorIdR(id, "pergunta");
-                while (rsetP.next()){
-                    Pergunta pergunta = new Pergunta(rsetP.getInt("id"), rsetP.getString("pergunta"), rsetP.getInt("id_atividade"));
-                    liP.add(pergunta);
-                }
-                Atividade atividade = new Atividade(rsetAT.getInt("id"), rsetAT.getDouble("pontuacao"), rsetAT.getInt("id_aula"), rsetAT.getString("fk_Imagens_url"), liP, liAL);
+            while (rsetAT.next()){
+                Alternativa alternativa = new Alternativa(rsetAT.getInt("id"), rsetAT.getString("alternativa"), rsetAT.getInt("id_atividade"), rsetAT.getBoolean("correta"));
+                liAL.add(alternativa);
+                Pergunta pergunta = new Pergunta(rsetAT.getInt("id"), rsetAT.getString("pergunta"), rsetAT.getInt("id_atividade"));
+                liP.add(pergunta);
+                Atividade atividade = new Atividade(rsetAT.getInt("id"), rsetAT.getDouble("pontuacao"), rsetAT.getInt("id_aula"), liP, liAL);
                 liAT.add(atividade);
             }
 
@@ -337,57 +277,4 @@ public class AtividadeDAO extends CRUD{
         }
     }
 
-//    busca atividades com base na imagem
-    public List<Atividade> buscarPorImagemURl(String imagemURL) {
-        //query
-        List<Atividade> liAT = new ArrayList<>();
-        List<Alternativa> liAL = new ArrayList<>();
-        List<Pergunta> liP = new ArrayList<>();
-
-        ResultSet rsetAT = null;
-        ResultSet rsetAL = null;
-        ResultSet rsetP = null;
-        Conexao conexao = new Conexao();
-        Connection conn = conexao.conectar();
-        try {
-            String busca = "SELECT * FROM atividade WHERE fk_Imagens_url = ?";
-            PreparedStatement pstm = conn.prepareStatement(busca);
-            pstm.setString(1, imagemURL);
-            rsetAT = pstm.executeQuery();
-
-
-            while (rsetAT.next()) {
-                int id = rsetAT.getInt("id");
-
-                rsetAL = buscarPorIdR(id, "alternativa");
-                while (rsetAL.next()) {
-                    Alternativa alternativa = new Alternativa(rsetAL.getInt("id"), rsetAL.getString("alternativa"), rsetAL.getInt("id_atividade"), rsetAL.getBoolean("correto"));
-                    liAL.add(alternativa);
-                }
-
-                rsetP = buscarPorIdR(id, "pergunta");
-                while (rsetP.next()){
-                    Pergunta pergunta = new Pergunta(rsetP.getInt("id"), rsetP.getString("pergunta"), rsetP.getInt("id_atividade"));
-                    liP.add(pergunta);
-                }
-                Atividade atividade = new Atividade(rsetAT.getInt("id"), rsetAT.getDouble("pontuacao"), rsetAT.getInt("id_aula"), rsetAT.getString("fk_Imagens_url"), liP, liAL);
-                liAT.add(atividade);
-            }
-
-
-
-        }
-        catch (SQLException | NullPointerException | IndexOutOfBoundsException | IllegalArgumentException | IllegalStateException e){
-            ExceptionHandler eh = new ExceptionHandler(e);
-            eh.printExeption();
-        }
-        catch (Exception e) {
-            ExceptionHandler eh = new ExceptionHandler(e);
-            eh.printExeption();
-        }
-        finally {
-            conexao.desconectar(conn);
-            return liAT;
-        }
-    }
 }

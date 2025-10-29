@@ -1,5 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.zeta_servlet.model.Adm" %>
+<%@ page import="com.zeta_servlet.Utils.Criptografia" %>
+<%@ page import="io.github.cdimascio.dotenv.Dotenv" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -49,17 +51,19 @@
             <tbody style="border-radius: 12px">
             <%
                 List<Adm> lisA = (List<Adm>) request.getAttribute("list");
+                Criptografia crip = new Criptografia();
                 System.out.println(lisA);
                 for (int i = 0; i < lisA.size(); i++) {
                     String email = lisA.get(i).getEmail();
                     String senha = lisA.get(i).getSenha();
+                    String senhaCrip = crip.criptografar(senha);
                     int id = lisA.get(i).getId();
 
             %>
             <tr style="padding: 0; border-radius: 12px">
                 <td style="padding: 0;"><%= id%></td>
                 <td><%= email%></td>
-                <td><%= senha%></td>
+                <td><%= senhaCrip%></td>
                 <td><form action="alterarAdm" id="alterar">
                     <input type="hidden" value="<%= i%>" name="i">
                     <button type="submit"><img src="assets/alterar.svg"></button>
@@ -84,271 +88,235 @@
     </a>
 </div>
 <script>
-    const CONFIG_TABELA = {
+    // Configuração das colunas - indice começa em 0
+    const configTabela = {
         campos: {
             'id': 0,
             'email': 1,
             'senha': 2
         },
-        colunasAcoes: 1
+        colunasAcoes: 1  // ultimas colunas nao entram na busca
     };
 
-    function iniciarBusca() {
-        setTimeout(function() {
-            try {
-                const campoBusca = document.getElementById('campoBusca');
-                if (!campoBusca) {
-                    setTimeout(iniciarBusca, 500);
-                    return;
-                }
+    // Inicia tudo quando carregar a pagina
+    window.onload = function() {
+        setTimeout(iniciarSistemaBusca, 1000);
+    };
 
-                campoBusca.addEventListener('input', function(e) {
-                    executarBusca(e.target.value);
-                });
+    function iniciarSistemaBusca() {
+        let campo = document.getElementById('campoBusca');
+        if (!campo) {
+            console.log('campo busca nao achado, tentando dnv...');
+            setTimeout(iniciarSistemaBusca, 500);
+            return;
+        }
 
-                const formulario = campoBusca.closest('form');
-                if (formulario) {
-                    formulario.addEventListener('submit', function(e) {
-                        e.preventDefault();
-                        executarBusca(campoBusca.value);
-                    });
-                }
+        // Quando digita, busca
+        campo.oninput = function(e) {
+            fazerBusca(e.target.value);
+        };
 
-                aplicarCoresLinhas();
+        // Se tiver form, nao deixa recarregar
+        let form = campo.closest('form');
+        if (form) {
+            form.onsubmit = function(e) {
+                e.preventDefault();
+                fazerBusca(campo.value);
+            };
+        }
 
-            } catch (error) {
-                console.log('Erro na inicialização:', error);
-            }
-        }, 300);
+        pintarLinhasAlternadas();
     }
 
-    function executarBusca(termoBusca) {
-        try {
-            const tabela = document.getElementById('tabela');
-            if (!tabela) return;
+    function fazerBusca(termo) {
+        let tabela = document.getElementById('tabela');
+        if (!tabela) {
+            console.log('erro: tabela nao existe');
+            return;
+        }
 
-            const linhas = obterLinhasDados(tabela);
-            if (!linhas || linhas.length === 0) return;
+        let linhas = pegarLinhasComDados(tabela);
+        if (linhas.length === 0) return;
 
-            const termo = termoBusca.trim();
+        termo = termo.trim();
+        removerDestaquesAnteriores();
 
-            removerDestaques();
+        if (termo === '') {
+            mostrarTodasAsLinhas();
+            return;
+        }
 
-            if (!termo) {
-                mostrarTodasLinhas();
-                return;
-            }
+        // Verifica se é busca especifica de coluna
+        if (termo.indexOf(':') > -1) {
+            let partes = termo.split(':');
+            let nomeCampo = partes[0].toLowerCase().trim();
+            let valorBusca = partes.slice(1).join(':').trim();
 
-            if (termo.includes(':')) {
-                const partes = termo.split(':');
-                const campo = partes[0].toLowerCase().trim();
-                const valor = partes.slice(1).join(':').trim();
-
-                const indiceColuna = CONFIG_TABELA.campos[campo];
-
-                if (indiceColuna !== undefined) {
-                    executarBuscaColuna(linhas, indiceColuna, valor);
-                } else {
-                    executarBuscaGeral(linhas, termo);
-                }
+            let indiceColuna = configTabela.campos[nomeCampo];
+            if (indiceColuna !== undefined) {
+                buscarNaColuna(linhas, indiceColuna, valorBusca);
             } else {
-                executarBuscaGeral(linhas, termo);
+                // Se nao achou o campo, busca normal
+                buscarGeral(linhas, termo);
             }
-
-            aplicarCoresLinhas();
-
-        } catch (error) {
-            console.log('Erro na busca:', error);
+        } else {
+            buscarGeral(linhas, termo);
         }
+
+        pintarLinhasAlternadas();
     }
 
-    function obterLinhasDados(tabela) {
-        try {
-            const todasLinhas = tabela.getElementsByTagName('tr');
-            const linhasDados = [];
+    function pegarLinhasComDados(tabela) {
+        let todasLinhas = tabela.getElementsByTagName('tr');
+        let linhasValidas = [];
 
-            for (let i = 0; i < todasLinhas.length; i++) {
-                const linha = todasLinhas[i];
+        for (let i = 0; i < todasLinhas.length; i++) {
+            let linha = todasLinhas[i];
 
-                if (linha.closest('thead')) continue;
+            // Pula cabecalho e linhas de titulo
+            if (linha.closest('thead')) continue;
+            if (linha.querySelector('th')) continue;
+            if (linha.classList.contains('header')) continue;
 
-                if (linha.querySelector('th') || linha.classList.contains('header')) continue;
+            // So adiciona se tiver células de dados
+            if (linha.querySelector('td')) {
+                linhasValidas.push(linha);
+            }
+        }
 
-                if (linha.querySelector('td')) {
-                    linhasDados.push(linha);
+        return linhasValidas;
+    }
+
+    function buscarNaColuna(linhas, indiceColuna, valor) {
+        for (let i = 0; i < linhas.length; i++) {
+            let linha = linhas[i];
+            let celulas = linha.getElementsByTagName('td');
+            let achou = false;
+
+            if (celulas.length > indiceColuna) {
+                let celula = celulas[indiceColuna];
+                let texto = celula.textContent || celula.innerText || '';
+
+                if (texto.toLowerCase().includes(valor.toLowerCase())) {
+                    achou = true;
+                    destacarTexto(celula, valor);
                 }
             }
 
-            return linhasDados;
-
-        } catch (error) {
-            console.log('Erro ao buscar linhas:', error);
-            return [];
+            linha.style.display = achou ? '' : 'none';
         }
     }
 
-    function executarBuscaColuna(linhas, indiceColuna, valorBusca) {
-        try {
-            for (let i = 0; i < linhas.length; i++) {
-                const linha = linhas[i];
-                const celulas = linha.getElementsByTagName('td');
-                let encontrado = false;
+    function buscarGeral(linhas, termo) {
+        let termoLower = termo.toLowerCase();
 
-                if (celulas.length > indiceColuna) {
-                    const celula = celulas[indiceColuna];
-                    const textoCelula = (celula.textContent || celula.innerText || '').toLowerCase();
-                    const termoBusca = valorBusca.toLowerCase();
+        for (let i = 0; i < linhas.length; i++) {
+            let linha = linhas[i];
+            let celulas = linha.getElementsByTagName('td');
+            let achou = false;
 
-                    if (textoCelula.includes(termoBusca)) {
-                        encontrado = true;
-                        aplicarDestaqueSeguro(celula, valorBusca);
-                    }
-                }
+            // Não busca nas colunas de ação
+            for (let j = 0; j < celulas.length - configTabela.colunasAcoes; j++) {
+                let celula = celulas[j];
+                let texto = celula.textContent || celula.innerText || '';
 
-                linha.style.display = encontrado ? '' : 'none';
-            }
-
-        } catch (error) {
-            console.log('Erro na busca por coluna:', error);
-        }
-    }
-
-    function executarBuscaGeral(linhas, termoBusca) {
-        try {
-            const termo = termoBusca.toLowerCase();
-
-            for (let i = 0; i < linhas.length; i++) {
-                const linha = linhas[i];
-                const celulas = linha.getElementsByTagName('td');
-                let encontrado = false;
-
-                for (let j = 0; j < celulas.length - CONFIG_TABELA.colunasAcoes; j++) {
-                    const celula = celulas[j];
-                    const textoCelula = (celula.textContent || celula.innerText || '').toLowerCase();
-
-                    if (textoCelula.includes(termo)) {
-                        encontrado = true;
-                        aplicarDestaqueSeguro(celula, termoBusca);
-                    }
-                }
-
-                linha.style.display = encontrado ? '' : 'none';
-            }
-
-        } catch (error) {
-            console.log('Erro na busca geral:', error);
-        }
-    }
-
-    function aplicarDestaqueSeguro(celula, termoBusca) {
-        try {
-            if (!termoBusca.trim()) return;
-
-            const textoOriginal = celula.textContent || celula.innerText || '';
-            const termo = termoBusca.toLowerCase();
-
-            if (!textoOriginal.toLowerCase().includes(termo)) return;
-
-            let resultado = '';
-            let textoRestante = textoOriginal;
-
-            while (true) {
-                const indice = textoRestante.toLowerCase().indexOf(termo);
-                if (indice === -1) break;
-
-                const antes = textoRestante.substring(0, indice);
-                const correspondente = textoRestante.substring(indice, indice + termo.length);
-                textoRestante = textoRestante.substring(indice + termo.length);
-
-                resultado += antes + '<span class="highlight-text">' + correspondente + '</span>';
-            }
-
-            resultado += textoRestante;
-            celula.innerHTML = resultado;
-
-        } catch (error) {
-            console.log('Erro no destaque:', error);
-        }
-    }
-
-    function aplicarCoresLinhas() {
-        try {
-            const tabela = document.getElementById('tabela');
-            if (!tabela) return;
-
-            const linhas = obterLinhasDados(tabela);
-            let contadorLinhasVisiveis = 0;
-
-            for (let i = 0; i < linhas.length; i++) {
-                const linha = linhas[i];
-                linha.classList.remove('linha-par', 'linha-impar');
-            }
-
-            for (let i = 0; i < linhas.length; i++) {
-                const linha = linhas[i];
-
-                if (linha.style.display !== 'none') {
-                    if (contadorLinhasVisiveis % 2 === 0) {
-                        linha.classList.add('linha-par');
-                    } else {
-                        linha.classList.add('linha-impar');
-                    }
-                    contadorLinhasVisiveis++;
+                if (texto.toLowerCase().includes(termoLower)) {
+                    achou = true;
+                    destacarTexto(celula, termo);
+                    // não break pra poder destacar em todas as colunas
                 }
             }
 
-        } catch (error) {
-            console.log('Erro ao aplicar cores:', error);
+            linha.style.display = achou ? '' : 'none';
         }
     }
 
-    function removerDestaques() {
-        try {
-            const tabela = document.getElementById('tabela');
-            if (!tabela) return;
+    function destacarTexto(celula, termoBusca) {
+        if (!termoBusca.trim()) return;
 
-            const destaques = tabela.querySelectorAll('.highlight-text');
-            for (let i = 0; i < destaques.length; i++) {
-                const destaque = destaques[i];
-                const pai = destaque.parentNode;
-                if (pai) {
-                    const texto = document.createTextNode(destaque.textContent);
-                    pai.replaceChild(texto, destaque);
+        let textoOriginal = celula.textContent || celula.innerText || '';
+        let termo = termoBusca.toLowerCase();
+
+        if (!textoOriginal.toLowerCase().includes(termo)) return;
+
+        let novoHTML = '';
+        let texto = textoOriginal;
+
+        while (true) {
+            let posicao = texto.toLowerCase().indexOf(termo);
+            if (posicao === -1) break;
+
+            let antes = texto.substring(0, posicao);
+            let match = texto.substring(posicao, posicao + termo.length);
+            texto = texto.substring(posicao + termo.length);
+
+            novoHTML += antes + '<mark class="destaque">' + match + '</mark>';
+        }
+
+        novoHTML += texto;
+        celula.innerHTML = novoHTML;
+    }
+
+    function pintarLinhasAlternadas() {
+        let tabela = document.getElementById('tabela');
+        if (!tabela) return;
+
+        let linhas = pegarLinhasComDados(tabela);
+        let count = 0;
+
+        // Remove cores antigas
+        for (let i = 0; i < linhas.length; i++) {
+            linhas[i].classList.remove('linha-par', 'linha-impar');
+        }
+
+        // Aplica novas cores só nas visíveis
+        for (let i = 0; i < linhas.length; i++) {
+            if (linhas[i].style.display !== 'none') {
+                if (count % 2 === 0) {
+                    linhas[i].classList.add('linha-par');
+                } else {
+                    linhas[i].classList.add('linha-impar');
                 }
+                count++;
             }
-        } catch (error) {
-            console.log('Erro ao remover destaques:', error);
         }
     }
 
-    function mostrarTodasLinhas() {
-        try {
-            const tabela = document.getElementById('tabela');
-            if (!tabela) return;
+    function removerDestaquesAnteriores() {
+        let tabela = document.getElementById('tabela');
+        if (!tabela) return;
 
-            const linhas = obterLinhasDados(tabela);
-            for (let i = 0; i < linhas.length; i++) {
-                linhas[i].style.display = '';
+        let destaques = tabela.querySelectorAll('.destaque');
+        for (let i = 0; i < destaques.length; i++) {
+            let destaque = destaques[i];
+            let pai = destaque.parentNode;
+            if (pai) {
+                let textoNormal = document.createTextNode(destaque.textContent);
+                pai.replaceChild(textoNormal, destaque);
             }
-
-            aplicarCoresLinhas();
-        } catch (error) {
-            console.log('Erro ao mostrar linhas:', error);
         }
     }
 
-    window.addEventListener('load', function() {
-        setTimeout(iniciarBusca, 500);
-    });
+    function mostrarTodasAsLinhas() {
+        let tabela = document.getElementById('tabela');
+        if (!tabela) return;
 
+        let linhas = pegarLinhasComDados(tabela);
+        for (let i = 0; i < linhas.length; i++) {
+            linhas[i].style.display = '';
+        }
+        pintarLinhasAlternadas();
+    }
+
+    // Backup caso o onload nao funcione direito
     setTimeout(function() {
-        const campoBusca = document.getElementById('campoBusca');
-        if (campoBusca) {
-            campoBusca.addEventListener('input', function(e) {
-                executarBusca(e.target.value);
-            });
+        let campo = document.getElementById('campoBusca');
+        if (campo && !campo.oninput) {
+            campo.oninput = function(e) {
+                fazerBusca(e.target.value);
+            };
         }
-    }, 2000);
+    }, 3000);
 </script>
 
 <style>

@@ -32,7 +32,7 @@ public class AlterarAdm extends HttpServlet {
 
 
         }catch (Exception e){
-            request.getRequestDispatcher("/menuAdm").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/jsp/erroAlterarAdm.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
             request.setAttribute("option", -1);

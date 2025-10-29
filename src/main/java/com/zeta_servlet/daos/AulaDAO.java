@@ -22,46 +22,61 @@ public class AulaDAO extends CRUD{
     public int inserir(Aula aula) {
         Connection conn = null;
         Conexao conexao = new Conexao();
+        int out=0;
         try {
-
             conn = conexao.conectar(); // abre a conexão com o banco
             String consulta = "insert into aula(nome, id_aula) values(?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(consulta);
             //Setando valores dos parametros
             pstmt.setString(1, aula.getNome());
             pstmt.setInt(2, aula.getId_curso());
+            pstmt.executeUpdate();
+            out++;
+
 
             // querys dos outros valores
 
+            //busca o id da ultima aula criada
+            int id = buscarUltimoId();
+
             //query flashCards
             for (int i = 0; i < aula.getFlashCards().size(); i++) {
+                aula.getFlashCards().get(i).setId_aula(id);
                 String consultaFlash = "insert into flash_card(frente, verso, id_aula) values(?, ?, ?)";
                 PreparedStatement pstmtFlash = conn.prepareStatement(consultaFlash);
                 //Setando valores dos parametros
                 pstmtFlash.setString(1, aula.getFlashCards().get(i).getFrente());
                 pstmtFlash.setString(2, aula.getFlashCards().get(i).getVerso());
                 pstmtFlash.setInt(3, aula.getFlashCards().get(i).getId_aula());
+                pstmtFlash.executeUpdate();
+                out++;
             }
             //query texto_corrido
             for (int i = 0; i < aula.getTexto_corridos().size(); i++) {
+                aula.getTexto_corridos().get(i).setId_aula(id);
                 String consultaTexto = "insert into texto_corrido(texto_corrido, id_aula) values(?, ?)";
                 PreparedStatement pstmtText = conn.prepareStatement(consultaTexto);
                 pstmtText.setString(1, aula.getTexto_corridos().get(i).getTexto_corrido());
                 pstmtText.setInt(2, aula.getTexto_corridos().get(i).getId_aula());
+                pstmtText.executeUpdate();
+                out++;
             }
 
             //query lei
             for (int i = 0; i < aula.getLeis().size(); i++) {
+                aula.getLeis().get(i).setId_aula(id);
                 String consultaTexto = "insert into lei(lei, id_aula) values(?, ?)";
                 PreparedStatement pstmtLei = conn.prepareStatement(consultaTexto);
                 pstmtLei.setString(1, aula.getLeis().get(i).getLei());
                 pstmtLei.setInt(2, aula.getLeis().get(i).getId_aula());
+                pstmtLei.executeUpdate();
+                out++;
             }
 
 
 
 
-            if (pstmt.executeUpdate() >0){
+            if (out>0){
                 return 1;
             }
             return 0;
@@ -93,7 +108,8 @@ public class AulaDAO extends CRUD{
             if (pstm.executeUpdate()>0){
                 return 1;
 
-            }  return 0;
+            }
+            return 0;
         }
         catch (Exception e){
             ExceptionHandler eh = new ExceptionHandler(e);
@@ -105,8 +121,36 @@ public class AulaDAO extends CRUD{
         }
     }
 
-//    remove uma aula da tabela
-    public boolean remover(int id) {return super.remover(id, "aula");}
+//    remove uma aula da tabela, juntamente com as tabelas relacionadas
+    public boolean remover(int id) {
+        Conexao conexao = new Conexao();
+        Connection coon = conexao.conectar();
+        try {
+            PreparedStatement pstmL = coon.prepareStatement("delete from lei where id_aula = ?");
+            PreparedStatement pstmF = coon.prepareStatement("delete from flash_card where id_aula = ?");
+            PreparedStatement pstmT = coon.prepareStatement("delete from texto_corrido where id_aula = ?");
+            PreparedStatement pstmA = coon.prepareStatement("delete from aula where id = ?");
+
+            pstmL.setInt(1, id);
+            pstmF.setInt(1, id);
+            pstmT.setInt(1, id);
+            pstmA.setInt(1, id);
+
+            if (pstmL.executeUpdate()>0 && pstmF.executeUpdate()>0 && pstmT.executeUpdate()>0 && pstmA.executeUpdate()>0){
+                return true;
+            }
+            return false;
+        }
+        catch (Exception e){
+            ExceptionHandler eh = new ExceptionHandler(e);
+            eh.printExeption();
+            return false;
+        }
+        finally {
+            conexao.desconectar(coon);
+        }
+
+    }
 
 //    seleciona todos os itens da tabela
     public List<Aula> buscar() {
@@ -117,35 +161,23 @@ public class AulaDAO extends CRUD{
         List<Lei> liL = new ArrayList<>();
 
         ResultSet rsetA = null;
-        ResultSet rsetF = null;
-        ResultSet rsetT = null;
-        ResultSet rsetL = null;
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
         try {
 
-            rsetA = buscarR("aula");
-
+            String busca = "select * from aula a join texto_corrido tc on tc.id_aula = a.id join lei l on l.id_aula = a.id join flash_card fc on fc.id_aula = a.id";
+            PreparedStatement pstm = conn.prepareStatement(busca);
+            rsetA = pstm.executeQuery();
             while (rsetA.next()) {
-                int id = rsetA.getInt("id");
 
-                rsetF = buscarPorIdR(id, "flash_card");
-                while (rsetF.next()) {
-                    Flash_card flash = new Flash_card(rsetF.getInt("id"), rsetF.getString("frente"), rsetF.getString("verso"), rsetF.getInt("id_aula"));
+                    Flash_card flash = new Flash_card(rsetA.getInt("id"), rsetA.getString("frente"), rsetA.getString("verso"), rsetA.getInt("id_aula"));
                     liF.add(flash);
-                }
 
-                rsetL = buscarPorIdR(id, "lei");
-                while (rsetL.next()){
-                    Lei lei = new Lei(rsetL.getInt("id"), rsetL.getString("lei"), rsetL.getInt("id_aula"));
+                    Lei lei = new Lei(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_aula"));
                     liL.add(lei);
-                }
 
-                rsetT = buscarPorIdR(id, "texto_corrido");
-                while (rsetT.next()){
-                    Texto_corrido texto = new Texto_corrido(rsetT.getInt("id"), rsetT.getString("lei"), rsetT.getInt("id_auala"));
+                    Texto_corrido texto = new Texto_corrido(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_auala"));
                     liT.add(texto);
-                }
 
                 Aula aula = new Aula(rsetA.getInt("id"), rsetA.getString("nome"), rsetA.getInt("id_curso"), liT, liF, liL);
                 liAU.add(aula);
@@ -176,36 +208,25 @@ public class AulaDAO extends CRUD{
         List<Texto_corrido> liT = new ArrayList<>();
         List<Lei> liL = new ArrayList<>();
         ResultSet rsetA = null;
-        ResultSet rsetF = null;
-        ResultSet rsetT = null;
-        ResultSet rsetL = null;
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
         try {
-            String busca = "SELECT * FROM aula WHERE id = ?";
+            String busca = "select * from aula a join texto_corrido tc on tc.id_aula = a.id join lei l on l.id_aula = a.id join flash_card fc on fc.id_aula = a.id where id = ?";
             PreparedStatement pstm = conn.prepareStatement(busca);
             pstm.setInt(1, id);
             rsetA = pstm.executeQuery();
 
 
             while (rsetA.next()) {
-                rsetF = buscarPorIdR(id, "flash_card");
-                while (rsetF.next()) {
-                    Flash_card flash = new Flash_card(rsetF.getInt("id"), rsetF.getString("frente"), rsetF.getString("verso"), rsetF.getInt("id_aula"));
-                    liF.add(flash);
-                }
 
-                rsetL = buscarPorIdR(id, "lei");
-                while (rsetL.next()){
-                    Lei lei = new Lei(rsetL.getInt("id"), rsetL.getString("lei"), rsetL.getInt("id_aula"));
-                    liL.add(lei);
-                }
+                Flash_card flash = new Flash_card(rsetA.getInt("id"), rsetA.getString("frente"), rsetA.getString("verso"), rsetA.getInt("id_aula"));
+                liF.add(flash);
 
-                rsetT = buscarPorIdR(id, "texto_corrido");
-                while (rsetT.next()){
-                    Texto_corrido texto = new Texto_corrido(rsetT.getInt("id"), rsetT.getString("lei"), rsetT.getInt("id_auala"));
-                    liT.add(texto);
-                }
+                Lei lei = new Lei(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_aula"));
+                liL.add(lei);
+
+                Texto_corrido texto = new Texto_corrido(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_auala"));
+                liT.add(texto);
 
                 Aula aula = new Aula(rsetA.getInt("id"), rsetA.getString("nome"), rsetA.getInt("id_curso"), liT, liF, liL);
                 liAU.add(aula);
@@ -236,41 +257,30 @@ public class AulaDAO extends CRUD{
         List<Texto_corrido> liT = new ArrayList<>();
         List<Lei> liL = new ArrayList<>();
         ResultSet rsetA = null;
-        ResultSet rsetF = null;
-        ResultSet rsetT = null;
-        ResultSet rsetL = null;
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
         try {
-            String busca = "SELECT * FROM aula WHERE nome = ?";
+            String busca = "select * from aula a join texto_corrido tc on tc.id_aula = a.id join lei l on l.id_aula = a.id join flash_card fc on fc.id_aula = a.id where nome = ?";
             PreparedStatement pstm = conn.prepareStatement(busca);
             pstm.setString(1, nome);
             rsetA = pstm.executeQuery();
 
 
             while (rsetA.next()) {
-                int id = rsetA.getInt("id");
 
-                rsetF = buscarPorIdR(id, "flash_card");
-                while (rsetF.next()) {
-                    Flash_card flash = new Flash_card(rsetF.getInt("id"), rsetF.getString("frente"), rsetF.getString("verso"), rsetF.getInt("id_aula"));
-                    liF.add(flash);
-                }
+                Flash_card flash = new Flash_card(rsetA.getInt("id"), rsetA.getString("frente"), rsetA.getString("verso"), rsetA.getInt("id_aula"));
+                liF.add(flash);
 
-                rsetL = buscarPorIdR(id, "lei");
-                while (rsetL.next()){
-                    Lei lei = new Lei(rsetL.getInt("id"), rsetL.getString("lei"), rsetL.getInt("id_aula"));
-                    liL.add(lei);
-                }
+                Lei lei = new Lei(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_aula"));
+                liL.add(lei);
 
-                rsetT = buscarPorIdR(id, "texto_corrido");
-                while (rsetT.next()){
-                    Texto_corrido texto = new Texto_corrido(rsetT.getInt("id"), rsetT.getString("lei"), rsetT.getInt("id_auala"));
-                    liT.add(texto);
-                }
+                Texto_corrido texto = new Texto_corrido(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_auala"));
+                liT.add(texto);
 
                 Aula aula = new Aula(rsetA.getInt("id"), rsetA.getString("nome"), rsetA.getInt("id_curso"), liT, liF, liL);
                 liAU.add(aula);
+
+
             }
 
 
@@ -289,6 +299,7 @@ public class AulaDAO extends CRUD{
             return liAU;
         }
     }
+
 
 //    busca a aula com base no módulo
 
@@ -299,38 +310,25 @@ public class AulaDAO extends CRUD{
         List<Texto_corrido> liT = new ArrayList<>();
         List<Lei> liL = new ArrayList<>();
         ResultSet rsetA = null;
-        ResultSet rsetF = null;
-        ResultSet rsetT = null;
-        ResultSet rsetL = null;
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
         try {
-            String busca = "SELECT * FROM aula WHERE id_modulo = ?";
+            String busca = "select * from aula a join texto_corrido tc on tc.id_aula = a.id join lei l on l.id_aula = a.id join flash_card fc on fc.id_aula = a.id where id_modulo = ?";
             PreparedStatement pstm = conn.prepareStatement(busca);
             pstm.setInt(1, id_modulo);
             rsetA = pstm.executeQuery();
 
 
             while (rsetA.next()) {
-                int id = rsetA.getInt("id");
 
-                rsetF = buscarPorIdR(id, "flash_card");
-                while (rsetF.next()) {
-                    Flash_card flash = new Flash_card(rsetF.getInt("id"), rsetF.getString("frente"), rsetF.getString("verso"), rsetF.getInt("id_aula"));
-                    liF.add(flash);
-                }
+                Flash_card flash = new Flash_card(rsetA.getInt("id"), rsetA.getString("frente"), rsetA.getString("verso"), rsetA.getInt("id_aula"));
+                liF.add(flash);
 
-                rsetL = buscarPorIdR(id, "lei");
-                while (rsetL.next()){
-                    Lei lei = new Lei(rsetL.getInt("id"), rsetL.getString("lei"), rsetL.getInt("id_aula"));
-                    liL.add(lei);
-                }
+                Lei lei = new Lei(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_aula"));
+                liL.add(lei);
 
-                rsetT = buscarPorIdR(id, "texto_corrido");
-                while (rsetT.next()){
-                    Texto_corrido texto = new Texto_corrido(rsetT.getInt("id"), rsetT.getString("lei"), rsetT.getInt("id_auala"));
-                    liT.add(texto);
-                }
+                Texto_corrido texto = new Texto_corrido(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_auala"));
+                liT.add(texto);
 
                 Aula aula = new Aula(rsetA.getInt("id"), rsetA.getString("nome"), rsetA.getInt("id_curso"), liT, liF, liL);
                 liAU.add(aula);
@@ -353,6 +351,33 @@ public class AulaDAO extends CRUD{
         }
     }
 
+    public int buscarUltimoId() {
+        //query
+        ResultSet rsetA = null;
+        int id=-1;
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+        try {
+            String busca = "select * from aula a order by id desc";
+            PreparedStatement pstm = conn.prepareStatement(busca);
+            rsetA = pstm.executeQuery();
+            id = rsetA.getInt("id");
 
+
+
+        }
+        catch (SQLException | NullPointerException | IndexOutOfBoundsException | IllegalArgumentException | IllegalStateException e){
+            ExceptionHandler eh = new ExceptionHandler(e);
+            eh.printExeption();
+        }
+        catch (Exception e) {
+            ExceptionHandler eh = new ExceptionHandler(e);
+            eh.printExeption();
+        }
+        finally {
+            conexao.desconectar(conn);
+            return id;
+        }
+    }
 
 }

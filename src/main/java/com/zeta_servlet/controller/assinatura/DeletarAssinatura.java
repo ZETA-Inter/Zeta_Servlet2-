@@ -1,9 +1,8 @@
-package com.zeta_servlet.controller.adm;
+package com.zeta_servlet.controller.assinatura;
 
 import com.zeta_servlet.ExceptionHandler.ExceptionHandler;
 import com.zeta_servlet.daos.AdmDAO;
-import com.zeta_servlet.model.Adm;
-import io.github.cdimascio.dotenv.Dotenv;
+import com.zeta_servlet.daos.AssinaturaDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,26 +10,26 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.List;
 
-@WebServlet(value = "/menuAdm")
-public class MenuAdm extends HttpServlet {
+@WebServlet(value = "/deletarAss")
+public class DeletarAssinatura extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Dotenv dotenv = Dotenv.configure().load();
-            AdmDAO admDAO = new AdmDAO();
-            List<Adm> liA;
-            liA=admDAO.buscar();
-            request.setAttribute("list", liA);
-            System.out.println(1+"menu");
-            request.getRequestDispatcher("WEB-INF/jsp/menuAdministrador.jsp").forward(request, response);
+            AssinaturaDAO assinaturaDAO = new AssinaturaDAO();
+            int i = Integer.parseInt(request.getParameter("id"));
+            System.out.println(i);
+            System.out.println(1+"deletar");
+            assinaturaDAO.remover(i);
+            request.getRequestDispatcher("/menuAss").forward(request, response);
+
+
         }catch (Exception e){
+            request.getRequestDispatcher("/menuAss").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
             request.setAttribute("option", -1);
             System.out.println(-1);
-            request.getRequestDispatcher("WEB-INF/jsp/menuAdministrador.jsp").forward(request, response);
 
         }
     }

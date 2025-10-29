@@ -1,8 +1,6 @@
 package com.zeta_servlet.controller.assinatura;
 
 import com.zeta_servlet.ExceptionHandler.ExceptionHandler;
-import com.zeta_servlet.Utils.Regex;
-
 import com.zeta_servlet.daos.AssinaturaDAO;
 import com.zeta_servlet.model.Assinatura;
 import jakarta.servlet.ServletException;
@@ -14,8 +12,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-@WebServlet(value = "/adicionarAss")
-public class AdicionarAssinatura extends HttpServlet {
+@WebServlet(value = "/alterarAssCompleto")
+public class AlterarAssinatura extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -25,18 +23,25 @@ public class AdicionarAssinatura extends HttpServlet {
             String descricao = request.getParameter("descricao");
             BigDecimal precoFixo = BigDecimal.valueOf(Double.valueOf(request.getParameter("precoFixo")));
             BigDecimal precoProdutor = BigDecimal.valueOf(Double.valueOf(request.getParameter("precoProdutor")));
-
-            Assinatura assinatura = new Assinatura(0, tpPlano, qtdCurso, descricao, precoFixo, precoProdutor);
-            assinaturaDAO.inserir(assinatura);
-            System.out.println(1 + "criarAssinatura");
+            int id = Integer.parseInt(request.getParameter("id"));
+            System.out.println(id);
+            System.out.println("passou");
+            Assinatura assinatura = new Assinatura(id, tpPlano, qtdCurso, descricao, precoFixo, precoProdutor);
+            assinaturaDAO.updateTp_Plano(assinatura, tpPlano);
+            assinaturaDAO.updatebenefDescPlno(assinatura, descricao);
+            assinaturaDAO.updateBnfQtdCurso(assinatura, qtdCurso);
+            assinaturaDAO.updatePreco_fixo(assinatura, precoFixo);
+            assinaturaDAO.updatePrecoQtdProdutores(assinatura, precoProdutor);
+            System.out.println(1 + "alterarCompleto");
             request.getRequestDispatcher("/menuAss").forward(request, response);
 
+
         }catch (Exception e){
-            request.getRequestDispatcher("html/erroCriarAssinatura.html").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/jsp/erroAlterarAssinatura.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
             request.setAttribute("option", -1);
-            System.out.println(-1);
+            System.out.println(-1+"IF");
 
         }
     }

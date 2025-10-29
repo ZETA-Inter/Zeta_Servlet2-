@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="ADMINISTRADOR/alterarAdministrador.css">
+    <link rel="stylesheet" href="css/alterarAdministrador.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="assets/LOGO%20ZETA%20-%205.png" type="image/x-icon">
     <title>CRUD</title>
@@ -30,13 +30,13 @@
     int id = adm.getId();
 
 %>
-<form action="alterarAdmCompleto" method="post">
+<form action="alterarAdmCompleto" method="post" id="alterar">
     <h1>Administrador</h1>
-    <label for="">Email</label>
-    <input type="email" name="email" id="email" placeholder="Digite o novo email" value="<%= email%>" style="border-color: red">
-    <p style="color: red">erro, senha ou email invalidos</p>
-    <label for="">Senha</label>
-    <input type="password" name="senha" id="senha" placeholder="Digite a nova senha" value="<%= senha%>" style="border-color: red">
+    <h3 style="color: red">Erro ao alterar assinatura, tente novamente</h3>
+    <label for="">Email
+    <input type="email" name="email" id="email" placeholder="Digite o novo email" value="<%= email%>" ></label>
+    <label for="">Senha
+    <input type="password" name="senha" id="senha" placeholder="Digite a nova senha" value="<%= senha%>" ></label>
     <input type="hidden" name="id" value="<%= id%>">
     <button type="submit">Alterar</button>
 </form>

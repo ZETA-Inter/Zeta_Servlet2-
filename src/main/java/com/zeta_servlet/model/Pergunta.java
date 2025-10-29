@@ -33,9 +33,9 @@ public class Pergunta {
     }
 
     public String toString() {
-        return "Pergunta{" +
-                "id=" + id +
-                ", pergunta='" + pergunta + '\'' +
-                ", id_atividade=" + id_atividade;
+        return "    \nId: " + id +"\n"+
+                "   Pergunta: " + pergunta + "\n" +
+                "   Id_atividade=" + id_atividade+"\n"+
+                "   "+"=".repeat(30);
     }
 }

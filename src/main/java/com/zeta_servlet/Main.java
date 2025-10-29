@@ -1,11 +1,14 @@
 package com.zeta_servlet;
+import com.zeta_servlet.Utils.Criptografia;
 import com.zeta_servlet.Utils.Filtro;
 import com.zeta_servlet.Utils.Regex;
 import com.zeta_servlet.daos.AdmDAO;
 import com.zeta_servlet.daos.AssinaturaDAO;
+import com.zeta_servlet.daos.AtividadeDAO;
 import com.zeta_servlet.daos.FornecedorDAO;
 import com.zeta_servlet.ExceptionHandler.ExceptionHandler;
 import com.zeta_servlet.model.Adm;
+import com.zeta_servlet.model.Atividade;
 import com.zeta_servlet.model.Fornecedor;
 
 import java.util.ArrayList;
@@ -81,17 +84,21 @@ public class Main {
 //            System.out.println(assinaturaDAO.buscar());
 
 //            Regex regex = new Regex();
-//            String telefone = "(11) 98765-4321";
-//            String cpf = "918.908.830-18";
-//            String cnpj = "12.345.678/0001-00";
-//            System.out.println(regex.formatarCnpj(cnpj));
-//            System.out.println(regex.formatarCpf(cpf));
-//            System.out.println(regex.formatarTelefone(telefone));
-            AdmDAO admDAO = new AdmDAO();
-            Filtro filtro = new Filtro();
-            List<Adm> adms = admDAO.buscar();
-            String index="2";
-            System.out.println(filtro.buscarPorTexto(adms, index));
+//            String cpnj = "62.173.620/0001-80";
+//            String cnpjFormat = regex.formatarCnpj(cpnj);
+//
+//            System.out.println(cnpjFormat);
+//            System.out.println(regex.formatarCnpj(cnpjFormat));
+
+            AtividadeDAO atividadeDAO = new AtividadeDAO();
+            System.out.println(atividadeDAO.buscar());
+
+
+
+//            Criptografia criptografia = new Criptografia("billie2510e");
+//            String mensagem = "Nicolaaaaaas25";
+//            String crip = criptografia.criptografar(mensagem);
+//            System.out.println(crip);
         }catch (Exception e){
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();

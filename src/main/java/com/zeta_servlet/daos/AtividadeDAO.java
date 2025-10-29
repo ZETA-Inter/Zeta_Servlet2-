@@ -16,10 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AtividadeDAO extends CRUD{
-
 //    insere um item na tabela
     public int inserir(Atividade atv) {
         Connection conn = null;
+        int out=0;
         Conexao conexao = new Conexao();
         try {
 
@@ -29,27 +29,35 @@ public class AtividadeDAO extends CRUD{
             //Setando valores dos parametros
             pstmt.setDouble(1, atv.getPontuacao());
             pstmt.setInt(2, atv.getId_aula());
+            pstmt.executeUpdate();
+            out++;
 
             // querys dos outros valores
+            int id = buscarUltimoId();
+
 
             //query alternativas
             for (int i = 0; i < atv.getAlternativas().size(); i++) {
+                atv.getAlternativas().get(i).setId_atividade(id);
                 String consultaFlash = "insert into alternativa(alternativa, id_ativade, correta) values(?, ?, ?)";
                 PreparedStatement pstmtFlash = conn.prepareStatement(consultaFlash);
-                pstmt.setString(1, atv.getAlternativas().get(i).getAlternativa());
-                pstmt.setInt(2, atv.getAlternativas().get(i).getId_atividade());
-                pstmt.setBoolean(3, atv.getAlternativas().get(i).isCorreto());
+                pstmtFlash.setString(1, atv.getAlternativas().get(i).getAlternativa());
+                pstmtFlash.setInt(2, atv.getAlternativas().get(i).getId_atividade());
+                pstmtFlash.setBoolean(3, atv.getAlternativas().get(i).isCorreto());
+                out++;
             }
 
             //query pergunta
             for (int i = 0; i < atv.getPerguntas().size(); i++) {
+                atv.getPerguntas().get(i).setId_atividade(id);
                 String consultaTexto = "insert into pergunta(pergunta, id_atividade) values(?, ?)";
-                PreparedStatement pstmtFlash = conn.prepareStatement(consultaTexto);
-                pstmt.setString(1, atv.getPerguntas().get(i).getPergunta());
-                pstmt.setInt(2, atv.getPerguntas().get(i).getId_atividade());
+                PreparedStatement pstmtPerg = conn.prepareStatement(consultaTexto);
+                pstmtPerg.setString(1, atv.getPerguntas().get(i).getPergunta());
+                pstmtPerg.setInt(2, atv.getPerguntas().get(i).getId_atividade());
+                out++;
             }
 
-            if (pstmt.executeUpdate() >0){
+            if (out >0){
                 return 1;
             }
             return 0;
@@ -95,8 +103,34 @@ public class AtividadeDAO extends CRUD{
     }
 
 
-//    remove uma atividade
-    public boolean remover(int id) {return super.remover(id, "atividade");}
+//    remove uma atividade, juntamente das tabelas relacionadas
+public boolean remover(int id) {
+    Conexao conexao = new Conexao();
+    Connection coon = conexao.conectar();
+    try {
+        PreparedStatement pstmAL = coon.prepareStatement("delete from alternativa where id_atividade = ?");
+        PreparedStatement pstmP = coon.prepareStatement("delete from pergunta where id_atividade = ?");
+        PreparedStatement pstmAT = coon.prepareStatement("delete from atividade where id = ?");
+
+        pstmAL.setInt(1, id);
+        pstmP.setInt(1, id);
+        pstmAT.setInt(1, id);
+
+        if (pstmAT.executeUpdate()>0 && pstmP.executeUpdate()>0 && pstmAL.executeUpdate()>0){
+            return true;
+        }
+        return false;
+    }
+    catch (Exception e){
+        ExceptionHandler eh = new ExceptionHandler(e);
+        eh.printExeption();
+        return false;
+    }
+    finally {
+        conexao.desconectar(coon);
+    }
+
+}
 
 //    seleciona todas as atividades da tabela
     public List<Atividade> buscar() {
@@ -274,6 +308,35 @@ public class AtividadeDAO extends CRUD{
         finally {
             conexao.desconectar(conn);
             return liAT;
+        }
+    }
+
+    public int buscarUltimoId() {
+        //query
+        ResultSet rsetA = null;
+        int id=-1;
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+        try {
+            String busca = "select * from atividade a order by id desc";
+            PreparedStatement pstm = conn.prepareStatement(busca);
+            rsetA = pstm.executeQuery();
+            id = rsetA.getInt("id");
+
+
+
+        }
+        catch (SQLException | NullPointerException | IndexOutOfBoundsException | IllegalArgumentException | IllegalStateException e){
+            ExceptionHandler eh = new ExceptionHandler(e);
+            eh.printExeption();
+        }
+        catch (Exception e) {
+            ExceptionHandler eh = new ExceptionHandler(e);
+            eh.printExeption();
+        }
+        finally {
+            conexao.desconectar(conn);
+            return id;
         }
     }
 

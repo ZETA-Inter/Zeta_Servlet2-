@@ -25,8 +25,8 @@ public class Flash_cardDAO extends CRUD{
             PreparedStatement pstmt = conn.prepareStatement(consulta);
             //Setando valores dos parametros
             pstmt.setString(1, flash.getFrente());
-            pstmt.setString(1, flash.getVerso());
-            pstmt.setInt(2, flash.getId_aula());
+            pstmt.setString(2, flash.getVerso());
+            pstmt.setInt(3, flash.getId_aula());
 
 
 

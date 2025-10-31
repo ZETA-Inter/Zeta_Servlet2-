@@ -22,21 +22,33 @@ body{
     padding:0;
 }
 
-.nav-bar ul img {
-    width: 40px;
-    height: 40px;
+.nav-bar ul form{
+    width:100%;
+    height:auto;
+    margin:0;
+    padding:0;
 }
 
-.nav-bar li{
+.nav-bar ul form img {
+    width: 38px;
+    height: 38px;
+}
+
+.nav-bar ul form img {
+    width: 38px;
+    height: 38px;
+}
+
+.nav-bar li {
     list-style: none;
     width:86.7%;
 }
 
-.nav-bar li a { 
+.nav-bar li a {
     display: flex;
     align-items: center;
     gap: 20px;
-    text-decoration:none; 
+    text-decoration:none;
     color:#ffffff;
     background-color:#043253;
     width: 100%;
@@ -48,10 +60,38 @@ body{
     text-align: left;
 }
 
+.nav-bar li form button {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-decoration:none;
+    color:#ffffff;
+    background-color:#043253;
+    width: 100%;
+    font-family:'Poppins';
+    font-size: 18px;
+    padding-left: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+button{
+    outline: none;
+    cursor: pointer;
+}
+.nav-bar li form button:hover{
+    background-color:#18A4E1;
+}
 .nav-bar li a:hover{
     background-color:#18A4E1;
-} 
+}
 .nav-bar li a{
+    transition: all .5s ease;
+}
+.nav-bar li form button{
     transition: all .5s ease;
 }
 
@@ -59,7 +99,7 @@ body{
     width: 200px;
     margin-left: 40px;
 }
-form{
+#adicionar{
     box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.3);
     border-radius: 50px;
     width: 620px;
@@ -71,11 +111,68 @@ form{
     font-family: 'Poppins';
     color: #043253;
 }
-form > h1{
+.nav-bar li form{
+    width: 300px;
+}
+#adicionar > h1{
+    margin-top: 30px;
+    text-align: center;
+    font-size: 50px;
+}
+#adicionar > input{
+    padding: 15px;
+    height: 35px;
+    border-radius: 20px;
+    border-style: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    font-family: 'Poppins';
+    font-size: 17.5px;
+    color: #043253;
+    width: 540px;
+    margin: auto;
+    margin-top: -65px;
+}
+
+#adicionar > label{
+    font-size: 25px;
+    margin-top: -40px;
+    /* padding: 30px; */
+    margin-left: 35px;
+}
+
+#adicionar > button{
+    border-radius: 18px;
+    background-color: #043253;
+    border-style: none;
+    color: #ffffff;
+    width: 200px;
+    font-size: 22.5px;
+    height: 55px;
+    font-family: 'Poppins';
+    margin: 0 auto;
+    transition: all .5s ease;
+}
+
+#adicionar > button:hover{
+    background-color: #18A4E1;
+}
+#formAdd{
+    box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.3);
+    border-radius: 50px;
+    width: 620px;
+    height: 560px;
+    margin: 0 auto;
+    gap: 2px;
+    padding: 20px;
+    display: grid;
+    font-family: 'Poppins';
+    color: #043253;
+}
+#formAdd > h1{
     margin-top: -3px;
     text-align: center;
 }
-form > input{
+#formAdd > input{
     padding: 15px;
     border-radius: 15px;
     border-style: none;
@@ -87,13 +184,13 @@ form > input{
     margin-top: -40px;
 }
 
-form > label{
+#formAdd > label{
     margin-top: -30px;
     padding: 30px;
     margin-left: 20px;
 }
 
-form > button{
+#formAdd > button{
     border-radius: 18px;
     background-color: #043253;
     border-style: none;
@@ -105,6 +202,11 @@ form > button{
     margin: 0 auto;
     transition: all .5s ease;
 }
+
+#formAdd > button:hover{
+    background-color: #18A4E1;
+}
+
 form > div > label > input{
     display: flex;
     flex-direction: column;
@@ -120,10 +222,4 @@ form > div > label > input{
 form > div > label {
     display: inline-block;
     margin-left: 30px;
-}
-
-
-
-form > button:hover{
-    background-color: #18A4E1;
 }

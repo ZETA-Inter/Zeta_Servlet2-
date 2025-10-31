@@ -21,17 +21,14 @@ public class PreLogin extends HttpServlet {
 
             if (email == null && senha == null) {
                 request.getRequestDispatcher("/html/admin.html").forward(request, response);
-                System.out.println("deu certo");
             }
             else{
                 request.getRequestDispatcher("/home").forward(request, response);
-                System.out.println("deu errado");
             }
         }catch (Exception e){
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
             request.setAttribute("option", -1);
-            System.out.println(-1+"IF");
             request.getRequestDispatcher("WEB-INF/jsp/resultadoLogin.jsp").forward(request, response);
 
         }

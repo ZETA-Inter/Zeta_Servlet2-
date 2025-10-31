@@ -2,14 +2,9 @@ package com.zeta_servlet;
 import com.zeta_servlet.Utils.Criptografia;
 import com.zeta_servlet.Utils.Filtro;
 import com.zeta_servlet.Utils.Regex;
-import com.zeta_servlet.daos.AdmDAO;
-import com.zeta_servlet.daos.AssinaturaDAO;
-import com.zeta_servlet.daos.AtividadeDAO;
-import com.zeta_servlet.daos.FornecedorDAO;
+import com.zeta_servlet.daos.*;
 import com.zeta_servlet.ExceptionHandler.ExceptionHandler;
-import com.zeta_servlet.model.Adm;
-import com.zeta_servlet.model.Atividade;
-import com.zeta_servlet.model.Fornecedor;
+import com.zeta_servlet.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,8 +85,21 @@ public class Main {
 //            System.out.println(cnpjFormat);
 //            System.out.println(regex.formatarCnpj(cnpjFormat));
 
-            AtividadeDAO atividadeDAO = new AtividadeDAO();
-            System.out.println(atividadeDAO.buscar());
+//            AulaDAO aulaDAO = new AulaDAO();
+//            Filtro filtro = new Filtro();
+//            System.out.println((aulaDAO.buscarPorId(39)));
+
+//            Flash_cardDAO flashCardDAO = new Flash_cardDAO();
+//            Flash_card flash = new Flash_card(0,"teste","teste",35);
+//            flashCardDAO.inserir(flash);
+
+            AulaDAO aulaDAO = new AulaDAO();
+            List<Aula> liAu;
+            liAu=aulaDAO.buscar();
+            int i = 35;
+            System.out.println(i);
+            Aula au = liAu.get(i);
+            System.out.println(au);
 
 
 

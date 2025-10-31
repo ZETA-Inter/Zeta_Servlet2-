@@ -5,21 +5,26 @@
          version="5.0">
     <error-page>
         <error-code>404</error-code>
-        <location>/html/erro404.html</location>
+        <location>/WEB-INF/errorPage/erro404.jsp</location>
     </error-page>
 
     <error-page>
         <error-code>505</error-code>
-        <location>/html/erro505.html</location>
+        <location>/WEB-INF/errorPage/erro505.jsp</location>
     </error-page>
 
     <error-page>
         <error-code>405</error-code>
-        <location>/html/erro405.html</location>
+        <location>/WEB-INF/errorPage/erro405.jsp</location>
     </error-page>
 
     <error-page>
         <error-code>500</error-code>
-        <location>/html/erro500.html</location>
+        <location>/WEB-INF/errorPage/erro500.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>401</error-code>
+        <location>/WEB-INF/errorPage/erro401.jsp</location>
     </error-page>
 </web-app>

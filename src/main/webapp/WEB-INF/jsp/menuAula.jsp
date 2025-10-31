@@ -1,13 +1,13 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.zeta_servlet.model.Adm" %>
-<%@ page import="com.zeta_servlet.Utils.Criptografia" %>
-<%@ page import="io.github.cdimascio.dotenv.Dotenv" %>
+<%@ page import="com.zeta_servlet.model.Aula" %>
+<%@ page import="java.math.BigDecimal" %>
+<%@ page import="com.zeta_servlet.Utils.Filtro" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/menuAdministrador.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/menuAula.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="assets/LOGO%20ZETA%20-%205.png" type="image/x-icon">
 
@@ -22,14 +22,14 @@
         <li><form action="menuAss" method="post"><button type="submit"><img src="assets/crudAss.svg" alt="Assinatura">Assinatura</button></form></li>
         <li><a href="${pageContext.request.contextPath}/menuProdutor.html"><img src="assets/crudProd.svg" alt="Produtor">Produtor</a></li>
         <li><a href="${pageContext.request.contextPath}/menuAtividade.html"><img src="assets/crudAtiv.svg" alt="Atividade">Atividade</a></li>
-        <li><form action="menuAula" method="post"><button type="submit"><img src="assets/crudAula.svg" alt="Assinatura">Aula</button></form></li>
+        <li><form action="menuAula" method="post"><button type="submit"><img src="assets/crudAula.svg" alt="Aula">Aula</button></form></li>
         <li><a href="../.."><img src="assets/crudDash.svg" alt="Dashboards">Dashboards</a></li>
         <li><form action="logout" method="post" id="fAdm"><button type="submit"><img src="assets/exit.svg" alt="exit">Sair</button></form></li>
 
     </ul>
 </nav>
 <div id="consultar">
-    <h1>Administrador</h1>
+    <h1>Aula</h1>
     <div id="query">
         <div id="buscas">
             <label for="campoBusca"><img src="assets/lupa.svg"></label>
@@ -43,34 +43,55 @@
             <thead style="border-radius: 12px; position: sticky; z-index: 20; top: 0;">
             <tr style="border-radius: 12px">
                 <td class="name-title" style="text-align: center">ID</td>
-                <td class="name-title" style="text-align: center">Email</td>
-                <td class="name-title" style="text-align: center;">Senha</td>
+                <td class="name-title" style="text-align: center">Nome</td>
+                <td class="name-title" style="text-align: center;">id Modulo</td>
+                <td class="name-title" style="text-align: center;">Flash Card</td>
+                <td class="name-title" style="text-align: center;">Texto Corrido</td>
+                <td class="name-title" style="text-align: center;">Lei</td>
                 <td class="name-title" style="text-align: center;"></td>
             </tr>
             </thead>
             <tbody style="border-radius: 12px">
             <%
-                @SuppressWarnings("unchecked")
-                List<Adm> lisA = (List<Adm>) request.getAttribute("list");
-                Criptografia crip = new Criptografia();
-                System.out.println(lisA);
-                for (int i = 0; i < lisA.size(); i++) {
-                    String email = lisA.get(i).getEmail();
-                    String senha = lisA.get(i).getSenha();
-                    String senhaCrip = crip.criptografar(senha);
-                    int id = lisA.get(i).getId();
-
+                Filtro filtro = new Filtro();
+                List<Aula> lisAs = (List<Aula>) request.getAttribute("list");
+                lisAs = filtro.removerDuplicados(lisAs);
+                for (int i = 0; i < lisAs.size(); i++) {
+                    int id = lisAs.get(i).getId();
+                    String nome = lisAs.get(i).getNome();
+                    int idModulo = lisAs.get(i).getIdModulo();
             %>
             <tr style="padding: 0; border-radius: 12px">
                 <td style="padding: 0;"><%= id%></td>
-                <td><%= email%></td>
-                <td><%= senhaCrip%></td>
-                <td><form action="alterarAdm" id="alterar">
+                <td><%= nome%></td>
+                <td><%= idModulo%></td>
+                <td><form action="menuFlash" id="alterar">
+                    <input type="hidden" value="<%= id%>" name="id">
+                    <button type="submit"><img src="assets/alterar.svg"></button>
+                </form>
+                </td>
+
+                <td><form action="menuTexto" id="alterar">
+                    <input type="hidden" value="<%= id%>" name="id">
+                    <button type="submit"><img src="assets/alterar.svg"></button>
+                </form>
+                </td>
+
+
+                <td><form action="menuLei" id="alterar">
+                    <input type="hidden" value="<%= id%>" name="id">
+                    <button type="submit"><img src="assets/alterar.svg"></button>
+                </form>
+                </td>
+
+
+                <td><form action="alterarAula" id="alterar">
                     <input type="hidden" value="<%= i%>" name="i">
                     <button type="submit"><img src="assets/alterar.svg"></button>
                 </form>
 
-                    <form action="deletarAdm" method="post" id="deletar">
+
+                    <form action="deletarAula" method="post" id="deletar">
                         <input type="hidden" value="<%= id%>" name="id">
                         <button type="submit"><img src="assets/deletar.svg"></button>
                     </form></td>
@@ -82,9 +103,9 @@
         </table>
     </div>
 
-    <a href="${pageContext.request.contextPath}/html/adicionarAdministrador.html">
+    <a href="${pageContext.request.contextPath}/html/adicionarAula.html">
         <div id="adicionar" style="margin-top: 20px">
-            <p>+ Adicionar Adm</p>
+            <p>+Adicionar</p>
         </div>
     </a>
 </div>
@@ -93,10 +114,10 @@
     const configTabela = {
         campos: {
             'id': 0,
-            'email': 1,
-            'senha': 2
+            'nome': 1,
+            'idmodulo': 2
         },
-        colunasAcoes: 1  // ultimas colunas nao entram na busca
+        colunasAcoes: 1 // ultimas colunas nao entram na busca
     };
 
     // Inicia tudo quando carregar a pagina
@@ -352,6 +373,9 @@
         font-weight: bold !important;
         padding: 1px 2px !important;
         border-radius: 2px !important;
+    }
+    #tabela{
+        width: 925px;
     }
 
 </style>

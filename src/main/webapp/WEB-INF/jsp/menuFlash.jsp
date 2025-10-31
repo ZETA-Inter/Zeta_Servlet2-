@@ -1,7 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.zeta_servlet.model.Adm" %>
-<%@ page import="com.zeta_servlet.Utils.Criptografia" %>
-<%@ page import="io.github.cdimascio.dotenv.Dotenv" %>
+<%@ page import="com.zeta_servlet.model.FlashCard" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -29,7 +27,7 @@
     </ul>
 </nav>
 <div id="consultar">
-    <h1>Administrador</h1>
+    <h1>Flash Card - Aula: <%= request.getAttribute("nomeAula")%></h1>
     <div id="query">
         <div id="buscas">
             <label for="campoBusca"><img src="assets/lupa.svg"></label>
@@ -43,32 +41,33 @@
             <thead style="border-radius: 12px; position: sticky; z-index: 20; top: 0;">
             <tr style="border-radius: 12px">
                 <td class="name-title" style="text-align: center">ID</td>
-                <td class="name-title" style="text-align: center">Email</td>
-                <td class="name-title" style="text-align: center;">Senha</td>
+                <td class="name-title" style="text-align: center">Frente</td>
+                <td class="name-title" style="text-align: center">Verso</td>
+                <td class="name-title" style="text-align: center;">idAula</td>
                 <td class="name-title" style="text-align: center;"></td>
             </tr>
             </thead>
             <tbody style="border-radius: 12px">
             <%
-                List<Adm> lisA = (List<Adm>) request.getAttribute("list");
-                Criptografia crip = new Criptografia();
+                List<FlashCard> lisA = (List<FlashCard>) request.getAttribute("list");
+                int idAula = lisA.get(0).getIdAula();
                 for (int i = 0; i < lisA.size(); i++) {
-                    String email = lisA.get(i).getEmail();
-                    String senha = lisA.get(i).getSenha();
-                    String senhaCrip = crip.criptografar(senha);
+                    String frente = lisA.get(i).getFrente();
+                    String verso = lisA.get(i).getVerso();
                     int id = lisA.get(i).getId();
 
             %>
             <tr style="padding: 0; border-radius: 12px">
                 <td style="padding: 0;"><%= id%></td>
-                <td><%= email%></td>
-                <td><%= senhaCrip%></td>
-                <td><form action="alterarAdm" id="alterar">
-                    <input type="hidden" value="<%= i%>" name="i">
+                <td><%= frente%></td>
+                <td><%= verso%></td>
+                <td><%= idAula%></td>
+                <td><form action="alterarFlash" id="alterar">
+                    <input type="hidden" value="<%= id%>" name="i">
                     <button type="submit"><img src="assets/alterar.svg"></button>
                 </form>
 
-                    <form action="deletarAdm" method="post" id="deletar">
+                    <form action="deletarFlash" method="get" id="deletar">
                         <input type="hidden" value="<%= id%>" name="id">
                         <button type="submit"><img src="assets/deletar.svg"></button>
                     </form></td>
@@ -80,9 +79,9 @@
         </table>
     </div>
 
-    <a href="${pageContext.request.contextPath}/html/adicionarAdministrador.html">
+    <a href="adicionarFlash?idAula=<%=idAula%>">
         <div id="adicionar" style="margin-top: 20px">
-            <p>+ Adicionar Adm</p>
+            <p>+ Adicionar</p>
         </div>
     </a>
 </div>
@@ -350,6 +349,10 @@
         font-weight: bold !important;
         padding: 1px 2px !important;
         border-radius: 2px !important;
+    }
+
+    #tabela{
+        width: 925px;
     }
 
 </style>

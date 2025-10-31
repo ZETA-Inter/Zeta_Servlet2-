@@ -3,7 +3,7 @@
 <%
     String admin = (String) session.getAttribute("role");
     if (admin == null) {
-        response.sendRedirect("erro401.html");
+        response.sendRedirect("/WEB-INF/errorPage/erro500.jsp");
         return;
     }
 %>

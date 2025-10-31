@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/adicionarFlash.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="../assets/LOGO%20ZETA%20-%205.png" type="image/x-icon">
+    <title>CRUD</title>
+</head>
+<body>
+<nav class="nav-bar">
+    <img src="../assets/LOGO%20ZETA%20-%205.png" alt="Logo" id="logoMenu">
+    <ul>
+        <li><form action="../home" method="post"><button type="submit"><img src="../assets/crudHome.svg" alt="home">Home</button></form></li>
+        <li><form action="../menuAdm" method="post"><button type="submit"><img src="../assets/crudAdm.svg" alt="Adm">Administrador</button></form></li>
+        <li><form action="../menuAss" method="post"><button type="submit"><img src="../assets/crudAss.svg" alt="Assinatura">Assinatura</button></form></li>
+        <li><a href="${pageContext.request.contextPath}/menuProdutor.html"><img src="../assets/crudProd.svg" alt="Produtor">Produtor</a></li>
+        <li><a href="${pageContext.request.contextPath}/menuAtividade.html"><img src="../assets/crudAtiv.svg" alt="Atividade">Atividade</a></li>
+        <li><form action="menuAula" method="post"><button type="submit"><img src="../assets/crudAula.svg" alt="Assinatura">Aula</button></form></li>
+        <li><a href=""><img src="../assets/crudDash.svg" alt="Dashboards">Dashboards</a></li>
+        <li><form action="logout" method="post" id="fAdm"><button type="submit"><img src="../assets/exit.svg" alt="exit">Sair</button></form></li>
+    </ul>
+</nav>
+<form action="../adicionarFlash" method="post" id="adicionar" autocomplete="off">
+    <h1>Flash Card</h1>
+    <label for="">Frente</label>
+    <input type="text" name="frente" id="frente" placeholder="Digite a frente do flash card" autocomplete="off" class="add">
+    <label for="">Verso</label>
+    <input type="text" name="verso" id="verso" placeholder="Digite o verso do flash card" autocomplete="off" class="add">
+    <label for="">Id aula</label>
+    <input type="text" name="idAula" id="aula" placeholder="Digite o id da aula" autocomplete="off" class="add">
+    <button type="submit">Adicionar</button>
+</form>
+</body>
+<style>
+    label{
+        font-size: 12px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    .add{
+        font-size: 3px;
+    }
+
+</style>
+</html>

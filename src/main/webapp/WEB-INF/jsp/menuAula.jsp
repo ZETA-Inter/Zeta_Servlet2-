@@ -65,20 +65,21 @@
                 <td style="padding: 0;"><%= id%></td>
                 <td><%= nome%></td>
                 <td><%= idModulo%></td>
-                <td><form action="menuFlash" id="alterar">
+                <td><form action="menuFlash" id="alterar" method="get">
+                    <input type="hidden" value="<%= id%>" name="idAula">
+                    <input type="hidden" value="<%= nome%>" name="nomeAula">
+                    <button type="submit"><img src="assets/alterar.svg"></button>
+                </form>
+                </td>
+
+                <td><form action="menuTexto" id="alterar" method="post">
                     <input type="hidden" value="<%= id%>" name="id">
                     <button type="submit"><img src="assets/alterar.svg"></button>
                 </form>
                 </td>
 
-                <td><form action="menuTexto" id="alterar">
-                    <input type="hidden" value="<%= id%>" name="id">
-                    <button type="submit"><img src="assets/alterar.svg"></button>
-                </form>
-                </td>
 
-
-                <td><form action="menuLei" id="alterar">
+                <td><form action="menuLei" id="alterar" method="post">
                     <input type="hidden" value="<%= id%>" name="id">
                     <button type="submit"><img src="assets/alterar.svg"></button>
                 </form>
@@ -110,6 +111,236 @@
     </a>
 </div>
 <script>
+    // Configuração das colunas - indice começa em 0
+    const configTabela = {
+        campos: {
+            'id': 0,
+            'nome': 1,
+            'idmodulo': 2
+        },
+        colunasAcoes: 1 // ultimas colunas nao entram na busca
+    };
+
+    // Inicia tudo quando carregar a pagina
+    window.onload = function() {
+        setTimeout(iniciarSistemaBusca, 1000);
+    };
+
+    function iniciarSistemaBusca() {
+        let campo = document.getElementById('campoBusca');
+        if (!campo) {
+            console.log('campo busca nao achado, tentando dnv...');
+            setTimeout(iniciarSistemaBusca, 500);
+            return;
+        }
+
+        // Quando digita, busca
+        campo.oninput = function(e) {
+            fazerBusca(e.target.value);
+        };
+
+        // Se tiver form, nao deixa recarregar
+        let form = campo.closest('form');
+        if (form) {
+            form.onsubmit = function(e) {
+                e.preventDefault();
+                fazerBusca(campo.value);
+            };
+        }
+
+        pintarLinhasAlternadas();
+    }
+
+    function fazerBusca(termo) {
+        let tabela = document.getElementById('tabela');
+        if (!tabela) {
+            console.log('erro: tabela nao existe');
+            return;
+        }
+
+        let linhas = pegarLinhasComDados(tabela);
+        if (linhas.length === 0) return;
+
+        termo = termo.trim();
+        removerDestaquesAnteriores();
+
+        if (termo === '') {
+            mostrarTodasAsLinhas();
+            return;
+        }
+
+        // Verifica se é busca especifica de coluna
+        if (termo.indexOf(':') > -1) {
+            let partes = termo.split(':');
+            let nomeCampo = partes[0].toLowerCase().trim();
+            let valorBusca = partes.slice(1).join(':').trim();
+
+            let indiceColuna = configTabela.campos[nomeCampo];
+            if (indiceColuna !== undefined) {
+                buscarNaColuna(linhas, indiceColuna, valorBusca);
+            } else {
+                // Se nao achou o campo, busca normal
+                buscarGeral(linhas, termo);
+            }
+        } else {
+            buscarGeral(linhas, termo);
+        }
+
+        pintarLinhasAlternadas();
+    }
+
+    function pegarLinhasComDados(tabela) {
+        let todasLinhas = tabela.getElementsByTagName('tr');
+        let linhasValidas = [];
+
+        for (let i = 0; i < todasLinhas.length; i++) {
+            let linha = todasLinhas[i];
+
+            // Pula cabecalho e linhas de titulo
+            if (linha.closest('thead')) continue;
+            if (linha.querySelector('th')) continue;
+            if (linha.classList.contains('header')) continue;
+
+            // So adiciona se tiver células de dados
+            if (linha.querySelector('td')) {
+                linhasValidas.push(linha);
+            }
+        }
+
+        return linhasValidas;
+    }
+
+    function buscarNaColuna(linhas, indiceColuna, valor) {
+        for (let i = 0; i < linhas.length; i++) {
+            let linha = linhas[i];
+            let celulas = linha.getElementsByTagName('td');
+            let achou = false;
+
+            if (celulas.length > indiceColuna) {
+                let celula = celulas[indiceColuna];
+                let texto = celula.textContent || celula.innerText || '';
+
+                if (texto.toLowerCase().includes(valor.toLowerCase())) {
+                    achou = true;
+                    destacarTexto(celula, valor);
+                }
+            }
+
+            linha.style.display = achou ? '' : 'none';
+        }
+    }
+
+    function buscarGeral(linhas, termo) {
+        let termoLower = termo.toLowerCase();
+
+        for (let i = 0; i < linhas.length; i++) {
+            let linha = linhas[i];
+            let celulas = linha.getElementsByTagName('td');
+            let achou = false;
+
+            // Não busca nas colunas de ação
+            for (let j = 0; j < celulas.length - configTabela.colunasAcoes; j++) {
+                let celula = celulas[j];
+                let texto = celula.textContent || celula.innerText || '';
+
+                if (texto.toLowerCase().includes(termoLower)) {
+                    achou = true;
+                    destacarTexto(celula, termo);
+                    // não break pra poder destacar em todas as colunas
+                }
+            }
+
+            linha.style.display = achou ? '' : 'none';
+        }
+    }
+
+    function destacarTexto(celula, termoBusca) {
+        if (!termoBusca.trim()) return;
+
+        let textoOriginal = celula.textContent || celula.innerText || '';
+        let termo = termoBusca.toLowerCase();
+
+        if (!textoOriginal.toLowerCase().includes(termo)) return;
+
+        let novoHTML = '';
+        let texto = textoOriginal;
+
+        while (true) {
+            let posicao = texto.toLowerCase().indexOf(termo);
+            if (posicao === -1) break;
+
+            let antes = texto.substring(0, posicao);
+            let match = texto.substring(posicao, posicao + termo.length);
+            texto = texto.substring(posicao + termo.length);
+
+            novoHTML += antes + '<mark class="destaque">' + match + '</mark>';
+        }
+
+        novoHTML += texto;
+        celula.innerHTML = novoHTML;
+    }
+
+    function pintarLinhasAlternadas() {
+        let tabela = document.getElementById('tabela');
+        if (!tabela) return;
+
+        let linhas = pegarLinhasComDados(tabela);
+        let count = 0;
+
+        // Remove cores antigas
+        for (let i = 0; i < linhas.length; i++) {
+            linhas[i].classList.remove('linha-par', 'linha-impar');
+        }
+
+        // Aplica novas cores só nas visíveis
+        for (let i = 0; i < linhas.length; i++) {
+            if (linhas[i].style.display !== 'none') {
+                if (count % 2 === 0) {
+                    linhas[i].classList.add('linha-par');
+                } else {
+                    linhas[i].classList.add('linha-impar');
+                }
+                count++;
+            }
+        }
+    }
+
+    function removerDestaquesAnteriores() {
+        let tabela = document.getElementById('tabela');
+        if (!tabela) return;
+
+        let destaques = tabela.querySelectorAll('.destaque');
+        for (let i = 0; i < destaques.length; i++) {
+            let destaque = destaques[i];
+            let pai = destaque.parentNode;
+            if (pai) {
+                let textoNormal = document.createTextNode(destaque.textContent);
+                pai.replaceChild(textoNormal, destaque);
+            }
+        }
+    }
+
+    function mostrarTodasAsLinhas() {
+        let tabela = document.getElementById('tabela');
+        if (!tabela) return;
+
+        let linhas = pegarLinhasComDados(tabela);
+        for (let i = 0; i < linhas.length; i++) {
+            linhas[i].style.display = '';
+        }
+        pintarLinhasAlternadas();
+    }
+
+    // Backup caso o onload nao funcione direito
+    setTimeout(function() {
+        let campo = document.getElementById('campoBusca');
+        if (campo && !campo.oninput) {
+            campo.oninput = function(e) {
+                fazerBusca(e.target.value);
+            };
+        }
+    }, 3000);
+</script><script>
     // Configuração das colunas - indice começa em 0
     const configTabela = {
         campos: {

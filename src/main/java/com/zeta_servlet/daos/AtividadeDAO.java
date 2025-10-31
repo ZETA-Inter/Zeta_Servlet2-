@@ -38,22 +38,22 @@ public class AtividadeDAO extends CRUD{
 
             //query alternativas
             for (int i = 0; i < atv.getAlternativas().size(); i++) {
-                atv.getAlternativas().get(i).setId_atividade(id);
+                atv.getAlternativas().get(i).setIdAtividade(id);
                 String consultaFlash = "insert into alternativa(alternativa, id_ativade, correta) values(?, ?, ?)";
                 PreparedStatement pstmtFlash = conn.prepareStatement(consultaFlash);
                 pstmtFlash.setString(1, atv.getAlternativas().get(i).getAlternativa());
-                pstmtFlash.setInt(2, atv.getAlternativas().get(i).getId_atividade());
+                pstmtFlash.setInt(2, atv.getAlternativas().get(i).getIdAtividade());
                 pstmtFlash.setBoolean(3, atv.getAlternativas().get(i).isCorreto());
                 out++;
             }
 
             //query pergunta
             for (int i = 0; i < atv.getPerguntas().size(); i++) {
-                atv.getPerguntas().get(i).setId_atividade(id);
+                atv.getPerguntas().get(i).setIdAtividade(id);
                 String consultaTexto = "insert into pergunta(pergunta, id_atividade) values(?, ?)";
                 PreparedStatement pstmtPerg = conn.prepareStatement(consultaTexto);
                 pstmtPerg.setString(1, atv.getPerguntas().get(i).getPergunta());
-                pstmtPerg.setInt(2, atv.getPerguntas().get(i).getId_atividade());
+                pstmtPerg.setInt(2, atv.getPerguntas().get(i).getIdAtividade());
                 out++;
             }
 

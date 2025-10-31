@@ -26,7 +26,7 @@ public class AlternativaDAO extends CRUD{
                 String consultaFlash = "insert into alternativa(alternativa, id_ativade, correto) values(?, ?, ?)";
                 PreparedStatement pstmt = conn.prepareStatement(consultaFlash);
                 pstmt.setString(1, at.getAlternativa());
-                pstmt.setInt(2, at.getId_atividade());
+                pstmt.setInt(2, at.getIdAtividade());
                 pstmt.setBoolean(3, at.isCorreto());
 
 

@@ -18,7 +18,6 @@ public class MenuAdm extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Dotenv dotenv = Dotenv.configure().load();
             AdmDAO admDAO = new AdmDAO();
             List<Adm> liA;
             liA=admDAO.buscar();

@@ -5,8 +5,8 @@ import com.zeta_servlet.ExceptionHandler.ExceptionHandler;
 import com.zeta_servlet.CRUD.CRUD;
 import com.zeta_servlet.model.Aula;
 import com.zeta_servlet.model.Lei;
-import com.zeta_servlet.model.Flash_card;
-import com.zeta_servlet.model.Texto_corrido;
+import com.zeta_servlet.model.FlashCard;
+import com.zeta_servlet.model.TextoCorrido;
 
 
 import java.sql.Connection;
@@ -137,8 +137,8 @@ public class AulaDAO extends CRUD{
     public List<Aula> buscar() {
         //query
         List<Aula> liAU = new ArrayList<>();
-        List<Flash_card> liF = new ArrayList<>();
-        List<Texto_corrido> liT = new ArrayList<>();
+        List<FlashCard> liF = new ArrayList<>();
+        List<TextoCorrido> liT = new ArrayList<>();
         List<Lei> liL = new ArrayList<>();
 
         ResultSet rsetA = null;
@@ -151,13 +151,13 @@ public class AulaDAO extends CRUD{
             rsetA = pstm.executeQuery();
             while (rsetA.next()) {
 
-                    Flash_card flash = new Flash_card(rsetA.getInt("id"), rsetA.getString("frente"), rsetA.getString("verso"), rsetA.getInt("id_modulo"));
+                    FlashCard flash = new FlashCard(rsetA.getInt("id"), rsetA.getString("frente"), rsetA.getString("verso"), rsetA.getInt("id_modulo"));
                     liF.add(flash);
 
                     Lei lei = new Lei(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_aula"));
                     liL.add(lei);
 
-                    Texto_corrido texto = new Texto_corrido(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_aula"));
+                    TextoCorrido texto = new TextoCorrido(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_aula"));
                     liT.add(texto);
 
                 Aula aula = new Aula(rsetA.getInt("id"), rsetA.getString("nome"), rsetA.getInt("id_modulo"), liT, liF, liL);
@@ -186,8 +186,8 @@ public class AulaDAO extends CRUD{
     public List<Aula> buscarPorId(int id) {
         //query
         List<Aula> liAU = new ArrayList<>();
-        List<Flash_card> liF = new ArrayList<>();
-        List<Texto_corrido> liT = new ArrayList<>();
+        List<FlashCard> liF = new ArrayList<>();
+        List<TextoCorrido> liT = new ArrayList<>();
         List<Lei> liL = new ArrayList<>();
         ResultSet rsetA = null;
         Conexao conexao = new Conexao();
@@ -201,13 +201,13 @@ public class AulaDAO extends CRUD{
 
             while (rsetA.next()) {
 
-                Flash_card flash = new Flash_card(rsetA.getInt("id"), rsetA.getString("frente"), rsetA.getString("verso"), rsetA.getInt("id_modulo"));
+                FlashCard flash = new FlashCard(rsetA.getInt("id"), rsetA.getString("frente"), rsetA.getString("verso"), rsetA.getInt("id_modulo"));
                 liF.add(flash);
 
                 Lei lei = new Lei(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_aula"));
                 liL.add(lei);
 
-                Texto_corrido texto = new Texto_corrido(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_aula"));
+                TextoCorrido texto = new TextoCorrido(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_aula"));
                 liT.add(texto);
 
                 Aula aula = new Aula(rsetA.getInt("id"), rsetA.getString("nome"), rsetA.getInt("id_modulo"), liT, liF, liL);
@@ -235,8 +235,8 @@ public class AulaDAO extends CRUD{
     public List<Aula> buscarPorNome(String nome) {
         //query
         List<Aula> liAU = new ArrayList<>();
-        List<Flash_card> liF = new ArrayList<>();
-        List<Texto_corrido> liT = new ArrayList<>();
+        List<FlashCard> liF = new ArrayList<>();
+        List<TextoCorrido> liT = new ArrayList<>();
         List<Lei> liL = new ArrayList<>();
         ResultSet rsetA = null;
         Conexao conexao = new Conexao();
@@ -250,13 +250,13 @@ public class AulaDAO extends CRUD{
 
             while (rsetA.next()) {
 
-                Flash_card flash = new Flash_card(rsetA.getInt("id"), rsetA.getString("frente"), rsetA.getString("verso"), rsetA.getInt("id_modulo"));
+                FlashCard flash = new FlashCard(rsetA.getInt("id"), rsetA.getString("frente"), rsetA.getString("verso"), rsetA.getInt("id_modulo"));
                 liF.add(flash);
 
                 Lei lei = new Lei(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_aula"));
                 liL.add(lei);
 
-                Texto_corrido texto = new Texto_corrido(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_aula"));
+                TextoCorrido texto = new TextoCorrido(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_aula"));
                 liT.add(texto);
 
                 Aula aula = new Aula(rsetA.getInt("id"), rsetA.getString("nome"), rsetA.getInt("id_modulo"), liT, liF, liL);
@@ -288,8 +288,8 @@ public class AulaDAO extends CRUD{
     public List<Aula> buscarPorIdModulo(int id_modulo) {
         //query
         List<Aula> liAU = new ArrayList<>();
-        List<Flash_card> liF = new ArrayList<>();
-        List<Texto_corrido> liT = new ArrayList<>();
+        List<FlashCard> liF = new ArrayList<>();
+        List<TextoCorrido> liT = new ArrayList<>();
         List<Lei> liL = new ArrayList<>();
         ResultSet rsetA = null;
         Conexao conexao = new Conexao();
@@ -303,13 +303,13 @@ public class AulaDAO extends CRUD{
 
             while (rsetA.next()) {
 
-                Flash_card flash = new Flash_card(rsetA.getInt("id"), rsetA.getString("frente"), rsetA.getString("verso"), rsetA.getInt("id_modulo"));
+                FlashCard flash = new FlashCard(rsetA.getInt("id"), rsetA.getString("frente"), rsetA.getString("verso"), rsetA.getInt("id_modulo"));
                 liF.add(flash);
 
                 Lei lei = new Lei(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_aula"));
                 liL.add(lei);
 
-                Texto_corrido texto = new Texto_corrido(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_aula"));
+                TextoCorrido texto = new TextoCorrido(rsetA.getInt("id"), rsetA.getString("lei"), rsetA.getInt("id_aula"));
                 liT.add(texto);
 
                 Aula aula = new Aula(rsetA.getInt("id"), rsetA.getString("nome"), rsetA.getInt("id_modulo"), liT, liF, liL);

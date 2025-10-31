@@ -1,16 +1,16 @@
 package com.zeta_servlet.model;
 
-public class Flash_card {
+public class FlashCard {
     private int id;
     private String frente;
     private String verso;
-    private int id_aula;
+    private int idAula;
 
-    public Flash_card(int id, String frente,String verso, int id_aula) {
+    public FlashCard(int id, String frente, String verso, int idAula) {
         this.id = id;
         this.frente = frente;
         this.verso = verso;
-        this.id_aula = id_aula;
+        this.idAula = idAula;
     }
 
     public int getId() {
@@ -21,12 +21,12 @@ public class Flash_card {
 
     public String getVerso() {return verso;}
 
-    public int getId_aula() {
-        return id_aula;
+    public int getIdAula() {
+        return idAula;
     }
 
-    public void setId_aula(int id_aula) {
-        this.id_aula = id_aula;
+    public void setIdAula(int idAula) {
+        this.idAula = idAula;
     }
 
 
@@ -35,7 +35,7 @@ public class Flash_card {
                 "id=" + id +
                 ", frente='" + frente + '\'' +
                 ", verso='" + verso + '\'' +
-                ", id_aula=" + id_aula +
+                ", id_aula=" + idAula +
                 '}';
     }
 }

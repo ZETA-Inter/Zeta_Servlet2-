@@ -6,12 +6,12 @@ package com.zeta_servlet.model;
 public class Lei {
     int id;
     String lei;
-    int id_aula;
+    int idAula;
 
-    public Lei(int id, String lei, int id_aula) {
+    public Lei(int id, String lei, int idAula) {
         this.id = id;
         this.lei = lei;
-        this.id_aula = id_aula;
+        this.idAula = idAula;
     }
 
     public int getId() {
@@ -22,19 +22,19 @@ public class Lei {
         return lei;
     }
 
-    public int getId_aula() {
-        return id_aula;
+    public int getIdAula() {
+        return idAula;
     }
 
-    public void setId_aula(int id_aula) {
-        this.id_aula = id_aula;
+    public void setIdAula(int id_aula) {
+        this.idAula = idAula;
     }
 
     public String toString() {
         return "Lei{" +
                 "id=" + id +
                 ", lei='" + lei + '\'' +
-                ", id_aula=" + id_aula +
+                ", id_aula=" + idAula +
                 '}';
     }
 }

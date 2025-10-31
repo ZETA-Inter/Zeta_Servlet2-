@@ -93,13 +93,19 @@ public class Main {
 //            Flash_card flash = new Flash_card(0,"teste","teste",35);
 //            flashCardDAO.inserir(flash);
 
-            AulaDAO aulaDAO = new AulaDAO();
-            List<Aula> liAu;
-            liAu=aulaDAO.buscar();
-            int i = 35;
-            System.out.println(i);
-            Aula au = liAu.get(i);
-            System.out.println(au);
+//            AulaDAO aulaDAO = new AulaDAO();
+//            List<Aula> liAu;
+//            liAu=aulaDAO.buscar();
+//            int i = 35;
+//            System.out.println(i);
+//            Aula au = liAu.get(i);
+//            System.out.println(au);
+            FlashCardDAO flashCardDAO = new FlashCardDAO();
+            FlashCard flashCard = new FlashCard(45, "teste", "teste", 8);
+            flashCardDAO.updateFrente(flashCard);
+            flashCardDAO.updateVerso(flashCard);
+            flashCardDAO.updateIdAula(flashCard);
+            System.out.println(flashCardDAO.buscarPorId(45));
 
 
 

@@ -338,6 +338,10 @@
         background: transparent !important;
     }
 
+    #tabela{
+        width: 925px;
+    }
+
     #tabela tr.linha-par {
         background-color: #fcf7f1 !important;
         background: #fcf7f1 !important;

@@ -4,13 +4,13 @@ package com.zeta_servlet.model;
 public class Alternativa {
     int id;
     String alternativa;
-    int id_atividade;
+    int idAtividade;
     boolean correto;
 
-    public Alternativa(int id, String alternativa, int id_atividade, boolean correto) {
+    public Alternativa(int id, String alternativa, int idAtividade, boolean correto) {
         this.id = id;
         this.alternativa = alternativa;
-        this.id_atividade = id_atividade;
+        this.idAtividade = idAtividade;
         this.correto = correto;
     }
 
@@ -24,19 +24,19 @@ public class Alternativa {
         return alternativa;
     }
 
-    public int getId_atividade() {
-        return id_atividade;
+    public int getIdAtividade() {
+        return idAtividade;
     }
 
-    public void setId_atividade(int id_atividade) {
-        this.id_atividade = id_atividade;
+    public void setIdAtividade(int id_atividade) {
+        this.idAtividade = idAtividade;
     }
 
     public String toString() {
         return
                 "   \nId: " + id +"\n"+
                 "   Alternativa: " + alternativa +"\n"+
-                "   Id_atividade: " + id_atividade+"\n"+
+                "   Id_atividade: " + idAtividade+"\n"+
                         "   "+"=".repeat(30);
 
     }

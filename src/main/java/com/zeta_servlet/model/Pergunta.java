@@ -3,12 +3,12 @@ package com.zeta_servlet.model;
 public class Pergunta {
     int id;
     String pergunta;
-    int id_atividade;
+    int idAtividade;
 
-    public Pergunta(int id, String pergunta, int id_atividade) {
+    public Pergunta(int id, String pergunta, int idAtividade) {
         this.id = id;
         this.pergunta = pergunta;
-        this.id_atividade = id_atividade;
+        this.idAtividade = idAtividade;
     }
 
     public int getId() {
@@ -19,18 +19,18 @@ public class Pergunta {
         return pergunta;
     }
 
-    public int getId_atividade() {
-        return id_atividade;
+    public int getIdAtividade() {
+        return idAtividade;
     }
 
-    public void setId_atividade(int id_atividade) {
-        this.id_atividade = id_atividade;
+    public void setIdAtividade(int idAtividade) {
+        this.idAtividade = idAtividade;
     }
 
     public String toString() {
         return "    \nId: " + id +"\n"+
                 "   Pergunta: " + pergunta + "\n" +
-                "   Id_atividade=" + id_atividade+"\n"+
+                "   Id_atividade=" + idAtividade+"\n"+
                 "   "+"=".repeat(30);
     }
 }

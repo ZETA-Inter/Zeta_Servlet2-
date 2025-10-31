@@ -7,26 +7,26 @@ public class Aula {
     int id;
     String nome;
     int id_modulo;
-    List<Texto_corrido> texto_corridos;
-    List<Flash_card> flashCards;
+    List<TextoCorrido> textoCorridos;
+    List<FlashCard> flashCards;
     List<Lei> leis;
 
 
-    public Aula(int id, String nome, int id_modulo, List<Texto_corrido> texto_corridos, List<Flash_card> flashCards, List<Lei> leis) {
+    public Aula(int id, String nome, int id_modulo, List<TextoCorrido> textoCorridos, List<FlashCard> flashCards, List<Lei> leis) {
         this.id = id;
         this.id_modulo = id_modulo;
         this.nome = nome;
-        this.texto_corridos = texto_corridos;
+        this.textoCorridos = textoCorridos;
         this.flashCards = flashCards;
         this.leis = leis;
         for (int i = 0; i < leis.size(); i++) {
-            leis.get(i).setId_aula(this.id);
+            leis.get(i).setIdAula(this.id);
         }
-        for (int i = 0; i < texto_corridos.size(); i++) {
-            texto_corridos.get(i).setId_aula(this.id);
+        for (int i = 0; i < textoCorridos.size(); i++) {
+            textoCorridos.get(i).setIdAula(this.id);
         }
         for (int i = 0; i < flashCards.size(); i++) {
-            flashCards.get(i).setId_aula(this.id);
+            flashCards.get(i).setIdAula(this.id);
         }
     }
 
@@ -49,11 +49,11 @@ public class Aula {
         return id_modulo;
     }
 
-    public List<Texto_corrido> getTexto_corridos() {
-        return texto_corridos;
+    public List<TextoCorrido> getTexto_corridos() {
+        return textoCorridos;
     }
 
-    public List<Flash_card> getFlashCards() {
+    public List<FlashCard> getFlashCards() {
         return flashCards;
     }
 
@@ -67,7 +67,7 @@ public class Aula {
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", id_modulo=" + id_modulo +
-                ", texto_corridos=" + texto_corridos +
+                ", texto_corridos=" + textoCorridos +
                 ", flashCards=" + flashCards +
                 ", leis=" + leis +
                 '}';

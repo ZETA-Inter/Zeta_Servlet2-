@@ -3,7 +3,7 @@ package com.zeta_servlet.daos;
 import com.zeta_servlet.daos.JDBC.Conexao;
 import com.zeta_servlet.ExceptionHandler.ExceptionHandler;
 import com.zeta_servlet.CRUD.CRUD;
-import com.zeta_servlet.model.Flash_card;
+import com.zeta_servlet.model.FlashCard;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,10 +12,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Flash_cardDAO extends CRUD{
+public class FlashCardDAO extends CRUD{
 
 //  insere um flash card no banco
-    public int inserir(Flash_card flash) {
+    public int inserir(FlashCard flash) {
         Connection conn = null;
         Conexao conexao = new Conexao();
         try {
@@ -26,7 +26,7 @@ public class Flash_cardDAO extends CRUD{
             //Setando valores dos parametros
             pstmt.setString(1, flash.getFrente());
             pstmt.setString(2, flash.getVerso());
-            pstmt.setInt(3, flash.getId_aula());
+            pstmt.setInt(3, flash.getIdAula());
 
 
 
@@ -51,7 +51,7 @@ public class Flash_cardDAO extends CRUD{
     }
 
 //    altera o flash card frente
-    public int updateFrente(Flash_card flash) {
+    public int updateFrente(FlashCard flash) {
         Conexao conexao = new Conexao();
         Connection coon = conexao.conectar();
         try {
@@ -79,7 +79,7 @@ public class Flash_cardDAO extends CRUD{
     }
 
     //    altera o flash card verso
-    public int updateVerso(Flash_card flash) {
+    public int updateVerso(FlashCard flash) {
         Conexao conexao = new Conexao();
         Connection coon = conexao.conectar();
         try {
@@ -107,12 +107,12 @@ public class Flash_cardDAO extends CRUD{
     }
 
 //    altera a aula do flash card
-    public int updateIdAula(Flash_card flash) {
+    public int updateIdAula(FlashCard flash) {
         Conexao conexao = new Conexao();
         Connection coon = conexao.conectar();
         try {
             PreparedStatement pstm = coon.prepareStatement("UPDATE flash_card SET id_aula = ? WHERE id = ?;");
-            pstm.setInt(1, flash.getId_aula());
+            pstm.setInt(1, flash.getIdAula());
             pstm.setInt(2, flash.getId());
             if (pstm.executeUpdate()>0){
                 return 1;
@@ -133,9 +133,9 @@ public class Flash_cardDAO extends CRUD{
     public boolean remover(int id) {return super.remover(id, "flash_card");}
 
 //    seleciona todos os flash cards da tabela
-    public List<Flash_card> buscar() {
+    public List<FlashCard> buscar() {
         //query
-        List<Flash_card> liF = new ArrayList<>();
+        List<FlashCard> liF = new ArrayList<>();
         ResultSet rset = null;
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
@@ -146,7 +146,40 @@ public class Flash_cardDAO extends CRUD{
 
 
             while (rset.next()) {
-                Flash_card flash = new Flash_card(rset.getInt("id"), rset.getString("frente"), rset.getString("verso"), rset.getInt("id_aula"));
+                FlashCard flash = new FlashCard(rset.getInt("id"), rset.getString("frente"), rset.getString("verso"), rset.getInt("id_aula"));
+                liF.add(flash);
+            }
+
+
+        }
+        catch (SQLException | NullPointerException | IndexOutOfBoundsException | IllegalArgumentException | IllegalStateException e){
+            ExceptionHandler eh = new ExceptionHandler(e);
+            eh.printExeption();
+        }
+        catch (Exception e) {
+            ExceptionHandler eh = new ExceptionHandler(e);
+            eh.printExeption();
+        }
+        finally {
+            conexao.desconectar(conn);
+            return liF;
+        }
+    }
+
+    public List<FlashCard> buscarPorId(int id) {
+        //query
+        List<FlashCard> liF = new ArrayList<>();
+        ResultSet rset = null;
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+        try {
+
+            rset = buscarPorIdR(id, "flash_card");
+
+
+
+            while (rset.next()) {
+                FlashCard flash = new FlashCard(rset.getInt("id"), rset.getString("frente"), rset.getString("verso"), rset.getInt("id_aula"));
                 liF.add(flash);
             }
 
@@ -168,9 +201,9 @@ public class Flash_cardDAO extends CRUD{
 
 
 //    busca o item da tabela com base no flash card
-    public List<Flash_card> buscarPorFlashCard(String flash_card) {
+    public List<FlashCard> buscarPorFlashCard(String flash_card) {
         //query
-        List<Flash_card> liF = new ArrayList<>();
+        List<FlashCard> liF = new ArrayList<>();
         ResultSet rset = null;
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
@@ -184,7 +217,7 @@ public class Flash_cardDAO extends CRUD{
 
 
             while (rset.next()) {
-                Flash_card flash = new Flash_card(rset.getInt("id"), rset.getString("frente"), rset.getString("verso"), rset.getInt("id_aula"));
+                FlashCard flash = new FlashCard(rset.getInt("id"), rset.getString("frente"), rset.getString("verso"), rset.getInt("id_aula"));
                 liF.add(flash);
             }
 
@@ -204,14 +237,14 @@ public class Flash_cardDAO extends CRUD{
     }
 
 //    seleciona o flash card com base na aula
-    public List<Flash_card> buscarPorIdAula(int id_aula) {
+    public List<FlashCard> buscarPorIdAula(int id_aula) {
         //query
-        List<Flash_card> liF = new ArrayList<>();
+        List<FlashCard> liF = new ArrayList<>();
         ResultSet rset = null;
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
         try {
-            String busca = "SELECT * FROM flash_cards WHERE id_aula = ?";
+            String busca = "SELECT * FROM flash_card WHERE id_aula = ?";
             PreparedStatement pstm = conn.prepareStatement(busca);
             pstm.setInt(1, id_aula);
             rset = pstm.executeQuery();
@@ -220,7 +253,7 @@ public class Flash_cardDAO extends CRUD{
 
 
             while (rset.next()) {
-                Flash_card flash = new Flash_card(rset.getInt("id"), rset.getString("frente"), rset.getString("verso"), rset.getInt("id_aula"));
+                FlashCard flash = new FlashCard(rset.getInt("id"), rset.getString("frente"), rset.getString("verso"), rset.getInt("id_aula"));
                 liF.add(flash);
             }
 

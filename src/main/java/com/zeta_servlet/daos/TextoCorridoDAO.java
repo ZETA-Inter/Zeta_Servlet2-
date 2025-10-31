@@ -1,10 +1,5 @@
 package com.zeta_servlet.daos;
 
-import com.zeta_servlet.daos.JDBC.Conexao;
-import com.zeta_servlet.ExceptionHandler.ExceptionHandler;
-import com.zeta_servlet.CRUD.CRUD;
-import com.zeta_servlet.model.Texto_corrido;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,9 +7,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Texto_corridoDAO extends CRUD{
+import com.zeta_servlet.CRUD.CRUD;
+import com.zeta_servlet.ExceptionHandler.ExceptionHandler;
+import com.zeta_servlet.daos.JDBC.Conexao;
+import com.zeta_servlet.model.TextoCorrido;
 
-    public int inserir(Texto_corrido texto) {
+public class TextoCorridoDAO extends CRUD{
+
+    public int inserir(TextoCorrido texto) {
         Connection conn = null;
         Conexao conexao = new Conexao();
         try {
@@ -48,7 +48,7 @@ public class Texto_corridoDAO extends CRUD{
         }
     }
 
-    public int updateTextoCorrido(Texto_corrido texto) {
+    public int updateTextoCorrido(TextoCorrido texto) {
         Conexao conexao = new Conexao();
         Connection coon = conexao.conectar();
         try {
@@ -70,7 +70,7 @@ public class Texto_corridoDAO extends CRUD{
         }
     }
 
-    public int updateIdAula(Texto_corrido texto) {
+    public int updateIdAula(TextoCorrido texto) {
         Conexao conexao = new Conexao();
         Connection coon = conexao.conectar();
         try {
@@ -94,16 +94,16 @@ public class Texto_corridoDAO extends CRUD{
 
     public boolean remover(int id) {return super.remover(id, "texto_corrido");}
 
-    public List<Texto_corrido> buscar() {
+    public List<TextoCorrido> buscar() {
         //query
-        List<Texto_corrido> liTE = new ArrayList<>();
+        List<TextoCorrido> liTE = new ArrayList<>();
         ResultSet rset = null;
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
         try {
             rset = buscarR("texto_corrido");
             while (rset.next()) {
-                Texto_corrido texto = new Texto_corrido(rset.getInt("id"), rset.getString("texto_corrido"), rset.getInt("id_aula"));
+                TextoCorrido texto = new TextoCorrido(rset.getInt("id"), rset.getString("texto_corrido"), rset.getInt("id_aula"));
                 liTE.add(texto);
             }
         }
@@ -121,9 +121,9 @@ public class Texto_corridoDAO extends CRUD{
         }
     }
 
-    public List<Texto_corrido> buscarPorId(int id) {
+    public List<TextoCorrido> buscarPorId(int id) {
         //query
-        List<Texto_corrido> liTE = new ArrayList<>();
+        List<TextoCorrido> liTE = new ArrayList<>();
         ResultSet rset = null;
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
@@ -137,7 +137,7 @@ public class Texto_corridoDAO extends CRUD{
 
 
             while (rset.next()) {
-                Texto_corrido texto = new Texto_corrido(rset.getInt("id"), rset.getString("texto_corrido"), rset.getInt("id_aula"));
+                TextoCorrido texto = new TextoCorrido(rset.getInt("id"), rset.getString("texto_corrido"), rset.getInt("id_aula"));
                 liTE.add(texto);
             }
 
@@ -156,9 +156,9 @@ public class Texto_corridoDAO extends CRUD{
         }
     }
 
-    public List<Texto_corrido> buscarPorTextoCorrido(String lei) {
+    public List<TextoCorrido> buscarPorTextoCorrido(String lei) {
         //query
-        List<Texto_corrido> liTE = new ArrayList<>();
+        List<TextoCorrido> liTE = new ArrayList<>();
         ResultSet rset = null;
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
@@ -172,7 +172,7 @@ public class Texto_corridoDAO extends CRUD{
 
 
             while (rset.next()) {
-                Texto_corrido texto = new Texto_corrido(rset.getInt("id"), rset.getString("texto_corrido"), rset.getInt("id_aula"));
+                TextoCorrido texto = new TextoCorrido(rset.getInt("id"), rset.getString("texto_corrido"), rset.getInt("id_aula"));
                 liTE.add(texto);
             }
 
@@ -191,9 +191,9 @@ public class Texto_corridoDAO extends CRUD{
         }
     }
 
-    public List<Texto_corrido> buscarPorIdAula(int id_aula) {
+    public List<TextoCorrido> buscarPorIdAula(int id_aula) {
         //query
-        List<Texto_corrido> liTE = new ArrayList<>();
+        List<TextoCorrido> liTE = new ArrayList<>();
         ResultSet rset = null;
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
@@ -207,7 +207,7 @@ public class Texto_corridoDAO extends CRUD{
 
 
             while (rset.next()) {
-                Texto_corrido texto = new Texto_corrido(rset.getInt("id"), rset.getString("texto_corrido"), rset.getInt("id_aula"));
+                TextoCorrido texto = new TextoCorrido(rset.getInt("id"), rset.getString("texto_corrido"), rset.getInt("id_aula"));
                 liTE.add(texto);
             }
 

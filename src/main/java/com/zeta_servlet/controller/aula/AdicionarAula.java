@@ -2,13 +2,13 @@ package com.zeta_servlet.controller.aula;
 
 import com.zeta_servlet.ExceptionHandler.ExceptionHandler;
 import com.zeta_servlet.daos.AulaDAO;
-import com.zeta_servlet.daos.Flash_cardDAO;
+import com.zeta_servlet.daos.FlashCardDAO;
 import com.zeta_servlet.daos.LeiDAO;
-import com.zeta_servlet.daos.Texto_corridoDAO;
+import com.zeta_servlet.daos.TextoCorridoDAO;
 import com.zeta_servlet.model.Aula;
-import com.zeta_servlet.model.Flash_card;
+import com.zeta_servlet.model.FlashCard;
 import com.zeta_servlet.model.Lei;
-import com.zeta_servlet.model.Texto_corrido;
+import com.zeta_servlet.model.TextoCorrido;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,7 +16,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(value = "/adicionarAula")
 public class AdicionarAula extends HttpServlet {
@@ -24,8 +23,8 @@ public class AdicionarAula extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             AulaDAO aulaDAO = new AulaDAO();
-            Texto_corridoDAO textoCorridoDAO = new Texto_corridoDAO();
-            Flash_cardDAO flashCardDAO = new Flash_cardDAO();
+            TextoCorridoDAO textoCorridoDAO = new TextoCorridoDAO();
+            FlashCardDAO flashCardDAO = new FlashCardDAO();
             LeiDAO leiDAO = new LeiDAO();
 
             String nome = request.getParameter("nome");
@@ -41,13 +40,13 @@ public class AdicionarAula extends HttpServlet {
                 // criando outras sub-tabelas
 
                 //Criando objetos
-                Flash_card flashCard = new Flash_card(0, frente, verso, id);
-                Texto_corrido texto_corrido = new Texto_corrido(0, textoCorrido, id);
+                FlashCard flashCard = new FlashCard(0, frente, verso, id);
+                TextoCorrido textoCorrido1 = new TextoCorrido(0, textoCorrido, id);
                 Lei lei = new Lei(0, leiT, id);
             System.out.println("passou1");
                 // inserindo nas tabelas
                 flashCardDAO.inserir(flashCard);
-                textoCorridoDAO.inserir(texto_corrido);
+                textoCorridoDAO.inserir(textoCorrido1);
                 leiDAO.inserir(lei);
             System.out.println("passou2");
 

@@ -49,11 +49,11 @@ public class Atividade {
     @Override
     public String toString() {
         return
-                "\nId" + id +"\n"+
-                "Pontuacao=" + pontuacao +"\n"+
-                "Id_aula=" + id_aula +"\n"+
-                "Perguntas=" + perguntas +"\n"+
-                "Alternativas=" + alternativas+"\n"+
+                "\nId: " + id +"\n"+
+                "Pontuacao: " + pontuacao +"\n"+
+                "Id_aula: " + id_aula +"\n"+
+                "Perguntas: " + perguntas +"\n"+
+                "Alternativas: " + alternativas+"\n"+
                  "=".repeat(30);
     }
 }

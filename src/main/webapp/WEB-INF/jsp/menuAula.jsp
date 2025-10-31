@@ -1,12 +1,13 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.zeta_servlet.model.Assinatura" %>
+<%@ page import="com.zeta_servlet.model.Aula" %>
 <%@ page import="java.math.BigDecimal" %>
+<%@ page import="com.zeta_servlet.Utils.Filtro" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/menuAssinatura.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/menuAula.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="assets/LOGO%20ZETA%20-%205.png" type="image/x-icon">
 
@@ -21,14 +22,14 @@
         <li><form action="menuAss" method="post"><button type="submit"><img src="assets/crudAss.svg" alt="Assinatura">Assinatura</button></form></li>
         <li><a href="${pageContext.request.contextPath}/menuProdutor.html"><img src="assets/crudProd.svg" alt="Produtor">Produtor</a></li>
         <li><a href="${pageContext.request.contextPath}/menuAtividade.html"><img src="assets/crudAtiv.svg" alt="Atividade">Atividade</a></li>
-        <li><form action="menuAula" method="post"><button type="submit"><img src="assets/crudAula.svg" alt="Assinatura">Aula</button></form></li>
+        <li><form action="menuAula" method="post"><button type="submit"><img src="assets/crudAula.svg" alt="Aula">Aula</button></form></li>
         <li><a href="../.."><img src="assets/crudDash.svg" alt="Dashboards">Dashboards</a></li>
         <li><form action="logout" method="post" id="fAdm"><button type="submit"><img src="assets/exit.svg" alt="exit">Sair</button></form></li>
 
     </ul>
 </nav>
 <div id="consultar">
-    <h1>Assinatura</h1>
+    <h1>Aula</h1>
     <div id="query">
         <div id="buscas">
             <label for="campoBusca"><img src="assets/lupa.svg"></label>
@@ -42,40 +43,55 @@
             <thead style="border-radius: 12px; position: sticky; z-index: 20; top: 0;">
             <tr style="border-radius: 12px">
                 <td class="name-title" style="text-align: center">ID</td>
-                <td class="name-title" style="text-align: center">tpPlano</td>
-                <td class="name-title" style="text-align: center;">benefQtdCursos</td>
-                <td class="name-title" style="text-align: center;">benefDescPlno</td>
-                <td class="name-title" style="text-align: center;">precoFixo</td>
-                <td class="name-title" style="text-align: center;">precoQtdProdutores</td>
+                <td class="name-title" style="text-align: center">Nome</td>
+                <td class="name-title" style="text-align: center;">id Modulo</td>
+                <td class="name-title" style="text-align: center;">Flash Card</td>
+                <td class="name-title" style="text-align: center;">Texto Corrido</td>
+                <td class="name-title" style="text-align: center;">Lei</td>
                 <td class="name-title" style="text-align: center;"></td>
             </tr>
             </thead>
             <tbody style="border-radius: 12px">
             <%
-                List<Assinatura> lisAs = (List<Assinatura>) request.getAttribute("list");
-                System.out.println(lisAs);
+                Filtro filtro = new Filtro();
+                List<Aula> lisAs = (List<Aula>) request.getAttribute("list");
+                lisAs = filtro.removerDuplicados(lisAs);
                 for (int i = 0; i < lisAs.size(); i++) {
                     int id = lisAs.get(i).getId();
-                    String tpPlano = lisAs.get(i).getTpPlano();
-                    int benefQtdCursos = lisAs.get(i).getBenefQtdCursos();
-                    String benefDescPlno = lisAs.get(i).getBenefDescPlno();
-                    BigDecimal precoFixo = lisAs.get(i).getPrecoFixo();
-                    BigDecimal precoQtdProdutores = lisAs.get(i).getPrecoQtdProdutores();
-
+                    String nome = lisAs.get(i).getNome();
+                    int idModulo = lisAs.get(i).getIdModulo();
             %>
             <tr style="padding: 0; border-radius: 12px">
                 <td style="padding: 0;"><%= id%></td>
-                <td><%= tpPlano%></td>
-                <td><%= benefQtdCursos%></td>
-                <td><%= benefDescPlno%></td>
-                <td><%= precoFixo%></td>
-                <td><%= precoQtdProdutores%></td>
-                <td><form action="alterarAss" id="alterar">
+                <td><%= nome%></td>
+                <td><%= idModulo%></td>
+                <td><form action="menuFlash" id="alterar">
+                    <input type="hidden" value="<%= id%>" name="id">
+                    <button type="submit"><img src="assets/alterar.svg"></button>
+                </form>
+                </td>
+
+                <td><form action="menuTexto" id="alterar">
+                    <input type="hidden" value="<%= id%>" name="id">
+                    <button type="submit"><img src="assets/alterar.svg"></button>
+                </form>
+                </td>
+
+
+                <td><form action="menuLei" id="alterar">
+                    <input type="hidden" value="<%= id%>" name="id">
+                    <button type="submit"><img src="assets/alterar.svg"></button>
+                </form>
+                </td>
+
+
+                <td><form action="alterarAula" id="alterar">
                     <input type="hidden" value="<%= i%>" name="i">
                     <button type="submit"><img src="assets/alterar.svg"></button>
                 </form>
 
-                    <form action="deletarAss" method="post" id="deletar">
+
+                    <form action="deletarAula" method="post" id="deletar">
                         <input type="hidden" value="<%= id%>" name="id">
                         <button type="submit"><img src="assets/deletar.svg"></button>
                     </form></td>
@@ -87,7 +103,7 @@
         </table>
     </div>
 
-    <a href="${pageContext.request.contextPath}/html/adicionarAssinatura.html">
+    <a href="${pageContext.request.contextPath}/html/adicionarAula.html">
         <div id="adicionar" style="margin-top: 20px">
             <p>+Adicionar</p>
         </div>
@@ -98,11 +114,8 @@
     const configTabela = {
         campos: {
             'id': 0,
-            'tpplano': 1,
-            'benefqtdcursos': 2,
-            'benefdescplno': 3,
-            'precofixo': 4,
-            'precoqtdprodutores': 5
+            'nome': 1,
+            'idmodulo': 2
         },
         colunasAcoes: 1 // ultimas colunas nao entram na busca
     };
@@ -360,6 +373,9 @@
         font-weight: bold !important;
         padding: 1px 2px !important;
         border-radius: 2px !important;
+    }
+    #tabela{
+        width: 925px;
     }
 
 </style>

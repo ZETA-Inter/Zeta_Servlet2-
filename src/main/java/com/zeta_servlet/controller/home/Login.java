@@ -24,7 +24,6 @@ public class Login extends HttpServlet {
             int i = autenticar(email, senha);
             if (i>0) {
                 request.setAttribute("option", i);
-                System.out.println(i+"IF");
                 HttpSession session = request.getSession();
                 session.setAttribute("email", email);
                 session.setAttribute("senha", email);
@@ -35,14 +34,12 @@ public class Login extends HttpServlet {
             }
             else {
                 request.setAttribute("option", i);
-                System.out.println(i+"IF");
                 request.getRequestDispatcher("WEB-INF/jsp/resultadoLogin.jsp").forward(request, response);
             }
         }catch (Exception e){
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
             request.setAttribute("option", -1);
-            System.out.println(-1+"IF");
             request.getRequestDispatcher("WEB-INF/jsp/resultadoLogin.jsp").forward(request, response);
 
         }
@@ -54,23 +51,19 @@ public class Login extends HttpServlet {
             List<Adm> adms = admDAO.buscarPorEmail(email);
             if (!adms.isEmpty()){
                 if (adms.get(0).getEmail().equals(email) && adms.get(0).getSenha().equals(senha)) {
-                    System.out.println(1);
                     return 1;
                 }
                 else {
-                    System.out.println(0+"errado");
                     return 0;
                 }
 
             }else{
-                System.out.println(-1);
                 return 0;
             }
 
         }catch (Exception e){
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            System.out.println(-1);
             return -1;
         }
     }

@@ -13,70 +13,79 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AtividadeDAO extends CRUD{
 //    insere um item na tabela
-    public int inserir(Atividade atv) {
-        Connection conn = null;
-        int out=0;
-        Conexao conexao = new Conexao();
-        try {
+public int inserir(Atividade atv) {
+    Connection conn = null;
+    Conexao conexao = new Conexao();
 
-            conn = conexao.conectar(); // abre a conexão com o banco
-            String consulta = "insert into Atividade(pontuacao, id_aula) values(?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(consulta);
-            //Setando valores dos parametros
-            pstmt.setDouble(1, atv.getPontuacao());
-            pstmt.setInt(2, atv.getId_aula());
-            pstmt.executeUpdate();
-            out++;
+    try {
+        conn = conexao.conectar();
 
-            // querys dos outros valores
-            int id = buscarUltimoId();
+        // 1. INSERIR ATIVIDADE (com retorno do ID)
+        String consultaAtividade = "insert into Atividade(pontuacao, id_aula) values(?, ?)";
+        PreparedStatement pstmtAtividade = conn.prepareStatement(consultaAtividade, PreparedStatement.RETURN_GENERATED_KEYS);
+        pstmtAtividade.setDouble(1, atv.getPontuacao());
+        pstmtAtividade.setInt(2, atv.getId_aula());
+        pstmtAtividade.executeUpdate();
 
-
-            //query alternativas
-            for (int i = 0; i < atv.getAlternativas().size(); i++) {
-                atv.getAlternativas().get(i).setId_atividade(id);
-                String consultaFlash = "insert into alternativa(alternativa, id_ativade, correta) values(?, ?, ?)";
-                PreparedStatement pstmtFlash = conn.prepareStatement(consultaFlash);
-                pstmtFlash.setString(1, atv.getAlternativas().get(i).getAlternativa());
-                pstmtFlash.setInt(2, atv.getAlternativas().get(i).getId_atividade());
-                pstmtFlash.setBoolean(3, atv.getAlternativas().get(i).isCorreto());
-                out++;
+        // 2. PEGAR ID GERADO
+        int idAtividade;
+        try (ResultSet generatedKeys = pstmtAtividade.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                idAtividade = generatedKeys.getInt(1);
+                System.out.println("ID da atividade gerado: " + idAtividade);
+            } else {
+                throw new SQLException("Falha ao obter ID da atividade");
             }
+        }
 
-            //query pergunta
-            for (int i = 0; i < atv.getPerguntas().size(); i++) {
-                atv.getPerguntas().get(i).setId_atividade(id);
-                String consultaTexto = "insert into pergunta(pergunta, id_atividade) values(?, ?)";
-                PreparedStatement pstmtPerg = conn.prepareStatement(consultaTexto);
-                pstmtPerg.setString(1, atv.getPerguntas().get(i).getPergunta());
-                pstmtPerg.setInt(2, atv.getPerguntas().get(i).getId_atividade());
-                out++;
-            }
+        // 3. INSERIR PERGUNTAS
+        if (atv.getPerguntas() != null && !atv.getPerguntas().isEmpty()) {
+            String consultaPergunta = "insert into pergunta(pergunta, id_atividade) values(?, ?)";
+            PreparedStatement pstmtPerg = conn.prepareStatement(consultaPergunta);
 
-            if (out >0){
-                return 1;
+            for (Pergunta pergunta : atv.getPerguntas()) {
+                pstmtPerg.setString(1, pergunta.getPergunta());
+                pstmtPerg.setInt(2, idAtividade); // Usa o ID gerado
+                pstmtPerg.executeUpdate(); // ← NÃO ESQUEÇA DESTA LINHA!
+                System.out.println("Pergunta inserida: " + pergunta.getPergunta());
             }
-            return 0;
         }
-        catch (SQLException | NullPointerException | IndexOutOfBoundsException | IllegalArgumentException | IllegalStateException e){
-            ExceptionHandler eh = new ExceptionHandler(e);
-            eh.printExeption();
-            e.printStackTrace();
-            return -1;
+
+        // 4. INSERIR ALTERNATIVAS (nome da coluna corrigido)
+        if (atv.getAlternativas() != null && !atv.getAlternativas().isEmpty()) {
+            String consultaAlternativa = "insert into alternativa(alternativa, id_atividade, correta) values(?, ?, ?)";
+            PreparedStatement pstmtAlt = conn.prepareStatement(consultaAlternativa);
+
+            for (Alternativa alternativa : atv.getAlternativas()) {
+                pstmtAlt.setString(1, alternativa.getAlternativa());
+                pstmtAlt.setInt(2, idAtividade); // Usa o ID gerado
+                pstmtAlt.setBoolean(3, alternativa.isCorreto());
+                pstmtAlt.executeUpdate(); // ← NÃO ESQUEÇA DESTA LINHA!
+                System.out.println("Alternativa inserida: " + alternativa.getAlternativa() + " - Correta: " + alternativa.isCorreto());
+            }
         }
-        catch (Exception e) {
-            ExceptionHandler eh = new ExceptionHandler(e);
-            eh.printExeption();
-            return -1;
-        }
-        finally {
-            conexao.desconectar(conn);
-        }
+
+        System.out.println("Atividade completa inserida com sucesso! ID: " + idAtividade);
+        return idAtividade; // Retorna o ID em vez de 1
+
+    } catch (SQLException e) {
+        System.out.println("ERRO SQL: " + e.getMessage());
+        e.printStackTrace();
+        return -1;
+    } catch (Exception e) {
+        System.out.println("ERRO: " + e.getMessage());
+        e.printStackTrace();
+        return -1;
+    } finally {
+        conexao.desconectar(conn);
     }
+}
 
 //  altera a pontuação da atividade
 
@@ -133,45 +142,94 @@ public boolean remover(int id) {
 }
 
 //    seleciona todas as atividades da tabela
-    public List<Atividade> buscar() {
-        //query
-        List<Atividade> liAT = new ArrayList<>();
-        List<Alternativa> liAL = new ArrayList<>();
-        List<Pergunta> liP = new ArrayList<>();
+public List<Atividade> buscar() {
+    List<Atividade> liAT = new ArrayList<>();
+    Map<Integer, Atividade> atividadesMap = new HashMap<>();
+    ResultSet rsetAT = null;
+    Conexao conexao = new Conexao();
+    Connection conn = conexao.conectar();
 
-        ResultSet rsetAT = null;
-        Conexao conexao = new Conexao();
-        Connection conn = conexao.conectar();
-        try {
+    String sql = "select a.id, a.pontuacao, p.pergunta, al.alternativa, al.correta, a.id_aula, " +
+            "p.id as id_pergunta, al.id as id_alternativa, p.id_atividade, al.id_atividade " +
+            "from atividade a " +
+            "join alternativa al on al.id_atividade = a.id " +
+            "join pergunta p on p.id_atividade = a.id";
 
-            String busca = "select * from atividade a join alternativa al on al.id_atividade = a.id join pergunta p on p.id_atividade = a.id";
-            PreparedStatement pstm = conn.prepareStatement(busca);
-            rsetAT = pstm.executeQuery();
+    try {
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        rsetAT = stmt.executeQuery();
 
-            while (rsetAT.next()){
-                    Alternativa alternativa = new Alternativa(rsetAT.getInt("id"), rsetAT.getString("alternativa"), rsetAT.getInt("id_atividade"), rsetAT.getBoolean("correta"));
-                    liAL.add(alternativa);
-                    Pergunta pergunta = new Pergunta(rsetAT.getInt("id"), rsetAT.getString("pergunta"), rsetAT.getInt("id_atividade"));
-                    liP.add(pergunta);
-                Atividade atividade = new Atividade(rsetAT.getInt("id"), rsetAT.getDouble("pontuacao"), rsetAT.getInt("id_aula"), liP, liAL);
+        while (rsetAT.next()) {
+            int idAtividade = rsetAT.getInt("id");
+
+            Atividade atividade = atividadesMap.get(idAtividade);
+            if (atividade == null) {
+                // Cria nova atividade com listas VAZIAS
+                atividade = new Atividade(
+                        idAtividade,
+                        rsetAT.getDouble("pontuacao"),
+                        rsetAT.getInt("id_aula"),
+                        new ArrayList<>(),  // Lista vazia para perguntas
+                        new ArrayList<>()   // Lista vazia para alternativas
+                );
+
+                atividadesMap.put(idAtividade, atividade);
                 liAT.add(atividade);
             }
 
+            // Adiciona alternativa à atividade específica (se não existir)
+            String textoAlternativa = rsetAT.getString("alternativa");
+            if (textoAlternativa != null && !contemAlternativa(atividade.getAlternativas(), textoAlternativa)) {
+                Alternativa alternativa = new Alternativa(
+                        rsetAT.getInt("id_alternativa"),
+                        textoAlternativa,
+                        rsetAT.getInt("id_atividade"),
+                        rsetAT.getBoolean("correta")
+                );
+                atividade.getAlternativas().add(alternativa);
+            }
 
+            // Adiciona pergunta à atividade específica (se não existir)
+            String textoPergunta = rsetAT.getString("pergunta");
+            if (textoPergunta != null && !contemPergunta(atividade.getPerguntas(), textoPergunta)) {
+                Pergunta pergunta = new Pergunta(
+                        rsetAT.getInt("id_pergunta"),
+                        textoPergunta,
+                        rsetAT.getInt("id_atividade")
+                );
+                atividade.getPerguntas().add(pergunta);
+            }
+        }
 
+    } catch (SQLException | NullPointerException | IndexOutOfBoundsException | IllegalArgumentException | IllegalStateException e) {
+        ExceptionHandler eh = new ExceptionHandler(e);
+        eh.printExeption();
+    } catch (Exception e) {
+        ExceptionHandler eh = new ExceptionHandler(e);
+        eh.printExeption();
+    } finally {
+        if (rsetAT != null) {
+            try {
+                rsetAT.close();
+            } catch (SQLException e) {
+                ExceptionHandler eh = new ExceptionHandler(e);
+                eh.printExeption();
+            }
         }
-        catch (SQLException | NullPointerException | IndexOutOfBoundsException | IllegalArgumentException | IllegalStateException e){
-            ExceptionHandler eh = new ExceptionHandler(e);
-            eh.printExeption();
-        }
-        catch (Exception e) {
-            ExceptionHandler eh = new ExceptionHandler(e);
-            eh.printExeption();
-        }
-        finally {
-            conexao.desconectar(conn);
-            return liAT;
-        }
+        conexao.desconectar(conn);
+    }
+
+    return liAT;
+}
+
+    private boolean contemPergunta(List<Pergunta> perguntas, String texto) {
+        if (perguntas == null || texto == null) return false;
+        return perguntas.stream().anyMatch(p -> p.getPergunta() != null && p.getPergunta().equals(texto));
+    }
+
+    private boolean contemAlternativa(List<Alternativa> alternativas, String texto) {
+        if (alternativas == null || texto == null) return false;
+        return alternativas.stream().anyMatch(a -> a.getAlternativa() != null && a.getAlternativa().equals(texto));
     }
 
 //    busca uma atividade por ID

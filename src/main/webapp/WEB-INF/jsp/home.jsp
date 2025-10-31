@@ -13,21 +13,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="assets/LOGO ZETA - 5.png" type="image/x-icon">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/LOGO ZETA - 5.png" type="image/x-icon">
     <title>CRUD</title>
 </head>
 <body>
 <nav class="nav-bar">
-    <img src="assets/LOGO ZETA - 5.png" alt="Logo" id="logoMenu">
+    <img src="${pageContext.request.contextPath}/assets/LOGO ZETA - 5.png" alt="Logo" id="logoMenu">
     <ul>
-        <li><form action="home" method="post"><button type="submit"><img src="assets/crudHome.svg" alt="home">Home</button></form></li>
-        <li><form action="menuAdm" method="post"><button type="submit"><img src="assets/crudAdm.svg" alt="Adm">Administrador</button></form></li>
-        <li><form action="menuAss" method="post"><button type="submit"><img src="assets/crudAss.svg" alt="Assinatura">Assinatura</button></form></li>
-        <li><a href="/PRODUTOR/menuProdutor.html"><img src="assets/crudProd.svg" alt="Produtor">Produtor</a></li>
+        <li><form action="home" method="post"><button type="submit"><img src="${pageContext.request.contextPath}/assets/crudHome.svg" alt="home">Home</button></form></li>
+        <li><form action="menuAdm" method="post"><button type="submit"><img src="${pageContext.request.contextPath}/assets/crudAdm.svg" alt="Adm">Administrador</button></form></li>
+        <li><form action="menuAss" method="post"><button type="submit"><img src="${pageContext.request.contextPath}/assets/crudAss.svg" alt="Assinatura">Assinatura</button></form></li>
+        <li><form action="menuProdutor" method="post"><button type="submit"><img src="${pageContext.request.contextPath}/assets/crudProd.svg" alt="Produtor">Produtor</button></form></li>
         <li><form action="menuAtividade" method="post"><button type="submit"><img src="${pageContext.request.contextPath}/assets/crudAtiv.svg" alt="Atividade">Atividade</button></form></li>
-        <li><a href="/html/menuAula.html"><img src="assets/crudAula.svg" alt="Aula">Aula</a></li>
-        <li><a href="#"><img src="assets/crudDash.svg" alt="Dashboards">Dashboards</a></li>
-        <li><form action="logout" method="post" id="fAdm"><button type="submit"><img src="assets/exit.svg" alt="exit">Sair</button></form></li>
+        <li><a href="${pageContext.request.contextPath}/html/menuAula.html"><img src="${pageContext.request.contextPath}/assets/crudAula.svg" alt="Aula">Aula</a></li>
+        <li><a href="#"><img src="${pageContext.request.contextPath}/assets/crudDash.svg" alt="Dashboards">Dashboards</a></li>
+        <li><form action="logout" method="post" id="fAdm"><button type="submit"><img src="${pageContext.request.contextPath}/assets/exit.svg" alt="exit">Sair</button></form></li>
 
     </ul>
 </nav>

@@ -2,8 +2,8 @@ body{
     padding: 0;
     top: 0;
     margin: 0;
-    overflow: hidden;
     display: flex;
+    overflow: hidden;
     font-family: 'Poppins';
 }
 
@@ -22,21 +22,33 @@ body{
     padding:0;
 }
 
-.nav-bar ul img {
+.nav-bar ul form{
+    width:100%;
+    height:auto;
+    margin:0;
+    padding:0;
+}
+
+.nav-bar ul form img {
     width: 38px;
     height: 38px;
 }
 
-.nav-bar li{
+.nav-bar ul form img {
+    width: 38px;
+    height: 38px;
+}
+
+.nav-bar li {
     list-style: none;
     width:86.7%;
 }
 
-.nav-bar li a { 
+.nav-bar li a {
     display: flex;
     align-items: center;
     gap: 20px;
-    text-decoration:none; 
+    text-decoration:none;
     color:#ffffff;
     background-color:#043253;
     width: 100%;
@@ -48,12 +60,44 @@ body{
     text-align: left;
 }
 
+.nav-bar li form button {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-decoration:none;
+    color:#ffffff;
+    background-color:#043253;
+    width: 100%;
+    font-family:'Poppins';
+    font-size: 18px;
+    padding-left: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.nav-bar li form{
+    width: 300px;
+}
+button{
+    outline: none;
+    cursor: pointer;
+}
+.nav-bar li form button:hover{
+    background-color:#18A4E1;
+}
 .nav-bar li a:hover{
     background-color:#18A4E1;
-} 
+}
 .nav-bar li a{
     transition: all .5s ease;
 }
+.nav-bar li form button{
+    transition: all .5s ease;
+}
+
 
 #logoMenu{
     width: 200px;
@@ -66,7 +110,7 @@ body{
 #consultar > h1{
     font-family: 'Poppins';
 }
-form{
+#buscas{
     box-shadow: 0px 5px 8px 0px rgba(176, 175, 175, 0.967);
     border-radius: 20px;
     border-color: black;
@@ -77,12 +121,29 @@ form{
     align-items: center;
     gap: 15px;
 }
-form > input{
+#campoBusca{
+    width: 850px;
+    font-size: 18px;
+    outline: none;
+    height: 40px;
+    border: none;
+}
+#alterar > button{
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
+#deletar > button{
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
+#buscar > input:not(#fAdm, #fHome){
     border: none;
     outline: none;
     font-size: larger;
 }
-form > label > img{
+#buscar > label > img{
     width: 64%;
     margin-left: 10px;
 }
@@ -92,14 +153,28 @@ table{
     border-spacing: 0px 1px;
     overflow: hidden;
     width: 100%;
+    overflow-y: auto;
+    max-height: 150px;
     border-radius: 10px;
     margin-bottom: 40px;
     background-color: rgba(252, 247, 241, 1);
 }
+table:not(#title){
+    margin-top: 40px;
+    border-collapse: separate;
+    border-spacing: 0px 1px;
+    overflow: hidden;
+    width: 100%;
+    overflow-y: auto;
+    max-height: 150px;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    background-color: rgba(252, 247, 241, 1);
+}
+
 thead{
     background-color:#043253;
     color: aliceblue;
-    gap: 20px;
 }
 td,th{
     padding: 20px;
@@ -108,9 +183,6 @@ td,th{
 td > a{
     margin: 5px;
 }
-tr:nth-child(even){
-    background-color: rgba(173, 173, 173, 1);
-}
 #adicionar{
     border: solid 1px rgba(24, 164, 225, 1);
     border-radius: 13px;
@@ -118,7 +190,7 @@ tr:nth-child(even){
     height: 35px;
     align-items: center;
     display: flex;
-    width: 190px;
+    width: 160px;
     color: rgba(24, 164, 225, 1);
 }
 #adicionar > p{
@@ -130,4 +202,58 @@ a:hover,
 a:active {
     text-decoration: none;
     color: inherit;
+}
+#tabela{
+    overflow-y: auto;
+    margin: 0;
+    max-height: 250px;
+}
+
+thead{
+    padding-bottom: 0;
+    overflow: hidden;
+}
+#title > thead > td{
+    padding: 0;
+}
+#return{
+    margin-left: 850px;
+    margin-top: -55px;
+}
+#query{
+    margin-bottom: 50px;
+}
+
+
+#tabela tr,
+#tabela tr:nth-child(n),
+#tabela tr:nth-child(odd),
+#tabela tr:nth-child(even) {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+#tabela tr.linha-par {
+    background-color: #fcf7f1 !important;
+    background: #fcf7f1 !important;
+}
+
+#tabela tr.linha-impar {
+    background-color: rgba(173, 173, 173, 1) !important;
+    background: rgba(173, 173, 173, 1) !important;
+}
+
+#tabela tr.linha-par td,
+#tabela tr.linha-impar td {
+    background-color: inherit !important;
+    background: inherit !important;
+}
+
+.highlight-text {
+    background-color: #c0fdfd !important;
+    opacity: 0.5;
+    color: black !important;
+    font-weight: bold !important;
+    padding: 1px 2px !important;
+    border-radius: 2px !important;
 }

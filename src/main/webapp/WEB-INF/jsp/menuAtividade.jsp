@@ -16,7 +16,7 @@
   <img src="${pageContext.request.contextPath}/assets/LOGO%20ZETA%20-%205.png" alt="Logo" id="logoMenu">
   <ul>
     <li><form action="home" method="post" id="fHome"><button type="submit"><img src="${pageContext.request.contextPath}/assets/crudHome.svg" alt="home">Home</button></form></li>
-    <li><form action="menuAdm" method="post" id="fAdm"><button type="submit"><img src="${pageContext.request.contextPath}/assets/crudAdm.svg" alt="Adm">Administrador</button></form></li>
+    <li><form action="menuAdm" method="post" class="fAdm"><button type="submit"><img src="${pageContext.request.contextPath}/assets/crudAdm.svg" alt="Adm">Administrador</button></form></li>
     <li><form action="menuAss" method="post"><button type="submit"><img src="${pageContext.request.contextPath}/assets/crudAss.svg" alt="Assinatura">Assinatura</button></form></li>
     <li><a href="${pageContext.request.contextPath}/html/menuProdutor.html"><img src="${pageContext.request.contextPath}/assets/crudProd.svg" alt="Produtor">Produtor</a></li>
     <li><form action="menuAtividade" method="post"><button type="submit"><img src="${pageContext.request.contextPath}/assets/crudAtiv.svg" alt="Atividade">Atividade</button></form></li>
@@ -35,7 +35,6 @@
     </div>
   </div>
 
-  </table>
   <div id="tabela">
     <table style="padding: 0; margin: 0;">
       <thead style="border-radius: 12px; position: sticky; z-index: 20; top: 0;">
@@ -45,7 +44,7 @@
         <td class="name-title" style="text-align: center;">Pergunta</td>
         <td class="name-title" style="text-align: center;">Alternativa</td>
         <td class="name-title" style="text-align: center;">Correta</td>
-        <td class="name-title" style="text-align: center;">Id_Aula</td>
+        <td class="name-title" style="text-align: center;">Id Aula</td>
         <td class="name-title" style="text-align: center;"></td>
       </tr>
       </thead>
@@ -53,33 +52,56 @@
       <%
         @SuppressWarnings("unchecked")
         List<Atividade> lisAti = (List<Atividade>) request.getAttribute("list");
-        System.out.println(lisAti);
         for (int i = 0; i < lisAti.size(); i++) {
-          Double pontuacao = lisAti.get(i).getPontuacao();
-          List<Pergunta> pergunta = lisAti.get(i).getPerguntas();
-          int id = lisAti.get(i).getId();
-          List<Alternativa> alternativas = lisAti.get(i).getAlternativas();
-          Boolean correta = lisAti.get(i).getAlternativas().get(i).isCorreto();
-          int id_aula = lisAti.get(i).getId_aula();
-
+          Atividade atividade = lisAti.get(i);
+          Double pontuacao = atividade.getPontuacao();
+          List<Pergunta> perguntas = atividade.getPerguntas();
+          int id = atividade.getId();
+          List<Alternativa> alternativas = atividade.getAlternativas();
+          int id_aula = atividade.getId_aula();
       %>
       <tr style="padding: 0; border-radius: 12px">
-        <td style="padding: 0;"><%= id%></td>
-        <td><%= pontuacao%></td>
-        <td><%= pergunta%></td>
-        <td><%= alternativas%></td>
-        <td><%= correta%></td>
-        <td><%= id_aula%></td>
-        <td><form action="alterarAtividade" id="alterar">
-          <input type="hidden" value="<%= i%>" name="i">
-          <button type="submit"><img src="${pageContext.request.contextPath}/assets/alterar.svg"></button>
-        </form>
+        <td style="padding: 0;"><%= id %></td>
+        <td><%= pontuacao != null ? pontuacao : "N/A" %></td>
+        <td>
+          <% if(perguntas != null && !perguntas.isEmpty()) {
+            for(Pergunta p : perguntas) { %>
+          • <%= p.getPergunta() %><br>
+          <% }
+          } else { %>
+          Sem perguntas
+          <% } %>
+        </td>
+        <td>
+          <% if(alternativas != null && !alternativas.isEmpty()) {
+            for(Alternativa alt : alternativas) { %>
+          • <%= alt.getAlternativa() %><br>
+          <% }
+          } else { %>
+          Sem alternativas
+          <% } %>
+        </td>
+        <td>
+          <% if(alternativas != null && !alternativas.isEmpty()) {
+            for(Alternativa alt : alternativas) { %>
+          <%= alt.isCorreto() ? "✔" : "✘" %><br>
+          <% }
+          } else { %>
+          N/A
+          <% } %>
+        </td>
+        <td><%= id_aula %></td>
+        <td>
+          <form action="${pageContext.request.contextPath}/PrepAlterarAtividade" method="post" style="display: inline;">
+            <input type="hidden" value="<%= id %>" name="id">
+            <button type="submit"><img src="${pageContext.request.contextPath}/assets/alterar.svg"></button>
+          </form>
 
-          <form action="deletarAtividade" method="post" id="deletar">
-            <input type="hidden" value="<%= id%>" name="id">
+          <form action="${pageContext.request.contextPath}/DeletarAtividade" method="post" style="display: inline;">
+            <input type="hidden" value="<%= id %>" name="id">
             <button type="submit"><img src="${pageContext.request.contextPath}/assets/deletar.svg"></button>
-          </form></td>
-
+          </form>
+        </td>
       </tr>
       <%
         }%>
@@ -88,7 +110,7 @@
   </div>
 
   <a href="${pageContext.request.contextPath}/html/adicionarAtividade.html">
-    <div id="adicionar" style="margin-top: 20px">
+    <div id="adicionar" style="margin-top: 20px; padding-right: 10px">
       <p>+ Adicionar Atividade</p>
     </div>
   </a>
@@ -376,10 +398,34 @@
     setTimeout(iniciarBusca, 500);
     // debugEstruturaTabela(); // Descomente para debug
   });
+
+  const container = document.querySelector('.conteiner');
+  let lastScrollLeft = 0;
+  let lastScrollTop = 0;
+  let lastDirection = null;
+
+  container.addEventListener('scroll', () => {
+    const deltaX = container.scrollLeft - lastScrollLeft;
+    const deltaY = container.scrollTop - lastScrollTop;
+
+    if (!lastDirection) {
+      lastDirection = Math.abs(deltaX) > Math.abs(deltaY) ? 'x' : 'y';
+    }
+    if (lastDirection === 'x') {
+      container.scrollTop = lastScrollTop;
+    } else {
+      container.scrollLeft = lastScrollLeft;
+    }
+    lastScrollLeft = container.scrollLeft;
+    lastScrollTop = container.scrollTop;
+    clearTimeout(container._scrollTimeout);
+    container._scrollTimeout = setTimeout(() => {
+      lastDirection = null;
+    }, 150);
+  });
 </script>
 
 <style>
-
   #tabela tr,
   #tabela tr:nth-child(n),
   #tabela tr:nth-child(odd),
@@ -405,14 +451,13 @@
   }
 
   .highlight-text {
-    background-color: aqua !important;
-    opacity: 0.5;
+    background-color: #a5ffff !important;
+    opacity: 0.8;
     color: black !important;
     font-weight: bold !important;
     padding: 1px 2px !important;
     border-radius: 2px !important;
   }
-
 </style>
 </body>
 </html>

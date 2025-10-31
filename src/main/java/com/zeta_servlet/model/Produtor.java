@@ -30,6 +30,19 @@ public class Produtor {
         this.id_assinatura = id_assinatura;
     }
 
+    public Produtor(String cpf, LocalDate dt_nascimento, String email, String senha, int pontos_acumulados, String nome_primeiro, String nome_ultimo, int aulas_feitas, int id_fornecedor, int id_assinatura) {
+        this.cpf = cpf;
+        this.dt_nascimento = dt_nascimento;
+        this.email = email;
+        this.senha = senha;
+        this.pontos_acumulados = pontos_acumulados;
+        this.nome_primeiro = nome_primeiro;
+        this.nome_ultimo = nome_ultimo;
+        this.aulas_feitas = aulas_feitas;
+        this.id_fornecedor = id_fornecedor;
+        this.id_assinatura = id_assinatura;
+    }
+
     public int getId() {
         return this.id;
     }

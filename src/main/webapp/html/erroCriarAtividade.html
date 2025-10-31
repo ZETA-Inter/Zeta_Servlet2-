@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/adicionarAtividade.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../assets/LOGO%20ZETA%20-%205.png" type="image/x-icon">
+  <title>CRUD</title>
+</head>
+<body>
+<nav class="nav-bar">
+  <img src="../assets/LOGO%20ZETA%20-%205.png" alt="Logo" id="logoMenu">
+  <ul>
+    <li><a href="../WEB-INF/jsp/home.jsp"><img src="../assets/crudHome.svg" alt="Home">Home</a></li>
+    <li><a href="../WEB-INF/jsp/menuAdministrador.jsp"><img src="../assets/crudAdm.svg" alt="Adm">Administrador</a></li>
+    <li><a href="../WEB-INF/jsp/menuAssinatura.jsp"><img src="../assets/crudAss.svg" alt="Assinatura">Assinatura</a></li>
+    <li><a href="menuProdutor.html"><img src="../assets/crudProd.svg" alt="Produtor">Produtor</a></li>
+    <li><a href="../WEB-INF/jsp/menuAtividade.jsp"><img src="../assets/crudAtiv.svg" alt="Atividade">Atividade</a></li>
+    <li><a href="/html/menuAula.html"><img src="../assets/crudAula.svg" alt="Aula">Aula</a></li>
+    <li><a href=".."><img src="../assets/crudDash.svg" alt="Dashboards">Dashboards</a></li>
+    <li><a href="#"><img src="../assets/exit.svg" alt="exit">Sair</a></li>
+  </ul>
+</nav>
+<form action="../adicionarAtividade" method="post">
+  <h1>Atividade</h1>
+  <h3 style="text-align: center; color: red">Erro ao criar assinatura, tente novamente</h3>
+  <div>
+    <label>
+      Pontuação:
+      <input type="number" name="pontos" id="pontos" placeholder="Digite a pontuação">
+    </label>
+    <label>
+      Pergunta:
+      <input type="text" name="pergunta" id="pergunta" placeholder="Digite a pergunta">
+    </label>
+  </div>
+
+  <div>
+    <label>
+      <input type="radio" name="correta" value="1">
+      Alternativa 1
+      <input type="text" class="alternativa" name="alternativa1" id="alternativa1" placeholder="Digite a alternativa">
+    </label>
+
+    <label>
+      <input type="radio" name="correta" value="2">
+      Alternativa 2
+      <input type="text" class="alternativa" name="alternativa2" id="alternativa2" placeholder="Digite a alternativa">
+    </label>
+  </div>
+
+  <div>
+    <label>
+      <input type="radio" name="correta" value="3">
+      Alternativa 3
+      <input type="text" class="alternativa" name="alternativa3" id="alternativa3" placeholder="Digite a alternativa">
+    </label>
+
+    <label>
+      <input type="radio" name="correta" value="4">
+      Alternativa 4
+      <input type="text" class="alternativa" name="alternativa4" id="alternativa4" placeholder="Digite a alternativa">
+    </label>
+  </div>
+
+  <h5>*Selecione a alternativa correta</h5>
+
+  <label for="idAula">Id da aula</label>
+  <input type="number" name="idAula" id="idAula" placeholder="Digite o ID da aula">
+
+  <button type="submit">Adicionar</button>
+
+</form>
+
+</body>
+</html>

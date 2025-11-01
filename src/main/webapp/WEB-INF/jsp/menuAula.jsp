@@ -72,8 +72,9 @@
                 </form>
                 </td>
 
-                <td><form action="menuTexto" id="alterar" method="post">
-                    <input type="hidden" value="<%= id%>" name="id">
+                <td><form action="menuTexto" id="alterar" method="get">
+                    <input type="hidden" value="<%= id%>" name="idAula">
+                    <input type="hidden" value="<%= nome%>" name="nomeAula">
                     <button type="submit"><img src="assets/alterar.svg"></button>
                 </form>
                 </td>

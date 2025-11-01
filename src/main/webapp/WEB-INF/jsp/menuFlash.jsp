@@ -90,8 +90,9 @@
     const configTabela = {
         campos: {
             'id': 0,
-            'email': 1,
-            'senha': 2
+            'frente': 1,
+            'verso': 2,
+            'idAula': 3
         },
         colunasAcoes: 1  // ultimas colunas nao entram na busca
     };

@@ -48,7 +48,7 @@ public class MenuTexto extends HttpServlet {
             eh.printExeption();
             e.printStackTrace();
             System.out.println(-1);
-            request.getRequestDispatcher("WEB-INF/jsp/menuTexto.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/jsp/menuTexto .jsp").forward(request, response);
 
         }
     }

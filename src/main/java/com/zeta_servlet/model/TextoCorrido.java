@@ -16,17 +16,15 @@ public class TextoCorrido {
         return id;
     }
 
-    public String getTexto_corrido() {
+    public String getTextoCorrido() {
         return textoCorrido;
     }
 
-    public int getId_aula() {
+    public int getIdAula() {
         return idAula;
     }
 
-    public void setIdAula(int id_aula) {
-        this.idAula = idAula;
-    }
+    public void setIdAula(int idAula) {this.idAula = idAula;}
 
     @Override
     public String toString() {

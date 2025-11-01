@@ -23,8 +23,8 @@ public class TextoCorridoDAO extends CRUD{
             String consulta = "insert into texto_corrido(texto_corrido, id_aula) values(?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(consulta);
             //Setando valores dos parametros
-            pstmt.setString(1, texto.getTexto_corrido());
-            pstmt.setInt(2, texto.getId_aula());
+            pstmt.setString(1, texto.getTextoCorrido());
+            pstmt.setInt(2, texto.getIdAula());
 
 
 
@@ -53,7 +53,7 @@ public class TextoCorridoDAO extends CRUD{
         Connection coon = conexao.conectar();
         try {
             PreparedStatement pstm = coon.prepareStatement("UPDATE texto_corrido SET texto_corrido = ? WHERE id = ?;");
-            pstm.setString(1, texto.getTexto_corrido());
+            pstm.setString(1, texto.getTextoCorrido());
             pstm.setInt(2, texto.getId());
             if (pstm.executeUpdate()>0){
                 return 1;
@@ -75,7 +75,7 @@ public class TextoCorridoDAO extends CRUD{
         Connection coon = conexao.conectar();
         try {
             PreparedStatement pstm = coon.prepareStatement("UPDATE texto_corrido SET id_aula = ? WHERE id = ?;");
-            pstm.setInt(1, texto.getId_aula());
+            pstm.setInt(1, texto.getIdAula());
             pstm.setInt(2, texto.getId());
             if (pstm.executeUpdate()>0){
                 return 1;

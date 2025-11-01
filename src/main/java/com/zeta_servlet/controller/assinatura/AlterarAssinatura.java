@@ -21,8 +21,8 @@ public class AlterarAssinatura extends HttpServlet {
             String tpPlano = request.getParameter("tpPlano");
             int qtdCurso = Integer.parseInt(request.getParameter("qtdCurso"));
             String descricao = request.getParameter("descricao");
-            BigDecimal precoFixo = BigDecimal.valueOf(Double.valueOf(Integer.parseInt(request.getParameter("precoProdutor"))));
-            BigDecimal precoProdutor = BigDecimal.valueOf(Double.valueOf(Integer.parseInt(request.getParameter("precoProdutor"))));
+            BigDecimal precoFixo = BigDecimal.valueOf(Double.parseDouble(request.getParameter("precoProdutor")));
+            BigDecimal precoProdutor = BigDecimal.valueOf(Double.parseDouble(request.getParameter("precoProdutor")));
             int id = Integer.parseInt(request.getParameter("id"));
             System.out.println(id);
             System.out.println("passou");

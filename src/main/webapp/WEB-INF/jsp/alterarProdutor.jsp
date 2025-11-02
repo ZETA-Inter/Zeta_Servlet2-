@@ -1,4 +1,5 @@
 <%@ page import="com.zeta_servlet.model.Produtor" %>
+<%@ page import="java.time.LocalDate" %>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -26,10 +27,12 @@
 
 <%
     Produtor produtor = (Produtor) request.getAttribute("produ");
-    int i = (int) request.getAttribute("i");
+    int id = produtor.getId();
+    String cpf = produtor.getCpf();
+    LocalDate dtNascimento = produtor.getDt_nascimento();
     String email = produtor.getEmail();
     String senha = produtor.getSenha();
-    double pontos = produtor.getPontos_acumulados();
+    int pontos = produtor.getPontos_acumulados();
     String nome = produtor.getNome_primeiro();
     String sobrenome = produtor.getNome_ultimo();
     int aulasFeitas = produtor.getAulas_feitas();
@@ -38,10 +41,10 @@
 
 %>
 
-<form action="">
+<form action="AlterarProdutor" method="post">
     <h1>Produtor</h1>
     <label for="email">Email</label>
-    <input type="mailto" name="email" id="email" value="<%= email%>">
+    <input type="email" name="email" id="email" value="<%= email%>">
     <label for="senha">Senha</label>
     <input type="password" name="senha" id="senha" value="<%= senha%>">
     <label for="pontos">Pontos</label>
@@ -60,7 +63,9 @@
         <label for="idAssinatura">Id Assinatura <input type="number" name="idAssinatura" id="idAssinatura" value="<%= idAssinatura%>"></label>
     </div>
 
-    <input type="hidden" name="id" value="<%= i%>">
+    <input type="hidden" name="id" value="<%= id%>">
+    <input type="hidden" name="dtNascimento" value="<%= dtNascimento%>">
+    <input type="hidden" name="cpf" value="<%= cpf%>">
 
     <button type="submit">Alterar</button>
 </form>

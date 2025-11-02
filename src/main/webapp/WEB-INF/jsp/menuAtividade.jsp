@@ -93,12 +93,12 @@
         <td><%= id_aula %></td>
         <td>
           <form action="${pageContext.request.contextPath}/PrepAlterarAtividade" method="post" style="display: inline;">
-            <input type="hidden" value="<%= id %>" name="id">
+            <input type="hidden" value="<%= i%>" name="i">
             <button type="submit"><img src="${pageContext.request.contextPath}/assets/alterar.svg"></button>
           </form>
 
           <form action="${pageContext.request.contextPath}/DeletarAtividade" method="post" style="display: inline;">
-            <input type="hidden" value="<%= id %>" name="id">
+            <input type="hidden" value="<%= i%>" name="i">
             <button type="submit"><img src="${pageContext.request.contextPath}/assets/deletar.svg"></button>
           </form>
         </td>

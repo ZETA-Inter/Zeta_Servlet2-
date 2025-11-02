@@ -23,7 +23,6 @@ public class PrepAlterarAtividade extends HttpServlet {
             System.out.println(i);
             Atividade ativ = liAti.get(i);
             request.setAttribute("ativ", ativ);
-            request.setAttribute("i", i);
             System.out.println(1+"alterar");
             request.getRequestDispatcher("WEB-INF/jsp/alterarAtividade.jsp").forward(request, response);
 

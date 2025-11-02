@@ -299,4 +299,85 @@ public class AlternativaDAO extends CRUD{
             return liAL;
         }
     }
+
+    public List<Alternativa> buscarPorIdAtividade(int idAtividade) {
+        List<Alternativa> alternativas = new ArrayList<>();
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+
+        try {
+            String sql = "SELECT id, alternativa, id_atividade, correta FROM alternativa WHERE id_atividade = ? ORDER BY id";
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, idAtividade);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                Alternativa alt = new Alternativa(
+                        rs.getInt("id"),
+                        rs.getString("alternativa"),
+                        rs.getInt("id_atividade"),
+                        rs.getBoolean("correta")
+                );
+                alternativas.add(alt);
+            }
+
+            rs.close();
+            pstm.close();
+
+        } catch (Exception e) {
+            ExceptionHandler eh = new ExceptionHandler(e);
+            eh.printExeption();
+            System.out.println("Erro ao buscar alternativas por ID atividade: " + e.getMessage());
+        } finally {
+            conexao.desconectar(conn);
+        }
+
+        return alternativas;
+    }
+
+    public int marcarTodasComoFalsas(int idAtividade) {
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+
+        try {
+            String sql = "UPDATE alternativa SET correta = false WHERE id_atividade = ?";
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, idAtividade);
+
+            int resultado = pstm.executeUpdate();
+            pstm.close();
+            return resultado;
+
+        } catch (Exception e) {
+            ExceptionHandler eh = new ExceptionHandler(e);
+            eh.printExeption();
+            System.out.println("Erro ao marcar alternativas como falsas: " + e.getMessage());
+            return -1;
+        } finally {
+            conexao.desconectar(conn);
+        }
+    }
+
+    public int marcarComoCorreta(int idAlternativa) {
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+
+        try {
+            String sql = "UPDATE alternativa SET correta = true WHERE id = ?";
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, idAlternativa);
+
+            int resultado = pstm.executeUpdate();
+            pstm.close();
+            return resultado;
+
+        } catch (Exception e) {
+            ExceptionHandler eh = new ExceptionHandler(e);
+            eh.printExeption();
+            System.out.println("Erro ao marcar alternativa como correta: " + e.getMessage());
+            return -1;
+        } finally {
+            conexao.desconectar(conn);
+        }
+    }
 }

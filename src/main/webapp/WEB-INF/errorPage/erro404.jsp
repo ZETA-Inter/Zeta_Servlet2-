@@ -17,7 +17,7 @@
         <div class="nossoappcontent">
             <h1 id="erro" style="font-weight: 400;">Erro 404</h1>
             <p id="erroDesc">
-                Página nao encontrada. Verifique o link ou retorne a pagina inicial.
+                Página não encontrada. Verifique o link ou retorne a pagina inicial.
             </p>
         </div>
         <div class="imgsBoi">

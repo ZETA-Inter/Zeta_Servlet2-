@@ -9,7 +9,7 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 
-@WebServlet(name = "DeletarProdutor", value = "/DeletarProdutor")
+@WebServlet("/DeletarProdutor")
 public class DeletarProdutor extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -17,12 +17,15 @@ public class DeletarProdutor extends HttpServlet {
         try {
             ProdutorDAO produtorDAO = new ProdutorDAO();
             int i = Integer.parseInt(request.getParameter("id"));
-            System.out.println(i + " - Id da atividade deletada");
+            System.out.println(i + " - Id do Produtor deletado");
             produtorDAO.remover(i);
-            request.getRequestDispatcher("WEB-INF/jsp/menuProdutor.jsp");
+
+            System.out.println("Produtor deletado");
+
+            request.getRequestDispatcher("/menuProdutor").forward(request, response);
 
         }catch (Exception e){
-            request.getRequestDispatcher("WEB-INF/jsp/menuProdutor.jsp").forward(request, response);
+            request.getRequestDispatcher("/menuProdutor").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
             request.setAttribute("option", -1);

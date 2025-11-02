@@ -23,7 +23,7 @@ public class ProdutorDAO extends CRUD {
         Connection conn = conexao.conectar();
 
         try {
-            PreparedStatement pstmt = conn.prepareStatement("Insert into produtor(cpf, dt_nascimento, email, senha, pontos_acumulados, nome_primeiro, nome_ultimo, aulas_feitas) values (?, ? , ?, ?, ?, ?, ?, ?)");
+            PreparedStatement pstmt = conn.prepareStatement("Insert into produtor(cpf, dt_nascimento, email, senha, pontos_acumulados, nome_primeiro, nome_ultimo, aulas_feitas, id_fornecedor, id_assinatura) values (?, ? , ?, ?, ?, ?, ?, ?, ?, ?)");
 
             pstmt.setString(1, produtor.getCpf());
             pstmt.setObject(2, produtor.getDt_nascimento());
@@ -33,6 +33,8 @@ public class ProdutorDAO extends CRUD {
             pstmt.setString(6, produtor.getNome_primeiro());
             pstmt.setString(7, produtor.getNome_ultimo());
             pstmt.setInt(8, produtor.getAulas_feitas());
+            pstmt.setInt(9, produtor.getId_fornecedor());
+            pstmt.setInt(10, produtor.getId_assinatura());
 
             if (pstmt.executeUpdate() > 0) {
                 return 1;
@@ -87,36 +89,36 @@ public class ProdutorDAO extends CRUD {
     }
 
 //    altera o email de um produtor
-    public int updateEmail(Produtor pcd, String email) {
-        Conexao conexao = new Conexao();
-        Connection conn = conexao.conectar();
+public int updateEmail(Produtor produtor, String email) {
+    Conexao conexao = new Conexao();
+    Connection conn = conexao.conectar();
 
-        try {
+    try {
+        String sql = "UPDATE produtor SET email = ? WHERE id = ?";
+        System.out.println("=== DEBUG UPDATE EMAIL ===");
+        System.out.println("SQL: " + sql);
+        System.out.println("CPF: " + produtor.getCpf());
+        System.out.println("Email: " + email);
 
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE PRODUTOR SET EMAIL = ? WHERE ID = ?");
-            pstmt.setString(1, email);
-            pstmt.setInt(2, pcd.getId());
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, email);
+        pstmt.setInt(2, produtor.getId());
 
+        int linhasAfetadas = pstmt.executeUpdate();
+        System.out.println("Linhas afetadas: " + linhasAfetadas);
 
-                if (pstmt.executeUpdate() > 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
+        return linhasAfetadas;
 
-        } catch (SQLException e) {
-            ExceptionHandler eh = new ExceptionHandler(e);
-            eh.printExeption();
-            return -1;
-        }
-        catch (Exception e){
-            ExceptionHandler eh = new ExceptionHandler(e);
-            eh.printExeption();
-            return -1;
-        }finally {
-            conexao.desconectar(conn);
-        }
+    } catch (SQLException se) {
+        System.err.println("ERRO no updateEmail: " + se.getMessage());
+        se.printStackTrace();
+        ExceptionHandler eh = new ExceptionHandler(se);
+        eh.printExeption();
+        return -1;
+    } finally {
+        conexao.desconectar(conn);
     }
+}
 
 //    altera o primeiro nome do produtor
     public int alterarPrimeiroNome(Produtor pcd, String nome_primeiro){
@@ -155,7 +157,7 @@ public class ProdutorDAO extends CRUD {
     }
 
 //    altera o sobrenome do produtor
-    public int alterarUltimoNome(String novo_nome_ultimo,  int idProdutor){
+    public int alterarUltimoNome(Produtor produtor, String novo_nome_ultimo){
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
 
@@ -164,7 +166,7 @@ public class ProdutorDAO extends CRUD {
             PreparedStatement pstmt = conn.prepareStatement("UPDATE PRODUTOR SET NOME_ULTIMO = ? WHERE ID = ?");
 
             pstmt.setString(1, novo_nome_ultimo);
-            pstmt.setInt(2, idProdutor);
+            pstmt.setInt(2, produtor.getId());
 
             if (pstmt.executeUpdate() > 0){
                 return 1;
@@ -187,6 +189,160 @@ public class ProdutorDAO extends CRUD {
             conexao.desconectar(conn);
         }
     }
+
+    public int updatePontos(Produtor pcd, int pontos) {
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE PRODUTOR SET PONTOS_ACUMULADOS = ? WHERE ID = ?");
+            pstmt.setInt(1, pontos);
+            pstmt.setInt(2, pcd.getId());
+
+            if (pstmt.executeUpdate() > 0) {
+                return 1;
+            } else {
+                return 0;
+            }
+
+        } catch (SQLException e) {
+            ExceptionHandler eh = new ExceptionHandler(e);
+            eh.printExeption();
+            return -1;
+        }
+        catch (Exception e){
+            ExceptionHandler eh = new ExceptionHandler(e);
+            eh.printExeption();
+            return -1;
+        }finally {
+            conexao.desconectar(conn);
+        }
+    }
+
+    public int updateAulasFeitas(Produtor pcd, int aulasFeitas) {
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE PRODUTOR SET AULAS_FEITAS = ? WHERE ID = ?");
+            pstmt.setInt(1, aulasFeitas);
+            pstmt.setInt(2, pcd.getId());
+
+            if (pstmt.executeUpdate() > 0) {
+                return 1;
+            } else {
+                return 0;
+            }
+
+        } catch (SQLException e) {
+            ExceptionHandler eh = new ExceptionHandler(e);
+            eh.printExeption();
+            return -1;
+        }
+        catch (Exception e){
+            ExceptionHandler eh = new ExceptionHandler(e);
+            eh.printExeption();
+            return -1;
+        }finally {
+            conexao.desconectar(conn);
+        }
+    }
+
+    public int updateIdFornecedor(Produtor pcd, int idFornecedor) {
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE PRODUTOR SET ID_FORNECEDOR = ? WHERE ID = ?");
+            pstmt.setInt(1, idFornecedor);
+            pstmt.setInt(2, pcd.getId());
+
+            if (pstmt.executeUpdate() > 0) {
+                return 1;
+            } else {
+                return 0;
+            }
+
+        } catch (SQLException e) {
+            ExceptionHandler eh = new ExceptionHandler(e);
+            eh.printExeption();
+            return -1;
+        }
+        catch (Exception e){
+            ExceptionHandler eh = new ExceptionHandler(e);
+            eh.printExeption();
+            return -1;
+        }finally {
+            conexao.desconectar(conn);
+        }
+    }
+
+    public int updateIdAssinatura(Produtor pcd, int idAssinatura) {
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE PRODUTOR SET ID_ASSINATURA = ? WHERE ID = ?");
+            pstmt.setInt(1, idAssinatura);
+            pstmt.setInt(2, pcd.getId());
+
+            if (pstmt.executeUpdate() > 0) {
+                return 1;
+            } else {
+                return 0;
+            }
+
+        } catch (SQLException e) {
+            ExceptionHandler eh = new ExceptionHandler(e);
+            eh.printExeption();
+            return -1;
+        }
+        catch (Exception e){
+            ExceptionHandler eh = new ExceptionHandler(e);
+            eh.printExeption();
+            return -1;
+        }finally {
+            conexao.desconectar(conn);
+        }
+    }
+
+    public int updateGeral(Produtor produtor) {
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+
+        try {
+            String sql = "UPDATE produtor SET dt_nascimento = ?, email = ?, senha = ?, " +
+                    "pontos_acumulados = ?, nome_primeiro = ?, nome_ultimo = ?, " +
+                    "aulas_feitas = ?, id_fornecedor = ?, id_assinatura = ? " +
+                    "WHERE id = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setDate(1, java.sql.Date.valueOf(produtor.getDt_nascimento()));
+            pstmt.setString(2, produtor.getEmail());
+            pstmt.setString(3, produtor.getSenha());
+            pstmt.setInt(4, produtor.getPontos_acumulados());
+            pstmt.setString(5, produtor.getNome_primeiro());
+            pstmt.setString(6, produtor.getNome_ultimo());
+            pstmt.setInt(7, produtor.getAulas_feitas());
+            pstmt.setInt(8, produtor.getId_fornecedor());
+            pstmt.setInt(9, produtor.getId_assinatura());
+            pstmt.setInt(10, produtor.getId());
+
+            if (pstmt.executeUpdate() > 0) {
+                return 1;
+            } else {
+                return 0;
+            }
+
+        } catch (SQLException se) {
+            System.err.println("ERRO no updateCompleto: " + se.getMessage());
+            return -1;
+        } finally {
+            conexao.desconectar(conn);
+        }
+    }
+
+
 //  remove um produtor
     public boolean remover(int id) {return super.remover(id, "produtor");}
 

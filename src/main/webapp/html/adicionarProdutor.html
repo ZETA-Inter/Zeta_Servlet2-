@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/adicionarProdutor.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="./assets/LOGO ZETA - 5.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/LOGO ZETA - 5.png" type="image/x-icon">
     <title>CRUD</title>
 </head>
 <body>
     <nav class="nav-bar">
-        <img src="/assets/LOGO%20ZETA%20-%205.png" alt="Logo" id="logoMenu">
+        <img src="../assets/LOGO%20ZETA%20-%205.png" alt="Logo" id="logoMenu">
         <ul>
-            <li><a href="home.html"><img src="/assets/crudHome.svg" alt="Home">Home</a></li>
+            <li><a href="/WEB-INF/jsp/home.jsp"><img src="/assets/crudHome.svg" alt="Home">Home</a></li>
             <li><a href="../ADMINISTRADOR/menuAdministrador.html"><img src="/assets/crudAdm.svg" alt="Adm">Administrador</a></li> 
             <li><a href="menuAssinatura.html"><img src="/assets/crudAss.svg" alt="Assinatura">Assinatura</a></li>
             <li><a href="menuProdutor.html"><img src="/assets/crudProd.svg" alt="Produtor">Produtor</a></li>
@@ -22,18 +22,18 @@
             <li><a href="#"><img src="/assets/exit.svg" alt="exit">Sair</a></li>
         </ul>
     </nav>
-    <form action="/adicionarProdutor">
+    <form action="../AdicionarProdutor" method="post">
         <h1>Produtor</h1>
         <input type="hidden" name="etapa" value="1">
-        <label for="">CPF</label>
+        <label for="cpf">CPF</label>
         <input type="text" name="cpf" id="cpf" placeholder="Ex: XXX.XXX.XXX-XX" required>
-        <label for="">Data de Nascimento</label>
+        <label for="dtNascimento">Data de Nascimento</label>
         <input type="date" name="dtNascimento" id="dtNascimento" placeholder="" required>
-        <label for="">Email</label>
+        <label for="email">Email</label>
         <input type="email" name="email" id="email" placeholder="exemplo@seudominio.com">
-        <label for="">Senha</label>
+        <label for="senha">Senha</label>
         <input type="password" name="senha" id="senha" placeholder="Digite a senha">
-        <label for="">Pontos</label>
+        <label for="pontos">Pontos</label>
         <input type="number" name="pontos" id="pontos" placeholder="Digite quantos pontos">
         <button type="submit">Próximo</button>
     </form>

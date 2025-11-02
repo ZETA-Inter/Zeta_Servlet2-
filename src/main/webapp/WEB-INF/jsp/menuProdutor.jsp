@@ -1,6 +1,7 @@
 <%@ page import="com.zeta_servlet.model.Produtor" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.time.LocalDate" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -15,7 +16,7 @@
 <nav class="nav-bar">
   <img src="${pageContext.request.contextPath}/assets/LOGO%20ZETA%20-%205.png" alt="Logo" id="logoMenu">
   <ul>
-    <li><a href="${pageContext.request.contextPath}home.html"><img src="${pageContext.request.contextPath}/assets/crudHome.svg" alt="Home">Home</a></li>
+    <li><a href="${pageContext.request.contextPath}/home.html"><img src="${pageContext.request.contextPath}/assets/crudHome.svg" alt="Home">Home</a></li>
     <li><a href="${pageContext.request.contextPath}/WEB-INF/jsp/menuAdministrador.jsp"><img src="${pageContext.request.contextPath}/assets/crudAdm.svg" alt="Adm">Administrador</a></li>
     <li><a href="${pageContext.request.contextPath}/WEB-INF/jsp/menuAssinatura.jsp"><img src="${pageContext.request.contextPath}/assets/crudAss.svg" alt="Assinatura">Assinatura</a></li>
     <li><form action="menuProdutor" method="post"><button type="submit"><img src="${pageContext.request.contextPath}/assets/crudProd.svg" alt="Produtor">Produtor</button></form></li>
@@ -25,12 +26,15 @@
     <li><a href="#"><img src="${pageContext.request.contextPath}/assets/exit.svg" alt="exit">Sair</a></li>
   </ul>
 </nav>
+
 <div id="consultar">
   <h1>Produtor</h1>
-  <form action="">
-    <label for="buscar"><img src="${pageContext.request.contextPath}/assets/lupa.svg"></label>
-    <input type="text" name="buscar" id="buscar" placeholder="Buscar" >
-  </form>
+  <div id="query">
+    <div id="buscas">
+      <label for="campoBusca"><img src="${pageContext.request.contextPath}/assets/lupa.svg"></label>
+      <input type="text" name="index" id="campoBusca" placeholder="Buscar, ou inserir código de busca (ex: email:, id:)" >
+    </div>
+  </div>
 
   </table>
   <div id="tabela">
@@ -78,7 +82,7 @@
         <td><%= aulasFeitas%></td>
         <td><%= idFornecedor%></td>
         <td><%= idAssinatura%></td>
-        <td><form action="${pageContext.request.contextPath}/PrepAlterarProdutor" id="alterar">
+        <td><form action="${pageContext.request.contextPath}/PrepAlterarProdutor" method="post" id="alterar">
           <input type="hidden" value="<%= i%>" name="i">
           <button type="submit"><img src="${pageContext.request.contextPath}/assets/alterar.svg"></button>
         </form>
@@ -100,30 +104,8 @@
       <p>+ Adicionar Produtor</p>
     </div>
   </a>
-
+</div>
   <script>
-    const container = document.querySelector('.conteiner');
-    let lastScrollLeft = 0;
-    let lastScrollTop = 0;
-    let scrollLock = false;
-
-    // CORREÇÃO: Scroll suave sem travar
-    container.addEventListener('scroll', () => {
-      if (scrollLock) return;
-
-      const deltaX = container.scrollLeft - lastScrollLeft;
-      const deltaY = container.scrollTop - lastScrollTop;
-
-      // Atualiza as últimas posições
-      lastScrollLeft = container.scrollLeft;
-      lastScrollTop = container.scrollTop;
-
-      clearTimeout(container._scrollTimeout);
-      container._scrollTimeout = setTimeout(() => {
-        // Reset após scroll parar
-      }, 150);
-    });
-
     const CONFIG_TABELA = {
       campos: {
         'id': 0,
@@ -141,7 +123,6 @@
       totalColunas: 10
     };
 
-    // ... o resto do código de busca permanece igual
     function iniciarBusca() {
       setTimeout(function() {
         try {
@@ -195,6 +176,7 @@
 
           const indiceColuna = CONFIG_TABELA.campos[campo];
 
+          // VERIFICAÇÃO ADICIONADA - se o campo existe na configuração
           if (indiceColuna !== undefined && indiceColuna >= 0) {
             executarBuscaColuna(linhas, indiceColuna, valor);
           } else {
@@ -241,6 +223,7 @@
           const celulas = linha.getElementsByTagName('td');
           let encontrado = false;
 
+          // VERIFICAÇÃO DE SEGURANÇA ADICIONADA
           if (celulas.length > indiceColuna && indiceColuna >= 0) {
             const celula = celulas[indiceColuna];
             const textoCelula = (celula.textContent || celula.innerText || '').toLowerCase();
@@ -269,6 +252,7 @@
           const celulas = linha.getElementsByTagName('td');
           let encontrado = false;
 
+          // CORRIGIDO: Desconta colunas de ações em TODOS os acessos
           const totalColunasBusca = celulas.length - CONFIG_TABELA.colunasAcoes;
 
           for (let j = 0; j < totalColunasBusca; j++) {
@@ -278,6 +262,7 @@
             if (textoCelula.includes(termo)) {
               encontrado = true;
               aplicarDestaqueSeguro(celula, termoBusca);
+              // break; // Opcional: parar na primeira ocorrência
             }
           }
 
@@ -386,6 +371,7 @@
       }
     }
 
+    // Função auxiliar para verificar a estrutura da tabela
     function debugEstruturaTabela() {
       const tabela = document.getElementById('tabela');
       if (!tabela) {
@@ -404,8 +390,68 @@
 
     window.addEventListener('load', function() {
       setTimeout(iniciarBusca, 500);
+      // debugEstruturaTabela(); // Descomente para debug
+    });
+
+    const container = document.querySelector('.conteiner');
+    let lastScrollLeft = 0;
+    let lastScrollTop = 0;
+    let lastDirection = null;
+
+    container.addEventListener('scroll', () => {
+      const deltaX = container.scrollLeft - lastScrollLeft;
+      const deltaY = container.scrollTop - lastScrollTop;
+
+      if (!lastDirection) {
+        lastDirection = Math.abs(deltaX) > Math.abs(deltaY) ? 'x' : 'y';
+      }
+      if (lastDirection === 'x') {
+        container.scrollTop = lastScrollTop;
+      } else {
+        container.scrollLeft = lastScrollLeft;
+      }
+      lastScrollLeft = container.scrollLeft;
+      lastScrollTop = container.scrollTop;
+      clearTimeout(container._scrollTimeout);
+      container._scrollTimeout = setTimeout(() => {
+        lastDirection = null;
+      }, 150);
     });
   </script>
-</div>
+
+<style>
+  #tabela tr,
+  #tabela tr:nth-child(n),
+  #tabela tr:nth-child(odd),
+  #tabela tr:nth-child(even) {
+    background-color: transparent !important;
+    background: transparent !important;
+  }
+
+  #tabela tr.linha-par {
+    background-color: #fcf7f1 !important;
+    background: #fcf7f1 !important;
+  }
+
+  #tabela tr.linha-impar {
+    background-color: rgba(173, 173, 173, 1) !important;
+    background: rgba(173, 173, 173, 1) !important;
+  }
+
+  #tabela tr.linha-par td,
+  #tabela tr.linha-impar td {
+    background-color: inherit !important;
+    background: inherit !important;
+  }
+
+  .highlight-text {
+    background-color: #a5ffff !important;
+    opacity: 0.8;
+    color: black !important;
+    font-weight: bold !important;
+    padding: 1px 2px !important;
+    border-radius: 2px !important;
+  }
+</style>
 </body>
 </html>

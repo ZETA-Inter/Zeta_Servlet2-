@@ -12,7 +12,7 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "PrepAlterarProdutor", value = "/PrepAlterarProdutor")
+@WebServlet("/PrepAlterarProdutor")
 public class PrepAlterarProdutor extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

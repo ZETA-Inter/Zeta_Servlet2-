@@ -32,7 +32,7 @@
     <h1>Administrador</h1>
     <div id="query">
         <div id="buscas">
-            <label for="campoBusca"><img src="assets/lupa.svg"></label>
+            <label for="campoBusca"><img src="${pageContext.request.contextPath}/assets/lupa.svg"></label>
             <input type="text" name="index" id="campoBusca" placeholder="Buscar, ou inserir código de busca (ex: email:, id:)" >
         </div>
     </div>
@@ -287,6 +287,14 @@
         let tabela = document.getElementById('tabela');
         if (!tabela) return;
 
+
+
+
+
+
+
+
+
         let destaques = tabela.querySelectorAll('.destaque');
         for (let i = 0; i < destaques.length; i++) {
             let destaque = destaques[i];
@@ -347,7 +355,7 @@
     }
 
     .highlight-text {
-        background-color: yellow !important;
+        background-color: #a5ffff !important;
         color: black !important;
         font-weight: bold !important;
         padding: 1px 2px !important;

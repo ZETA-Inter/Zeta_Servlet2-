@@ -125,20 +125,25 @@ public boolean remover(int id) {
         pstmP.setInt(1, id);
         pstmAT.setInt(1, id);
 
-        if (pstmAT.executeUpdate()>0 && pstmP.executeUpdate()>0 && pstmAL.executeUpdate()>0){
-            return true;
-        }
-        return false;
-    }
-    catch (Exception e){
+        // ✅ CORRETO - Executar todos, mas só verificar a atividade
+        int resultadoAlt = pstmAL.executeUpdate();
+        int resultadoPerg = pstmP.executeUpdate();
+        int resultadoAtiv = pstmAT.executeUpdate();
+
+        System.out.println("Deleção - Alternativas: " + resultadoAlt +
+                ", Perguntas: " + resultadoPerg +
+                ", Atividade: " + resultadoAtiv);
+
+        // ✅ Só precisa da atividade ser deletada
+        return resultadoAtiv > 0;
+
+    } catch (Exception e) {
         ExceptionHandler eh = new ExceptionHandler(e);
         eh.printExeption();
         return false;
-    }
-    finally {
+    } finally {
         conexao.desconectar(coon);
     }
-
 }
 
 //    seleciona todas as atividades da tabela
@@ -153,7 +158,7 @@ public List<Atividade> buscar() {
             "p.id as id_pergunta, al.id as id_alternativa, p.id_atividade, al.id_atividade " +
             "from atividade a " +
             "join alternativa al on al.id_atividade = a.id " +
-            "join pergunta p on p.id_atividade = a.id";
+            "join pergunta p on p.id_atividade = a.id order by id asc";
 
     try {
         PreparedStatement stmt = conn.prepareStatement(sql);

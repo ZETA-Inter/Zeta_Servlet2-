@@ -20,16 +20,18 @@ public class PreLogin extends HttpServlet {
             String senha = (String) session.getAttribute("senha");
 
             if (email == null && senha == null) {
-                request.getRequestDispatcher("/html/admin.html").forward(request, response);
+                response.sendRedirect("html/admin.html");
             }
             else{
                 request.getRequestDispatcher("/home").forward(request, response);
             }
         }catch (Exception e){
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            request.setAttribute("option", -1);
-            request.getRequestDispatcher("WEB-INF/jsp/resultadoLogin.jsp").forward(request, response);
+            e.printStackTrace();
 
         }
     }

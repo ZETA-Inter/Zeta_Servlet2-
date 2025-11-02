@@ -52,7 +52,7 @@ public class PerguntaDAO extends CRUD{
 
 //  altera a pontuação da atividade
 
-    public int updateAlternativa(Pergunta pt, String pergunta) {
+    public int updatePergunta(Pergunta pt, String pergunta) {
         Conexao conexao = new Conexao();
         Connection coon = conexao.conectar();
         try {

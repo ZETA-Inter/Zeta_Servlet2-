@@ -1,10 +1,7 @@
 package com.zeta_servlet.controller.textoCorrido;
 
 import com.zeta_servlet.ExceptionHandler.ExceptionHandler;
-import com.zeta_servlet.daos.FlashCardDAO;
 import com.zeta_servlet.daos.TextoCorridoDAO;
-import com.zeta_servlet.model.Adm;
-import com.zeta_servlet.model.FlashCard;
 import com.zeta_servlet.model.TextoCorrido;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -39,16 +36,16 @@ public class MenuTexto extends HttpServlet {
             }
             liT = textoCorridoDAO.buscarPorIdAula(id);
             request.setAttribute("list", liT);
-            System.out.println(1 + "menu");
             request.getRequestDispatcher("WEB-INF/jsp/menuTexto.jsp").forward(request, response);
 
 
         }catch (Exception e){
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
             e.printStackTrace();
-            System.out.println(-1);
-            request.getRequestDispatcher("WEB-INF/jsp/menuTexto .jsp").forward(request, response);
 
         }
     }

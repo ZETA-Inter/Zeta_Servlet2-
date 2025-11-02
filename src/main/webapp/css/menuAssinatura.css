@@ -223,3 +223,15 @@ thead{
 #query{
     margin-bottom: 50px;
 }
+
+#voltar{
+    position: absolute;
+    top: 110px;
+    left: 1175px;
+    padding: 10px;
+}
+#voltar > button{
+    outline: none;
+    border: none;
+    background: none;
+}

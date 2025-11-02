@@ -1,12 +1,7 @@
 package com.zeta_servlet.controller.textoCorrido;
 
 import com.zeta_servlet.ExceptionHandler.ExceptionHandler;
-import com.zeta_servlet.Utils.Regex;
-import com.zeta_servlet.daos.AdmDAO;
-import com.zeta_servlet.daos.FlashCardDAO;
 import com.zeta_servlet.daos.TextoCorridoDAO;
-import com.zeta_servlet.model.Adm;
-import com.zeta_servlet.model.FlashCard;
 import com.zeta_servlet.model.TextoCorrido;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,12 +21,14 @@ public class AdicionarTexto extends HttpServlet {
             int idAula = Integer.parseInt(request.getParameter("idAula"));
             TextoCorrido textoCorrido = new TextoCorrido(0, texto, idAula);
             textoCorridoDAO.inserir(textoCorrido);
-            System.out.println(1 + "criarFlash");
             request.getRequestDispatcher("/menuTexto").forward(request, response);
         }catch (Exception e){
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            System.out.println(-1);
+            e.printStackTrace();
 
         }
     }

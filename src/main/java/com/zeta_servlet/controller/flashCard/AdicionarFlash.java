@@ -25,12 +25,15 @@ public class AdicionarFlash extends HttpServlet {
             int idAula = Integer.parseInt(request.getParameter("idAula"));
             FlashCard flashCard = new FlashCard(0, frente, verso, idAula);
             flashCardDAO.inserir(flashCard);
-            System.out.println(1 + "criarFlash");
             request.getRequestDispatcher("/menuFlash").forward(request, response);
+
         }catch (Exception e){
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            System.out.println(-1);
+            e.printStackTrace();
 
         }
     }

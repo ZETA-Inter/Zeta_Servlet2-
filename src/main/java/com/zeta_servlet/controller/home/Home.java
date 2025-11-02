@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -13,14 +14,18 @@ import java.io.IOException;
 public class Home extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        session.setAttribute("paginaAnterior", request.getRequestURI());
         try {
             request.getRequestDispatcher("WEB-INF/jsp/home.jsp").forward(request, response);
-            System.out.println("redirecionando a home");
+
         } catch (Exception e) {
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            System.out.println(-1);
-            request.getRequestDispatcher("WEB-INF/jsp/home.jsp").forward(request, response);
+            e.printStackTrace();
 
         }
     }

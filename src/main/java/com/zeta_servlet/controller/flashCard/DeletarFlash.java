@@ -18,18 +18,17 @@ public class DeletarFlash extends HttpServlet {
         try {
             FlashCardDAO flashCardDAO = new FlashCardDAO();
             int i = Integer.parseInt(request.getParameter("id"));
-            System.out.println(i);
-            System.out.println(1+"deletar");
             flashCardDAO.remover(i);
             request.getRequestDispatcher("/menuFlash").forward(request, response);
 
 
         }catch (Exception e){
-            request.getRequestDispatcher("/menuFlash").forward(request, response);
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            request.setAttribute("option", -1);
-            System.out.println(-1);
+            e.printStackTrace();
 
         }
     }

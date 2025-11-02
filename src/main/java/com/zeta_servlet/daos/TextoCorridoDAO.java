@@ -128,10 +128,8 @@ public class TextoCorridoDAO extends CRUD{
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
         try {
-            String busca = "SELECT * FROM texto_corrido WHERE id = ?";
-            PreparedStatement pstm = conn.prepareStatement(busca);
-            pstm.setInt(1, id);
-            rset = pstm.executeQuery();
+
+            rset = buscarPorIdR(id, "texto_corrido");
 
 
 
@@ -225,6 +223,8 @@ public class TextoCorridoDAO extends CRUD{
             return liTE;
         }
     }
+
+
 
 
 }

@@ -17,18 +17,17 @@ public class DeletarAula extends HttpServlet {
         try {
             AulaDAO aulaDAO = new AulaDAO();
             int i = Integer.parseInt(request.getParameter("id"));
-            System.out.println(i);
-            System.out.println(1+"deletar");
             aulaDAO.remover(i);
             request.getRequestDispatcher("/menuAula").forward(request, response);
 
 
         }catch (Exception e){
-            request.getRequestDispatcher("/menuAula").forward(request, response);
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            request.setAttribute("option", -1);
-            System.out.println(-1);
+            e.printStackTrace();
 
         }
     }

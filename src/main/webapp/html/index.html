@@ -6,76 +6,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZETA - Bem-estar Animal</title>
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="shortcut icon" href="../assets/LOGO%20ZETA%20-%205.png" type="image/x-icon">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Spartan:wght@300;400;500;600;700&family=Poppins:wght@300;400;500&display=swap"
-        rel="stylesheet">
-
+    <link rel="shortcut icon" href="../assets/LOGO ZETA - 5.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Spartan:wght@300;400;500;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <header class="site-header">
         <div class="logo">
-            <img src="../assets/Group%2012229.svg" alt="Logo ZETA">
-            <div class="brand" aria-label="ZETA">ZETA</div>
+            <img src="../assets/Group 12229.svg" alt="Logo ZETA">
+            <span class="brand" aria-label="ZETA">ZETA</span>
         </div>
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-btn">&#9776;</label>
         <nav class="nav" aria-label="Menu principal">
             <ul class="nav-list">
-                <li><a href="#home" class="is-active">Início</a></li>
-                <li><a href="#funcionalidades" class="is-active">Funcionalidades</a></li>
-                <li><a href="#planos" class="is-active">Planos</a></li>
-                <li><a href="#contato" class="is-active">Contato</a></li>
-                <li><form action="../admin" method="post" class="is-active"><button type="submit">Admin</button></form></li>
+                <li><a href="#home">Início</a></li>
+                <li><a href="#funcionalidades">Funcionalidades</a></li>
+                <li><a href="#planos">Planos</a></li>
+                <li><a href="#contato">Contato</a></li>
+                <li><a href="#" onclick="document.getElementById('formHidden').submit()">Admin</a></li>
+                <form id="formHidden" method="post" action="../admin" style="display: none;"></form>
             </ul>
         </nav>
     </header>
+
     <a href="#home" class="btn"><img src="../assets/seta.png" alt="voltar"></a>
+
     <main class="main">
-        <section id="home">
-            <div class="hcontent">
-                <h1 id="Bvindo">Bem-vindo</h1>
-                <div class="subtitle">
-                    <span>ao</span>
-                    <span class="zetaHighlight">ZETA</span>
+        <div class="container">
+            <section id="home">
+                <div class="hcontent">
+                    <h1 id="Bvindo">
+                        Bem-vindo ao
+                        <span class="zetaHighlight">ZETA</span>
+                    </h1>
+                    <p class="description">
+                        O ZETA é um aplicativo de jornada sobre as leis de bem-estar animal para a capacitação de
+                        funcionários em fazendas de aves, bovinos e suínos.
+                    </p>
+                    <div class="buttons">
+                        <a href="#funcionalidades" class="btn1">
+                            <button type="submit" id="btn1Cover">Nossos serviços</button>
+                        </a>
+                        <a href="#aboutUs" class="btn2">
+                            <button type="submit" id="btn2Cover">Sobre nós</button>
+                        </a>
+                    </div>
                 </div>
-                <p class="description">
-                    O ZETA é um aplicativo de jornada sobre as leis de bem-estar animal para a capacitação de
-                    funcionários em fazendas de aves, bovinos e suínos.
-                </p>
-                
-                <div class="buttons">
-                    <button id="btn1Cover">  
-                        <a href="#funcionalidades" class="btn1">Nossos serviços</a>
-                    </button>
-                    <button id="btn2Cover">
-                        <a href="#aboutUs" class="btn2">Sobre nós</a>
-                    </button>
+                <img src="../assets/boiPatas.png" alt="Imagem ZETA" class="himage">
+            </section>
+        </div>
+    </main>
+    <main class="main">
+        <div class="container">
+            <section id="nssapp">
+                <div class="nossoappcontent">
+                    <h1 id="Nssaplicat">Nosso aplicativo</h1>
+                    <p id="nssappdescription">
+                        O nosso aplicativo é uma gamificação das leis de bem-estar animal para a capacitação de
+                        funcionários em fazendas de aves, bovinos e suínos.
+                    </p>
+                    <img class="patinhas" src="../assets/pataapp.png" alt="patas">
                 </div>
-
-            </div>
-            <div class="himages">
-                <img class="mainImg" src="../assets/Group%20145.svg" alt="Ilustração ZETA">
-                <img class="himg2" src="../assets/Group%2012232.svg" alt="Ícone adicional">
-            </div>
-        </section>
-
-        <section id="nssapp">
-            <div class="nossoappcontent">
-                <h1 id="Nssaplicat">Nosso aplicativo</h1>
-                <p id="nssappdescription">
-                    O nosso aplicativo é uma gamificação das leis de bem-estar animal para a capacitação de funcionários em fazendas de aves, bovinos e suínos.
-                </p>
-            </div>
-            <div class="imgsCel">
-                <img class="celular" src="../assets/celular.png" alt="celular" >
-                <img class="funcionali" src="../assets/func.png" alt="funcionalidades-app">
-            </div>
-            <div class="Imgpat">
-                <img class="patinhas" src="../assets/pataapp.png" alt="patas" >
-            </div>
-        </section>
-
-
+                <img src="../assets/celular.png" alt="CelularZETA" class="celular">
+            </section>
+        </div>
+    </main>
+    <main class="main">
         <section id="funcionalidades">
             <div class="nossoservico">
                 <h1 id="Nssserv">Nossos serviços</h1>
@@ -121,12 +118,13 @@
                 </div>
             </div>
         </section>
-    
         <section id="mission">
             <div class="missionContent">
                 <h1 id="missao">Nossa missão</h1>
                 <p class="missiondescription">
-                    A nossa missão é capacitar os funcionários que trabalham na produção de bovinos, aves e suínos. Fazendo com que tenham um manejamento adequado de acordo com as leis de bem-estar animal.
+                    A nossa missão é capacitar os funcionários que trabalham na produção de bovinos,
+                    aves e suínos. Fazendo com que tenham um manejamento adequado de acordo com as
+                    leis de bem-estar animal.
                 </p>
             </div>
             <div class="missionImg">
@@ -139,159 +137,185 @@
                 <img src="../assets/patanossamissao.png" alt="Pata-Missão">
             </div>
         </section>
-
-
         <section id="clientes">
             <div class="clientesContent">
                 <h1 id="nssCliente">Nossos clientes</h1>
                 <p class="clientesdescription">
-                    Nosso aplicativo é voltado para a indústria agropecuária com maior foco nas de pequena e médio porte.
+                    Nosso aplicativo é voltado para a indústria agropecuária com maior foco nas de pequena e médio
+                    porte.
                 </p>
                 <p class="clientesdescription">
-                    Os principais usuários do ZETA são os donos das empresas e seus funcionários. Os funcionários podem ser indepentendes ou já afiliados à alguma empresa
+                    Os principais usuários do ZETA são os donos das empresas e seus funcionários. Os funcionários podem
+                    ser indepentendes ou já afiliados à alguma empresa.
                 </p>
                 <div class="pataCliente">
                     <img src="../assets/patanossamissao.png" alt="Pata-Cliente">
                 </div>
                 <div class="logoCliente">
-                    <img src="../assets/Group%20145.svg" alt="Logo">
+                    <img src="../assets/Group 145.svg" alt="Logo">
                 </div>
             </div>
         </section>
-    
-
         <section id="aboutUs">
+            <h1 id="Sobrenos">Sobre nós</h1>
             <div class="aboutUsContent">
-                <h1 id="Sobrenos">Sobre nós</h1>
                 <p class="descriptionUs">
-                    O ZETA é uma empresa formada por 14 alunos da Germinare. Os 7 alunos fundadores do 1° ano com o objetivo de resolver um dos problemas da ODS 9 com um aplicativo, criaram o ZETA. Logo após os 7 desenvolvedores do 2° ano se juntaram ao grupo, para conseguir colocar nossa ideia na prática.
+                    O ZETA é uma empresa formada por 14 alunos da Germinare. Os 7 alunos fundadores do 1° ano com o
+                    objetivo de resolver um dos problemas da ODS 9 com um aplicativo, criaram o ZETA. Logo após os 7
+                    desenvolvedores do 2° ano se juntaram ao grupo, para conseguir colocar nossa ideia na prática.
                 </p>
-            </div>
-            <div class="grupo">
-                <div class="foto">
-                    <img src="https://i.pinimg.com/1200x/37/3f/6b/373f6bac9076ca80cec703c0f36d2835.jpg" alt="foto do grupo">
-                </div>
+                <img src="../assets/grupo.png" alt="foto do grupo" class="foto">
             </div>
         </section>
-
         <section class="e">
             <div class="equipeContent">
                 <h1 class="nssEquip">Nossa equipe</h1>
                 <p class="subtitulo">Fundadores</p>
             </div>
-
             <div class="Integrantesprimeiroano">
-                <img class="col1" src="../assets/integrantes1.png" alt="Integrantes">
-                <div class="Integ1">
-                    <h3 class="nome">Raphaely Mendes</h3>
-                    <p class="descInt">Product Owner, designer e desenvolvedora front-end</p>
+                <div class="coluna1">
+                    <img class="col1" src="../assets/integrantes1.png" alt="Integrantes">
+                    <div class="Integ1">
+                        <div class="text1">
+                            <h3 class="nome">Raphaely Mendes</h3>
+                            <p class="descInt">Product Owner, designer e desenvolvedora front-end</p>
+                        </div>
+                    </div>
+                    <div class="Integ2">
+                        <div class="text1">
+                            <h3 class="nome">Matheus Rezende</h3>
+                            <p class="descInt">Desenvolvedor full stack</p>
+                        </div>
+                    </div>
+                    <div class="Integ3">
+                        <div class="text1">
+                            <h3 class="nome">Lucas Ramos</h3>
+                            <p class="descInt">Analista de dados</p>
+                        </div>
+                    </div>
+                    <div class="Integ4">
+                        <div class="text1">
+                            <h3 class="nome">Caio Mezini</h3>
+                            <p class="descInt">Desenvolvedor full stack</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="Integ2">
-                    <h3 class="nome">Matheus Rezende</h3>
-                    <p class="descInt">Desenvolvedor full stack</p>
-                </div>
-                <div class="Integ3">
-                    <h3 class="nome">Lucas Ramos</h3>
-                    <p class="descInt">Analista de dados</p>
-                </div>
-                <div class="Integ4">
-                    <h3 class="nome">Caio Mezini</h3>
-                    <p class="descInt">Desenvolvedor full stack</p>
-                </div>
-                <img class="col2" src="../assets/integrantes1d.png" alt="Integrantes">
-                <div class="Integ5">
-                    <h3 class="nome">João Souza</h3>
-                    <p class="descInt">Scrum Master e analista de dados</p>
-                </div>
-                <div class="Integ6">
-                    <h3 class="nome">Nicolas Vlad</h3>
-                    <p class="descInt">Desenvolvedor back-end</p>
-                </div>
-                <div class="Integ7">
-                    <h3 class="nome">Davi Dias</h3>
-                    <p class="descInt">Analista de dados</p>
+                <div class="coluna2">
+                    <img class="col2" src="../assets/integrantes1d.png" alt="Integrantes">
+                    <div class="Integ5">
+                        <div class="text2">
+                            <h3 class="nome">João Souza</h3>
+                            <p class="descInt">Scrum Master e analista de dados</p>
+                        </div>
+                    </div>
+                    <div class="Integ6">
+                        <div class="text2">
+                            <h3 class="nome">Nicolas Vlad</h3>
+                            <p class="descInt">Desenvolvedor back-end</p>
+                        </div>
+                    </div>
+                    <div class="Integ7">
+                        <div class="text2">
+                            <h3 class="nome">Davi Dias</h3>
+                            <p class="descInt">Analista de dados</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="patas">
-                <img class="patasboi1" src="../assets/pata1.png" alt="pata" >
+                <img class="patasboi1" src="../assets/pata1.png" alt="pata">
                 <img class="patasboi2" src="../assets/pata2.png" alt="pata">
             </div>
             <div class="patas2">
                 <img class="patasboi3" src="../assets/pata3.png" alt="pata">
             </div>
         </section>
-
-        
-        <section class="e">
+        <section class="e2">
             <div class="equipeContent">
                 <h1 class="nssEquip">Nossa equipe</h1>
                 <p class="subtitulo">Desenvolvedores</p>
             </div>
-
             <div class="Integrantessegundoano">
-                <img class="col1" src="../assets/devsegundo2.png" alt="Integrantes">
-                <div class="Integ1">
-                    <h3 class="nome">Alisson Oliveira</h3>
-                    <p class="descInt">Desenvolvedor de sistemas</p>
+                <div class="coluna1">
+                    <img class="col1" src="../assets/devsegundo.svg" alt="Integrantes">
+                    <div class="Integ1">
+                        <div class="text1">
+                            <h3 class="nome">Alisson Oliveira</h3>
+                            <p class="descInt">Desenvolvedor de sistemas</p>
+                        </div>
+                    </div>
+                    <div class="Integ2">
+                        <div class="text1">
+                            <h3 class="nome">Bianca Clarindo</h3>
+                            <p class="descInt">Desenvolvedora de sistemas</p>
+                        </div>
+                    </div>
+                    <div class="Integ3">
+                        <div class="text1">
+                            <h3 class="nome">Julia Porfírio</h3>
+                            <p class="descInt">Desenvolvedora de sistemas</p>
+                        </div>
+                    </div>
+                    <div class="Integ4">
+                        <div class="text1">
+                            <h3 class="nome">Laura Távora</h3>
+                            <p class="descInt">Desenvolvedora de sistemas</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="Integ2">
-                    <h3 class="nome">Bianca Clarindo</h3>
-                    <p class="descInt">Desenvolvedora de sistemas</p>
-                </div>
-                <div class="Integ3">
-                    <h3 class="nome">Julia Porfírio</h3>
-                    <p class="descInt">Desenvolvedora de sistemas</p>
-                </div>
-                <div class="Integ4">
-                    <h3 class="nome">Laura Távora</h3>
-                    <p class="descInt">Desenvolvedora de sistemas</p>
-                </div>
-                <img class="col2" src="../assets/dadossegundo.png" alt="Integrantes">
-                <div class="Integ5">
-                    <h3 class="nome">Raquel Tolomei</h3>
-                    <p class="descInt">Analista de dados</p>
-                </div>
-                <div class="Integ6">
-                    <h3 class="nome">Sofia Santana</h3>
-                    <p class="descInt">Scrum Master e analista de dados</p>
-                </div>
-                <div class="Integ7">
-                    <h3 class="nome">Sophia Gasparetto</h3>
-                    <p class="descInt">Analista de dados</p>
+                <div class="coluna2">
+                    <img class="col2" src="../assets/dadossegundo.svg" alt="Integrantes">
+                    <div class="Integ5">
+                        <div class="text2">
+                            <h3 class="nome">Raquel Tolomei</h3>
+                            <p class="descInt">Analista de dados</p>
+                        </div>
+                    </div>
+                    <div class="Integ6">
+                        <div class="text2">
+                            <h3 class="nome">Sofia Santana</h3>
+                            <p class="descInt">Scrum Master e analista de dados</p>
+                        </div>
+                    </div>
+                    <div class="Integ7">
+                        <div class="text2">
+                            <h3 class="nome">Sophia Gasparetto</h3>
+                            <p class="descInt">Analista de dados</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="patas">
-                <img class="patasboi1" src="../assets/pata1.png" alt="pata" >
+                <img class="patasboi1" src="../assets/pata1.png" alt="pata">
                 <img class="patasboi2" src="../assets/pata2.png" alt="pata">
             </div>
             <div class="patas2">
                 <img class="patasboi3" src="../assets/pata3.png" alt="pata">
             </div>
         </section>
-        
         <section id="planos">
             <div class="ttplanoscontent">
-                <h3 id="tbpreco">Tabela de preços</h3>
+                <h3 id="tbpreco">Tabela de preços mensais</h3>
                 <h1 id="escPlano">Escolha o seu melhor plano</h1>
             </div>
             <div id="planosAll">
                 <div class="plano">
                     <h4 id="zeta+">ZETA+</h4>
                     <h1>R$180</h1>
-                        <div class="checks">
-                            <div class="check">
-                                <img src="../assets/checkAzul.svg" alt="ícone">
-                                <p>Acesso completo de 2 cursos</p>
-                            </div>
-                            <div class="check">
-                                <img src="../assets/checkAzul.svg" alt="ícone">
-                                <p>Funcionalidades ilimitadas</p>
-                            </div>
-                            <div class="check">
-                                <img src="../assets/checkAzul.svg" alt="ícone">
-                                <p>Chatbot (Limitado)</p>
-                            </div>
+                    <div class="checks">
+                        <div class="check">
+                            <img src="../assets/checkAzul.svg" alt="ícone">
+                            <p>Acesso completo de 2 cursos</p>
                         </div>
+                        <div class="check">
+                            <img src="../assets/checkAzul.svg" alt="ícone">
+                            <p>Funcionalidades ilimitadas</p>
+                        </div>
+                        <div class="check">
+                            <img src="../assets/checkAzul.svg" alt="ícone">
+                            <p>Chatbot Ilimitado</p>
+                        </div>
+                    </div>
                     <button class="btSelecAzul1">Selecionar</button>
                 </div>
                 <div class="planoAzul">
@@ -310,19 +334,13 @@
                             <img src="../assets/checkBranco.svg" alt="ícone">
                             <p>Chatbot Ilimitado</p>
                         </div>
-                        <div class="check">
-                            <img src="../assets/checkBranco.svg" alt="ícone">
-                            <p>Metas personalizadas</p>
-                        </div>
                     </div>
-
                     <button id="btBrancoSelec">Selecionar</button>
                 </div>
                 <div class="plano">
                     <h4 id="zetaf">ZETA Fornecedor</h4>
                     <h1>R$300</h1>
                     <p id="especific">+R$50,00 por produtor</p>
-                    
                     <div class="checksF">
                         <div class="check">
                             <img src="../assets/checkAzul.svg" alt="ícone">
@@ -336,68 +354,57 @@
                             <img src="../assets/checkAzul.svg" alt="ícone">
                             <p>Chatbot Ilimitado</p>
                         </div>
-                        
                         <div class="check">
                             <img src="../assets/checkAzul.svg" alt="ícone">
                             <p>5 afiliados grátis</p>
                         </div>
                     </div>
-
                     <button class="btSelecAzul">Selecionar</button>
                 </div>
             </div>
-
             <div class="img1">
                 <img src="../assets/pataPlano.png" alt="Elemento">
-
             </div>
             <div class="img2">
                 <img src="../assets/pataPlano2.png" alt="Elemento">
-
             </div>
         </section>
-
         <section id="contato">
             <div class="ccontent">
                 <h1 id="entContat">Entre em contato</h1>
                 <p class="descriptioncontact">
-                    Tem uma dúvida, sugestão ou quer bater um papo sobre como podemos ajudar você? Preencha o formulário abaixo e contate a nossa equipe. Estamos aqui para ouvir você!
+                    Tem uma dúvida, sugestão ou quer bater um papo sobre como podemos ajudar você? Preencha o
+                    formulário abaixo e contate a nossa equipe. Estamos aqui para ouvir você!
                 </p>
-                
-                <form class="contactUs">
-                    <div id="nomeContato">
-                        <label for="nomeUser"><img src="../assets/nomeIcon.svg" alt="Nome"></label>
-                        <input type="text" name="username" id="nomeUser" placeholder="Nome">
+                <div class="link">
+                    <form class="contactUs">
+                        <a id="Enviar" href="mailto:appzetaofc@gmail.com">Enviar e-mail</a>
+                    </form>
+                    <div class="IconsContato">
+                        <a id="insta" href="https://www.instagram.com/zeta.ofc/" target="_blank">
+                            <img src="../assets/instaIcon.svg" alt="instagram">
+                        </a>
+                        <img id="zap" src="../assets/zapIcon.svg" alt="whatsapp">
+                        <a id="email" href="mailto:appzetaofc@gmail.com" target="_blank">
+                            <img src="../assets/emailIconC.svg" alt="email">
+                        </a>
                     </div>
-
-                    <div id="emailContato">
-                        <label for="emailUser"><img src="../assets/emailIcon.svg" alt="Email"></label>
-                        <input type="email" name="email" id="emailUser" placeholder= "E-mail">
-                    </div>
-
-                    <button id="Enviar" type="submit">Enviar</button>
-                </form>
-
-                <div class="IconsContato">
-                    <img id="zap" src="../assets/zapIcon.svg" alt="whatsapp">
-                    <img id="email" src="../assets/emailIconC.svg" alt="email">
-                    <img id="insta" src="../assets/instaIcon.svg" alt="instagram">
-                </div>
-
-                <div class="imgBoi">
-                    <img class="boizao" src="../assets/Group%20145.svg" alt="Ilustração ZETA">
-                    <img class="patadoboi" src="../assets/Group%2012232.svg" alt="Ícone adicional">
                 </div>
             </div>
+            <img class="imgBoi" src="../assets/boiPatas.png" alt="Boi ZETA">
         </section>
     </main>
     <footer>
         <div class="imagFooter">
-            <img src="../assets/LOGO%20ZETA%20-%205.png" alt="Logo - Footer" id="logoF">
+            <img src="../assets/LOGO ZETA - 5.png" alt="Logo - Footer" id="logoF">
             <div class="iconesFooter">
                 <img src="../assets/zapFooter.svg" alt="whatsapp">
-                <img src="../assets/instaFooter.svg" alt="instagram">
-                <img src="../assets/emailFooter.svg" alt="email">
+                <a href="https://www.instagram.com/zeta.ofc/" target="_blank">
+                    <img src="../assets/instaFooter.svg" alt="instagram">
+                </a>
+                <a href="mailto:appzetaofc@gmail.com" target="_blank">
+                    <img src="../assets/emailFooter.svg" alt="email">
+                </a>
             </div>
         </div>
         <div class="linksRapidos">
@@ -422,21 +429,8 @@
             <div class="localizacao">
                 <img src="../assets/localContato.svg" alt="Localização">
                 <p>São Paulo, Brasil</p>
-        </div>
+            </div>
     </footer>
-    <style>
-        .nav-list form button {
-            position: relative;
-            display: inline-block;
-            text-decoration: none;
-            font-family: Arial;
-            font-size: 22px;
-            font-weight: lighter;
-            color: #111;
-            transition: color .2s ease;
-            background: transparent;
-            border: none;
-            cursor: pointer ;
-        }
-    </style>
-</body>            
+</body>
+
+</html>

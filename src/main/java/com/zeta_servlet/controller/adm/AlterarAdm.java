@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -21,24 +22,26 @@ public class AlterarAdm extends HttpServlet {
             Regex regex = new Regex();
             String email = request.getParameter("email");
             String senha = request.getParameter("senha");
-            System.out.println(request.getParameter("id"));
             int id = Integer.parseInt(request.getParameter("id"));
-                System.out.println("passou");
+            if (regex.validarEmail(email) && regex.validarSenha(senha)) {
                 Adm adm = new Adm(email, id, senha);
-                admDAO.updateEmail(adm, email);
                 admDAO.updateSenha(adm, senha);
-                System.out.println(1 + "alterarCompleto");
+                admDAO.updateEmail(adm, email);
                 request.getRequestDispatcher("/menuAdm").forward(request, response);
+            }
+            else{
+                request.getRequestDispatcher("html/invalidoAlterarAdm.html").forward(request, response);
+            }
 
 
         }catch (Exception e){
-            request.getRequestDispatcher("WEB-INF/jsp/erroAlterarAdm.jsp").forward(request, response);
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            request.setAttribute("option", -1);
-            System.out.println(-1+"IF");
+            e.printStackTrace();
 
         }
     }
-
 }

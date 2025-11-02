@@ -21,7 +21,6 @@ public class AlterarFlash extends HttpServlet {
             String verso = request.getParameter("verso");
             int idAula = Integer.parseInt(request.getParameter("idAula"));
             int id = Integer.parseInt(request.getParameter("id"));
-            System.out.println("passou");
             FlashCard flashCard = new FlashCard(id, frente, verso, idAula);
             flashCardDAO.updateFrente(flashCard);
             flashCardDAO.updateVerso(flashCard);
@@ -29,15 +28,16 @@ public class AlterarFlash extends HttpServlet {
             request.setAttribute("id", idAula);
 
 
-            System.out.println(1 + "alterarCompleto");
             request.getRequestDispatcher("/menuFlash").forward(request, response);
 
 
         }catch (Exception e){
-            e.printStackTrace();
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            System.out.println(-1+"IF");
+            e.printStackTrace();
 
         }
     }

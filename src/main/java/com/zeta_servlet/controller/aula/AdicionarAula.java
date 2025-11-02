@@ -43,21 +43,21 @@ public class AdicionarAula extends HttpServlet {
                 FlashCard flashCard = new FlashCard(0, frente, verso, id);
                 TextoCorrido textoCorrido1 = new TextoCorrido(0, textoCorrido, id);
                 Lei lei = new Lei(0, leiT, id);
-            System.out.println("passou1");
                 // inserindo nas tabelas
                 flashCardDAO.inserir(flashCard);
                 textoCorridoDAO.inserir(textoCorrido1);
                 leiDAO.inserir(lei);
-            System.out.println("passou2");
 
 
                 request.getRequestDispatcher("/menuAula").forward(request, response);
+
         }catch (Exception e){
-            request.getRequestDispatcher("html/erroCriarAula.html").forward(request, response);
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            request.setAttribute("option", -1);
-            System.out.println(-1);
+            e.printStackTrace();
 
         }
     }

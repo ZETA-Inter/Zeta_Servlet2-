@@ -21,13 +21,14 @@
         <li><a href="${pageContext.request.contextPath}/menuProdutor.html"><img src="assets/crudProd.svg" alt="Produtor">Produtor</a></li>
         <li><a href="${pageContext.request.contextPath}/menuAtividade.html"><img src="assets/crudAtiv.svg" alt="Atividade">Atividade</a></li>
         <li><form action="menuAula" method="post"><button type="submit"><img src="assets/crudAula.svg" alt="Assinatura">Aula</button></form></li>
-        <li><a href="../.."><img src="assets/crudDash.svg" alt="Dashboards">Dashboards</a></li>
+        <li><a href="https://app.powerbi.com/view?r=eyJrIjoiOTdmYWNmYjktNWVlYi00ZjJlLWIyMWUtOWVmZGVhMzBjNGExIiwidCI6ImIxNDhmMTRjLTIzOTctNDAyYy1hYjZhLTFiNDcxMTE3N2FjMCJ9"><img src="assets/crudDash.svg" alt="Dashboards">Dashboards</a></li>
         <li><form action="logout" method="post" id="fAdm"><button type="submit"><img src="assets/exit.svg" alt="exit">Sair</button></form></li>
 
     </ul>
 </nav>
 <div id="consultar">
     <h1>Flash Card - Aula: <%= request.getAttribute("nomeAula")%></h1>
+
     <div id="query">
         <div id="buscas">
             <label for="campoBusca"><img src="assets/lupa.svg"></label>
@@ -45,6 +46,8 @@
                 <td class="name-title" style="text-align: center">Verso</td>
                 <td class="name-title" style="text-align: center;">idAula</td>
                 <td class="name-title" style="text-align: center;"></td>
+                <td class="name-title" style="text-align: center;"></td>
+
             </tr>
             </thead>
             <tbody style="border-radius: 12px">
@@ -65,8 +68,8 @@
                 <td><form action="alterarFlash" id="alterar">
                     <input type="hidden" value="<%= id%>" name="i">
                     <button type="submit"><img src="assets/alterar.svg"></button>
-                </form>
-
+                </form></td>
+                <td>
                     <form action="deletarFlash" method="get" id="deletar">
                         <input type="hidden" value="<%= id%>" name="id">
                         <button type="submit"><img src="assets/deletar.svg"></button>
@@ -94,7 +97,7 @@
             'verso': 2,
             'idAula': 3
         },
-        colunasAcoes: 1  // ultimas colunas nao entram na busca
+        colunasAcoes: 2  // ultimas colunas nao entram na busca
     };
 
     // Inicia tudo quando carregar a pagina

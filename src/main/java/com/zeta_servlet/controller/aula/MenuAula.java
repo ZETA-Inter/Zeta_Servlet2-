@@ -22,14 +22,15 @@ public class MenuAula extends HttpServlet {
             List<Aula> liA;
             liA=aulaDAO.buscar();
             request.setAttribute("list", liA);
-            System.out.println(1+"menu");
             request.getRequestDispatcher("WEB-INF/jsp/menuAula.jsp").forward(request, response);
+
         }catch (Exception e){
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            request.setAttribute("option", -1);
-            System.out.println(-1);
-            request.getRequestDispatcher("WEB-INF/jsp/menuAula.jsp").forward(request, response);
+            e.printStackTrace();
 
         }
     }

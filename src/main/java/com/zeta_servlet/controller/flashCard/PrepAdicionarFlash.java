@@ -18,16 +18,16 @@ public class PrepAdicionarFlash extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             int i = Integer.parseInt(request.getParameter("idAula"));
-            System.out.println(i);
             request.setAttribute("idAula", i);
-            System.out.println(1+"alterar");
             request.getRequestDispatcher("WEB-INF/jsp/adicionarFlash.jsp").forward(request, response);
 
         }catch (Exception e){
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            request.setAttribute("option", -1);
-            System.out.println(-1);
+            e.printStackTrace();
 
         }
     }

@@ -22,15 +22,15 @@ public class MenuAssinatura extends HttpServlet {
             List<Assinatura> liAs;
             liAs=assinaturaDAO.buscar();
             request.setAttribute("list", liAs);
-            System.out.println(1+"menu");
             request.getRequestDispatcher("WEB-INF/jsp/menuAssinatura.jsp").forward(request, response);
 
         }catch (Exception e){
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            request.setAttribute("option", -1);
-            System.out.println(-1);
-            request.getRequestDispatcher("WEB-INF/jsp/menuAssinatura.jsp").forward(request, response);
+            e.printStackTrace();
 
         }
     }

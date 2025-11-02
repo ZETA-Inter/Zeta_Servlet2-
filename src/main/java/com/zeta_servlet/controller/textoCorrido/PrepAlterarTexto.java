@@ -1,11 +1,7 @@
-package com.zeta_servlet.controller.flashCard;
+package com.zeta_servlet.controller.textoCorrido;
 
 import com.zeta_servlet.ExceptionHandler.ExceptionHandler;
-import com.zeta_servlet.daos.AdmDAO;
-import com.zeta_servlet.daos.FlashCardDAO;
 import com.zeta_servlet.daos.TextoCorridoDAO;
-import com.zeta_servlet.model.Adm;
-import com.zeta_servlet.model.FlashCard;
 import com.zeta_servlet.model.TextoCorrido;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -25,17 +21,18 @@ public class PrepAlterarTexto extends HttpServlet {
             List<TextoCorrido> liT;
 
             int i = Integer.parseInt(request.getParameter("i"));
-            System.out.println(i);
-            liT=TextoCorridoDAO.buscarPorId(i);
+            liT=textoCorridoDAO.buscarPorId(i);
             TextoCorrido textoCorrido = liT.get(0);
-            request.setAttribute("flash", textoCorrido);
-            System.out.println(1+"alterar");
+            request.setAttribute("texto", textoCorrido);
             request.getRequestDispatcher("WEB-INF/jsp/alterarTexto.jsp").forward(request, response);
 
         }catch (Exception e){
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            System.out.println(-1);
+            e.printStackTrace();
 
         }
     }

@@ -37,16 +37,16 @@ public class MenuFlash extends HttpServlet {
                 }
                 liF = flashCardDAO.buscarPorIdAula(id);
                 request.setAttribute("list", liF);
-                System.out.println(1 + "menu");
                 request.getRequestDispatcher("WEB-INF/jsp/menuFlash.jsp").forward(request, response);
 
 
         }catch (Exception e){
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
             e.printStackTrace();
-            System.out.println(-1);
-            request.getRequestDispatcher("WEB-INF/jsp/menuFlash.jsp").forward(request, response);
 
         }
     }

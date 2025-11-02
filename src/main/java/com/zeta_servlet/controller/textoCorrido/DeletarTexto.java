@@ -2,7 +2,6 @@ package com.zeta_servlet.controller.textoCorrido;
 
 import com.zeta_servlet.ExceptionHandler.ExceptionHandler;
 import com.zeta_servlet.daos.TextoCorridoDAO;
-import com.zeta_servlet.model.TextoCorrido;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,17 +17,17 @@ public class DeletarTexto extends HttpServlet {
         try {
             TextoCorridoDAO textoCorridoDAO = new TextoCorridoDAO();
             int i = Integer.parseInt(request.getParameter("id"));
-            System.out.println(i);
-            System.out.println(1+"deletar");
             textoCorridoDAO.remover(i);
             request.getRequestDispatcher("/menuTexto").forward(request, response);
 
 
         }catch (Exception e){
-            request.getRequestDispatcher("/menuTexto").forward(request, response);
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            System.out.println(-1);
+            e.printStackTrace();
 
         }
     }

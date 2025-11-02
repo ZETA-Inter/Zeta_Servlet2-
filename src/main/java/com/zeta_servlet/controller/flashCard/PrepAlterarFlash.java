@@ -23,17 +23,18 @@ public class PrepAlterarFlash extends HttpServlet {
             List<FlashCard> liF;
 
             int i = Integer.parseInt(request.getParameter("i"));
-            System.out.println(i);
             liF=flashCardDAO.buscarPorId(i);
             FlashCard flash = liF.get(0);
             request.setAttribute("flash", flash);
-            System.out.println(1+"alterar");
             request.getRequestDispatcher("WEB-INF/jsp/alterarFlash.jsp").forward(request, response);
 
         }catch (Exception e){
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            System.out.println(-1);
+            e.printStackTrace();
 
         }
     }

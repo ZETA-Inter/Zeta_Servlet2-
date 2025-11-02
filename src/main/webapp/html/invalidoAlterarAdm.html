@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/adicionarAdministrador.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="/assets/LOGO%20ZETA%20-%205.png" type="image/x-icon">
+    <title>CRUD</title>
+</head>
+<body>
+<nav class="nav-bar">
+    <img src="/assets/LOGO%20ZETA%20-%205.png" alt="Logo" id="logoMenu">
+    <ul>
+        <li><form action="../home" method="post"><button type="submit"><img src="../assets/crudHome.svg" alt="home">Home</button></form></li>
+        <li><form action="../menuAdm" method="post"><button type="submit"><img src="../assets/crudAdm.svg" alt="Adm">Administrador</button></form></li>
+        <li><form action="../menuAss" method="post"><button type="submit"><img src="../assets/crudAss.svg" alt="Assinatura">Assinatura</button></form></li>
+        <li><form action="../menuProdutor" method="post"><button type="submit"><img src="../assets/crudProd.svg" alt="Produtor">Produtor</button></form></li>
+        <li><form action="../menuAtividade" method="post"><button type="submit"><img src="../assets/crudAtiv.svg" alt="Atividade">Atividade</button></form></li>
+        <li><form action="../menuAula" method="post"><button type="submit"><img src="../assets/crudAula.svg" alt="Assinatura">Aula</button></form></li>
+        <li><a href=""><img src="../assets/crudDash.svg" alt="Dashboards">Dashboards</a></li>
+        <li><form action="logout" method="post" id="fAdm"><button type="submit"><img src="../assets/exit.svg" alt="exit">Sair</button></form></li>
+    </ul>
+</nav>
+<form action="alterarAdmCompletoAdm" method="post" id="adicionar" autocomplete="off" >
+    <h1>Administrador</h1>
+    <label for="" style="margin-bottom: 15px">Email</label>
+    <input type="email" name="email" id="email" placeholder="Digite o email do administrador" style="border: red;">
+    <p style="color: red; margin: 0 auto">Informações inválidas, tente Novamente</p>
+    <label for="" style="margin-bottom: 15px">Senha</label>
+    <input type="password" name="senha" id="senha" placeholder="Digite a senha do administrador" style="border: red" title="✨ Senha deve conter:
+✓ Letra inicial
+✓ Maiúsculas e minúsculas
+✓ Número
+✓ Caractere especial
+✓ 8+ caracteres">
+    <button type="submit">Alterar</button>
+</form>
+</body>
+</html>

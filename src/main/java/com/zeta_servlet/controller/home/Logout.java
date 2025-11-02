@@ -22,10 +22,12 @@ public class Logout extends HttpServlet {
                 request.getRequestDispatcher("/admin").forward(request, response);
 
         }catch (Exception e){
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            System.out.println(-1+"IF");
-            request.getRequestDispatcher("/admin").forward(request, response);
+            e.printStackTrace();
 
         }
     }

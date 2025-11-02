@@ -100,17 +100,15 @@ public class Main {
 //            System.out.println(i);
 //            Aula au = liAu.get(i);
 //            System.out.println(au);
+//            FlashCardDAO flashCardDAO = new FlashCardDAO();
+//            FlashCard flashCard = new FlashCard(45, "teste", "teste", 8);
+//            flashCardDAO.updateFrente(flashCard);
+//            flashCardDAO.updateVerso(flashCard);
+//            flashCardDAO.updateIdAula(flashCard);
+//            System.out.println(flashCardDAO.buscarPorId(45));
 
-            AlternativaDAO alternativaDAO = new AlternativaDAO();
-            AtividadeDAO atividadeDAO = new AtividadeDAO();
-
-         //  System.out.println(alternativaDAO.buscar());
-
-          System.out.println(atividadeDAO.buscar());
-
-            PerguntaDAO perguntaDAO = new PerguntaDAO();
-
-          //  System.out.println(perguntaDAO.buscar());
+            AdmDAO admDAO = new AdmDAO();
+            System.out.println(admDAO.buscarPorEmail("matheus.raimundo@germinare.org.br"));
 
 
 

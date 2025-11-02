@@ -26,7 +26,7 @@ public class LeiDAO extends CRUD{
             PreparedStatement pstmt = conn.prepareStatement(consulta);
             //Setando valores dos parametros
             pstmt.setString(1, lei.getLei());
-            pstmt.setInt(2, lei.getId_aula());
+            pstmt.setInt(2, lei.getIdAula());
 
 
 
@@ -80,7 +80,7 @@ public class LeiDAO extends CRUD{
         Connection coon = conexao.conectar();
         try {
             PreparedStatement pstm = coon.prepareStatement("UPDATE lei SET id_aula = ? WHERE id = ?;");
-            pstm.setInt(1, lei.getId_aula());
+            pstm.setInt(1, lei.getIdAula());
             pstm.setInt(2, lei.getId());
             if (pstm.executeUpdate()>0){
                 return 1;

@@ -21,19 +21,17 @@ public class PrepAlterarAula extends HttpServlet {
             List<Aula> liAu;
             liAu=aulaDAO.buscar();
             int i = Integer.parseInt(request.getParameter("i"));
-            System.out.println(i);
             Aula au = liAu.get(i);
             request.setAttribute("au", au);
-            System.out.println(1+"alterar");
             request.getRequestDispatcher("WEB-INF/jsp/alterarAula.jsp").forward(request, response);
 
         }catch (Exception e){
-            request.getRequestDispatcher("WEB-INF/jsp/menuAula.jsp").forward(request, response);
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
             e.printStackTrace();
-            request.setAttribute("option", -1);
-            System.out.println(-1);
 
         }
     }

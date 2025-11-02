@@ -21,18 +21,17 @@ public class PrepAlterarAssinatura extends HttpServlet {
             List<Assinatura> liAs;
             liAs=assinaturaDAO.buscar();
             int i = Integer.parseInt(request.getParameter("i"));
-            System.out.println(i);
             Assinatura ass = liAs.get(i);
             request.setAttribute("ass", ass);
-            System.out.println(1+"alterar");
             request.getRequestDispatcher("WEB-INF/jsp/alterarAssinatura.jsp").forward(request, response);
 
         }catch (Exception e){
-            request.getRequestDispatcher("WEB-INF/jsp/menuAssinatura.jsp").forward(request, response);
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            request.setAttribute("option", -1);
-            System.out.println(-1);
+            e.printStackTrace();
 
         }
     }

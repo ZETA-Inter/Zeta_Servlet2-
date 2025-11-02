@@ -62,7 +62,7 @@ public class AssinaturaDAO extends CRUD{
         Conexao conexao = new Conexao();
         Connection coon = conexao.conectar();
         try {
-            PreparedStatement pstm = coon.prepareStatement("UPDATE assinatura SET preco_qtd_produtoresx = ? WHERE id = ?;");
+            PreparedStatement pstm = coon.prepareStatement("UPDATE assinatura SET preco_qtd_produtores = ? WHERE id = ?;");
             pstm.setBigDecimal(1, money);
             pstm.setInt(2, assinatura.getId());
             if (pstm.executeUpdate()>0){

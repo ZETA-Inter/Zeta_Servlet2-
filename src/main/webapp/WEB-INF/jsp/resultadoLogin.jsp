@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZETA - Bem-estar Animal</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css">
-    <link rel="shortcut icon" href="./assets/LOGO ZETA - 5.png" type="image/x-icon">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/LOGO ZETA - 5.png" type="image/x-icon">
     <link
             href="https://fonts.googleapis.com/css2?family=Spartan:wght@300;400;500;600;700&family=Poppins:wght@300;400;500&display=swap"
             rel="stylesheet">
@@ -15,7 +15,7 @@
 <body>
 <header class="site-header">
     <div class="logo">
-        <img src="./assets/Group 12229.svg" alt="Logo ZETA">
+        <img src="${pageContext.request.contextPath}/assets/Group 12229.svg" alt="Logo ZETA">
         <div class="brand" aria-label="ZETA">ZETA</div>
     </div>
     <nav class="nav" aria-label="Menu principal">
@@ -39,12 +39,12 @@
 
             <form class="loginAdmin" action="loginAdmin" method="post">
                 <div id="emailLogin" style="border: 2px solid red">
-                    <label for="emailUser"><img id="email" src="./assets/emailAdmin.svg" alt="Email"></label>
+                    <label for="emailUser"><img id="email" src="${pageContext.request.contextPath}/assets/emailAdmin.svg" alt="Email"></label>
                     <input type="email" name="email" id="emailUser" placeholder= "Digite seu e-mail" required>
                 </div>
-                <p style="color: red; font-size: 15px; margin: 0 auto; margin-top: -25; margin-left: 10px;">Erro ao realizar o login, verifique as informações</p>
+                <p style="color: red; font-size: 15px; margin: 0 auto; margin-top: -25px; margin-left: 10px;">Erro ao realizar o login, verifique as informações</p>
                 <div id="senhaAdmin" style="border: 2px solid red">
-                    <label for="senhaUser"><img id="senha" src="./assets/senhaAdmin.svg" alt="senha"</label>
+                    <label for="senhaUser"><img id="senha" src="${pageContext.request.contextPath}/assets/senhaAdmin.svg" alt="senha"></label>
                     <input type="password" name="userpassword" id="senhaUser" placeholder="Digite sua senha" required >
                 </div>
 
@@ -58,13 +58,13 @@
 
 
             <div class="Imagens">
-                <img class="elipseAz" src="./assets/elipseazulqseescuro.png" alt="ElementoAzul">
+                <img class="elipseAz" src="${pageContext.request.contextPath}/assets/elipseazulqseescuro.png" alt="ElementoAzul">
 
-                <img class="elipseAzul" src="./assets/elipseazulclaro.png" alt="ElementoAzulClaro">
+                <img class="elipseAzul" src="${pageContext.request.contextPath}/assets/elipseazulclaro.png" alt="ElementoAzulClaro">
 
-                <img class="elipseBranca" src="./assets/elipseBranca.png" alt="ElementoBranco">
+                <img class="elipseBranca" src="${pageContext.request.contextPath}/assets/elipseBranca.png" alt="ElementoBranco">
 
-                <img class="boiAdmin" src="./assets/boiAdmin.png" alt="LogoZeta">
+                <img class="boiAdmin" src="${pageContext.request.contextPath}/assets/boiAdmin.png" alt="LogoZeta">
             </div>
 
         </div>

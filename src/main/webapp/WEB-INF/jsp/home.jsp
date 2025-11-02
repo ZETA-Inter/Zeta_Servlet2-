@@ -3,7 +3,7 @@
 <%
     String admin = (String) session.getAttribute("role");
     if (admin == null) {
-        response.sendRedirect("erro405.html");
+        response.sendRedirect("/WEB-INF/errorPage/erro500.jsp");
         return;
     }
 %>
@@ -25,8 +25,8 @@
         <li><form action="menuAss" method="post"><button type="submit"><img src="${pageContext.request.contextPath}/assets/crudAss.svg" alt="Assinatura">Assinatura</button></form></li>
         <li><form action="menuProdutor" method="post"><button type="submit"><img src="${pageContext.request.contextPath}/assets/crudProd.svg" alt="Produtor">Produtor</button></form></li>
         <li><form action="menuAtividade" method="post"><button type="submit"><img src="${pageContext.request.contextPath}/assets/crudAtiv.svg" alt="Atividade">Atividade</button></form></li>
-        <li><a href="${pageContext.request.contextPath}/html/menuAula.html"><img src="${pageContext.request.contextPath}/assets/crudAula.svg" alt="Aula">Aula</a></li>
-        <li><a href="#"><img src="${pageContext.request.contextPath}/assets/crudDash.svg" alt="Dashboards">Dashboards</a></li>
+        <li><form action="menuAula" method="post"><button type="submit"><img src="${pageContext.request.contextPath}/assets/crudAula.svg" alt="Assinatura">Aula</button></form></li>
+        <li><a href="https://app.powerbi.com/view?r=eyJrIjoiOTdmYWNmYjktNWVlYi00ZjJlLWIyMWUtOWVmZGVhMzBjNGExIiwidCI6ImIxNDhmMTRjLTIzOTctNDAyYy1hYjZhLTFiNDcxMTE3N2FjMCJ9"><img src="${pageContext.request.contextPath}/assets/crudDash.svg" alt="Dashboards">Dashboards</a></li>
         <li><form action="logout" method="post" id="fAdm"><button type="submit"><img src="${pageContext.request.contextPath}/assets/exit.svg" alt="exit">Sair</button></form></li>
 
     </ul>
@@ -35,11 +35,11 @@
 <div class="BemVindo">
     <div class="logoB">
         <h1 id="ZETA">ZETA</h1>
-        <img src="assets/boiHome.png" alt="Logo ZETA">
+        <img src="${pageContext.request.contextPath}/assets/boiHome.png" alt="Logo ZETA">
     </div>
     <h2>Bem vindo ao CRUD</h2>
     <div class="element">
-        <img src="assets/pata2.png" alt="Elemento pata traçada">
+        <img src="${pageContext.request.contextPath}/assets/pata2.png" alt="Elemento pata traçada">
     </div>
 </div>
 </body>

@@ -18,7 +18,7 @@ public class Atividade {
         this.perguntas = perguntas;
         this.alternativas = alternativas;
         for (int i = 0; i < perguntas.size(); i++) {
-            perguntas.get(i).setId_atividade(this.id);
+            perguntas.get(i).setIdAtividade(this.id);
         }
         for (int i = 0; i < alternativas.size(); i++) {
             alternativas.get(i).setId_atividade(this.id);
@@ -31,7 +31,7 @@ public class Atividade {
         this.perguntas = perguntas;
         this.alternativas = alternativas;
         for (int i = 0; i < perguntas.size(); i++) {
-            perguntas.get(i).setId_atividade(this.id);
+            perguntas.get(i).setIdAtividade(this.id);
         }
         for (int i = 0; i < alternativas.size(); i++) {
             alternativas.get(i).setId_atividade(this.id);

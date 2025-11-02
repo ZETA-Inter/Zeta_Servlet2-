@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -24,20 +25,18 @@ public class AdicionarAdm extends HttpServlet {
             if (regex.validarEmail(email) && regex.validarSenha(senha)) {
                 Adm adm = new Adm(email, 0, senha);
                 admDAO.inserir(adm);
-                System.out.println(1 + "criarAdm");
                 request.getRequestDispatcher("/menuAdm").forward(request, response);
             }
             else{
-                System.out.println("Invalido");
                 request.getRequestDispatcher("html/InvalidoAdm.html").forward(request, response);
             }
         }catch (Exception e){
-            request.getRequestDispatcher("html/erroCriarAdm.html").forward(request, response);
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            request.setAttribute("option", -1);
-            System.out.println(-1);
-
+            e.printStackTrace();
         }
     }
 

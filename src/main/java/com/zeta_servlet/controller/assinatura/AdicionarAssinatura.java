@@ -28,15 +28,15 @@ public class AdicionarAssinatura extends HttpServlet {
 
             Assinatura assinatura = new Assinatura(0, tpPlano, qtdCurso, descricao, precoFixo, precoProdutor);
             assinaturaDAO.inserir(assinatura);
-            System.out.println(1 + "criarAssinatura");
             request.getRequestDispatcher("/menuAss").forward(request, response);
 
         }catch (Exception e){
-            request.getRequestDispatcher("html/erroCriarAssinatura.html").forward(request, response);
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            request.setAttribute("option", -1);
-            System.out.println(-1);
+            e.printStackTrace();
 
         }
     }

@@ -20,20 +20,19 @@ public class AlterarAula extends HttpServlet {
             String nome = request.getParameter("nome");
             int idModulo = Integer.parseInt(request.getParameter("idModulo"));
             int id = Integer.parseInt(request.getParameter("id"));
-            System.out.println("passou");
             Aula aula = new Aula(id, nome, idModulo);
             aulaDAO.updateModulo(aula, idModulo);
             aulaDAO.updateNome(aula, nome);
-            System.out.println(1 + "alterarCompleto");
             request.getRequestDispatcher("/menuAula").forward(request, response);
 
 
         }catch (Exception e){
-            request.getRequestDispatcher("WEB-INF/jsp/erroAlterarAdm.jsp").forward(request, response);
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            request.setAttribute("option", -1);
-            System.out.println(-1+"IF");
+            e.printStackTrace();
 
         }
     }

@@ -26,7 +26,7 @@ public class PerguntaDAO extends CRUD{
             String consultaFlash = "insert into pergunta(pergunta, id_ativade) values(?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(consultaFlash);
             pstmt.setString(1, pt.getPergunta());
-            pstmt.setInt(2, pt.getId_atividade());
+            pstmt.setInt(2, pt.getIdAtividade());
 
 
             if (pstmt.executeUpdate() >0){

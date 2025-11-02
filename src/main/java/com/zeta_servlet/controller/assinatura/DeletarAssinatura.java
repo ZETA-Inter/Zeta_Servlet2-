@@ -18,18 +18,17 @@ public class DeletarAssinatura extends HttpServlet {
         try {
             AssinaturaDAO assinaturaDAO = new AssinaturaDAO();
             int i = Integer.parseInt(request.getParameter("id"));
-            System.out.println(i);
-            System.out.println(1+"deletar");
             assinaturaDAO.remover(i);
             request.getRequestDispatcher("/menuAss").forward(request, response);
 
 
         }catch (Exception e){
-            request.getRequestDispatcher("/menuAss").forward(request, response);
+            request.setAttribute("mensagem", e.getMessage());
+            request.setAttribute("erro", e.getClass().getSimpleName());
+            request.getRequestDispatcher("WEB-INF/errorPage/erroJava.jsp").forward(request, response);
             ExceptionHandler eh = new ExceptionHandler(e);
             eh.printExeption();
-            request.setAttribute("option", -1);
-            System.out.println(-1);
+            e.printStackTrace();
 
         }
     }

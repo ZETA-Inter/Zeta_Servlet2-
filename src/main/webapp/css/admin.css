@@ -4,124 +4,193 @@ body {
     padding: 0;
     font-family: 'Poppins', serif;
     width: 100%;
-    overflow: hidden;
 }
 
-.main{
+.main {
     width: 100%;
-
 }
+
 .site-header {
-    margin-top: -70px;
     position: fixed;
+    top: 0;
     width: 100%;
+    height: 5.5rem;
     background-color: white;
+    opacity: 0.9;
+    z-index: 1000;
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
-    z-index: 1000; 
+    justify-content: space-between;
+    padding: 0 12vw;
+    box-sizing: border-box;
 }
 
-.is-active{
-    font-size: 20px;
-}
-
-.brand {
-    font-size: 28px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    color: #1d3750; 
-    white-space: nowrap;
-}
-
-.nav {
-    margin-left: 650px;
-    margin-top: 30px;
+nav>.nav-list {
+    display: flex;
+    gap: 3.5vw;
+    font-size: 1.1rem;
     color: #000;
-    font-size: 20px;
-    display: flex;
-    gap: 40px; 
-}
-
-.nav-list {
-    display: flex;
-    align-items: center;
-    gap: 50px; 
-    list-style: none;
-    margin: 0;
-    padding: 0;
-
-}
-
-.nav-list a {
-    position: relative;
-    display: inline-block;
-    text-decoration: none;
-    font-family: Arial;
-    font-size: 22px;
     font-weight: lighter;
-    color: #111;
-    transition: color .2s ease;
+    margin-top: 1.2rem;
+    list-style: none;
 }
 
-.logo{
-    margin-top: 30px;
-    width: 82.748px;
-    height: 80.198px;
+nav>.nav-list>li>a {
+    cursor: pointer;
+    width: max-content;
+    position: relative;
+}
+
+nav>.nav-list>li>a::before {
+    content: "";
+    position: absolute;
+    left: -10%;
+    bottom: 0;
+    height: 0.2rem;
+    width: 120%;
+    background: #0CC0DF;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.5s ease;
+}
+
+nav>.nav-list>li>a:hover::after {
+    opacity: 0.4;
+    transform: scaleX(0.86);
+    content: "";
+    position: absolute;
+    left: -10%;
+    bottom: 0;
+    height: 0.2rem;
+    width: 120%;
+    background: darkgray;
+}
+
+body:has(#home:target) nav>.nav-list>li:has(>a[href="#home"])>a::before {
+    transform: scaleX(0.86);
+}
+
+body:has(#home:target) nav>.nav-list>li:has(>a[href="#home"])>a::after {
+    opacity: 0;
+}
+
+body:has(#funcionalidades:target) nav>.nav-list>li:has(>a[href="#funcionalidades"])>a::before {
+    transform: scaleX(0.86);
+}
+
+body:has(#funcionalidades:target) nav>.nav-list>li:has(>a[href="#funcionalidades"])>a::after {
+    opacity: 0;
+}
+
+body:has(#planos:target) nav>.nav-list>li:has(>a[href="#planos"])>a::before {
+    transform: scaleX(0.86);
+}
+
+body:has(#planos:target) nav>.nav-list>li:has(>a[href="#planos"])>a::after {
+    opacity: 0;
+}
+
+body:has(#contato:target) nav>.nav-list>li:has(>a[href="#contato"])>a::before {
+    transform: scaleX(0.86);
+}
+
+body:has(#contato:target) nav>.nav-list>li:has(>a[href="#contato"])>a::after {
+    opacity: 0;
+}
+
+@keyframes admin-bar-open {
+    from {
+        transform: scaleX(0);
+    }
+
+    to {
+        transform: scaleX(0.86);
+    }
+}
+
+body.admin-page nav>.nav-list>li>a[href="admin.html"]::before {
+    animation: admin-bar-open 560ms cubic-bezier(.2, .9, .3, 1) 240ms forwards;
+    transition: none !important;
+}
+
+body.admin-page nav>.nav-list>li>a[href="admin.html"]::after {
+    opacity: 0;
+}
+
+.menu-btn {
+    font-size: 28px;
+    cursor: pointer;
+    display: none;
+    user-select: none;
+}
+
+#menu-toggle {
+    display: none;
+}
+
+.logo {
+    width: 4rem;
+    height: 4rem;
     color: #043253;
-    font-size: 25px;
+    font-size: 1.46rem;
     font-weight: 500px;
     display: flex;
-    gap: 16px;
+    margin-left: -4vw;
+    margin-top: -0.5vh;
+    gap: 1vw;
 }
 
-.logo>img {
-    margin-bottom: 10px;
-    margin-left: 140px;
+.logo>span {
+    margin-top: 1.2rem;
+    font-weight: lighter;
 }
 
-.logo> .brand {  
-    margin-top: 28%;
+a {
+    color: #000;
+    text-decoration: none;
 }
 
 main {
     margin-top: -30px;
 }
 
-
-
-#Adm{
-    font-size: 80px;
-    color: #0CC0DF;
-    font-family: 'Poppins', serif;
-    font-style: normal;
-    font-weight: lighter;
-    margin-bottom: 20px;
-    transform: translateY(60%);
+section {
+    display: flex;
 }
 
-.admContent{
+#Adm {
+    font-size: 5rem;
+    color: #0CC0DF;
+    font-weight: lighter;
+    margin-bottom: 2vh;
+    transform: translateY(60%);
+    transition: ease 0.25s;
+}
+
+.admContent {
     position: relative;
-    font-size: 25px;
+    font-size: 1.4rem;
     text-align: left;
     font-weight: lighter;
-    margin-left: 141.6px;
-    margin-top: 85px;
+    margin-left: 9.2vw;
+    margin-top: 10vh;
+    z-index: 100;
 }
 
-.loginAdmin{
-    margin-top: 50px;
+.loginAdmin {
+    margin-top: 7vh;
 }
 
-#Login{
-    margin-top: 100px;
+#Login {
+    margin-top: 10vh;
 }
 
 
-.loginAdmin > #senhaAdmin{
+.loginAdmin>#senhaAdmin {
     box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.415);
     width: 350px;
     border: white solid 2px;
+    background-color: white;
     border-radius: 25px;
     padding: 8px;
     padding-left: 40px;
@@ -129,13 +198,14 @@ main {
     align-items: center;
 }
 
-.loginAdmin > #emailLogin{
+.loginAdmin>#emailLogin {
     display: flex;
     align-items: center;
     box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.415);
     width: 350px;
     margin-top: 30px;
     border: white solid 2px;
+    background-color: white;
     border-radius: 25px;
     padding: 8px;
     padding-left: 40px;
@@ -144,24 +214,33 @@ main {
     color: #000;
 }
 
-label > img{
+label>img {
     height: 20px;
     width: 25px;
     align-items: center;
+    margin-top: 8px;
 }
 
+label>#senha {
+    position: relative;
+    top: 1px;
+}
 
 input {
     align-items: center;
-    border: 0px;
+    border: 0;
     padding: 10px;
-    font-size: 20px;
+    font-size: 1.2rem;
     color: #333;
-    outline: none;
-    font-family: 'Poppins', serif;
 }
 
-#Login{
+input:focus {
+    outline: none;
+    border: none;
+}
+
+
+#Login {
     box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.415);
     color: black;
     background-color: white;
@@ -169,7 +248,7 @@ input {
     padding: 10px;
     border-radius: 30px;
     border: white solid;
-    font-size: 20px;
+    font-size: 1.2rem;
     font-weight: lighter;
     font-style: initial;
     font-family: 'Poppins', serif;
@@ -177,68 +256,457 @@ input {
 
 }
 
-.entraesq{
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-#Entrar{
+#Entrar {
     background-color: #0077B6;
     color: white;
-    width: 140px;
+    margin-top: 5vh;
+    width: 150px;
     padding: 10px;
     border-radius: 30px;
     border: #0077B6 solid;
-    font-size: 18px;
+    font-family: 'Poppins', serif;
+    font-size: 1.1rem;
     font-weight: lighter;
     font-style: initial;
-    font-family: 'Poppins', serif;
-    margin-right: 980px;
     letter-spacing: 2px;
     transition: 0.5s;
     cursor: pointer;
 }
 
-#esqsenha{
-    width: 250px;
-    font-size: 18px;
-    text-indent: 5px;
-    padding-right: 5px;
-}
-
-#Entrar:hover{
+#Entrar:hover {
     background-color: #043253;
     border: #043253 solid;
     color: rgb(227, 226, 226);
 }
 
-.elipseAz{
-    position: absolute;
-    left: 72%;
-    top: 6%;
+.elipseAz {
+    position: relative;
+    left: 70%;
+    top: -74.6vh;
     height: 660px;
 }
 
-.elipseAzul{
-    position: absolute;
-    left: 75%;
-    top: 7%;
+.elipseAzul {
+    position: relative;
+    left: 43%;
+    top: -74.6vh;
     height: 660px;
 }
 
-.elipseBranca{
-    position: absolute;
-    left: 78%;
-    top: 8%;
+.elipseBranca {
+    position: relative;
+    left: 20%;
+    top: -74.6vh;
     height: 660px;
 }
 
-.boiAdmin{
-    position: absolute;
-    left: 80%;
-    top: 28%;
+.boiAdmin {
+    position: relative;
+    right: 1.5vw;
+    margin-right: -1vw;
+    top: -105vh;
     height: 260px;
 }
 
+.Imagens {
+    position: fixed;
+    top: 86.35vh;
+    right: 3%;
+    margin-right: -2vw;
+    z-index: 50;
+    transition: ease 0.25s;
+}
+
+@media (max-width: 1353px) {
+    .elipseAz {
+        position: absolute;
+        left: 34%;
+    }
+
+    .elipseAzul {
+        position: absolute;
+    }
+
+    .elipseBranca {
+        position: absolute;
+        left: 53%;
+    }
+
+    .boiAdmin {
+        top: -50.5vh;
+        left: 25.5vw;
+        margin-right: 26vw;
+    }
+
+    .Imagens {
+        margin-right: -2vw;
+    }
+}
+
+@media (max-width: 1300px) {
+    .boiAdmin {
+        left: 55%;
+    }
+}
+
+@media (max-width: 1200px) {
+    .boiAdmin {
+        left: 57%;
+    }
+
+    .Imagens {
+        margin-right: 1%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .boiAdmin {
+        left: 56%;
+    }
+
+    .Imagens {
+        margin-right: 5%;
+    }
+}
+
+@media (max-width: 879px) {
+    .Imagens {
+        opacity: 0.7;
+        transition: ease-in 0.25s;
+    }
+}
+
+@media (max-width: 800px) {
+    .site-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .menu-btn {
+        display: block;
+        position: relative;
+        right: -6vw;
+        top: 0.6rem;
+        font-size: 1.5rem;
+    }
+
+    .nav {
+        position: absolute;
+        top: 8vh;
+        right: 3vw;
+        background: #fff;
+        border: 1px solid #ddd;
+        gap: 15px;
+        padding-left: 15px;
+        padding-right: 15px;
+        display: none;
+    }
+
+    .nav-list {
+        flex-direction: column;
+        padding-left: 0;
+    }
+
+    #menu-toggle:checked~.nav {
+        display: flex;
+    }
+
+    .admContent {
+        margin-top: 10%;
+        width: 65%;
+    }
+
+    #Adm {
+        margin-bottom: 5%;
+        font-size: 7rem;
+    }
+
+    #Login {
+        width: 50%;
+        font-size: 2rem;
+        margin-bottom: 10%;
+    }
+
+    .loginAdmin {
+        width: 100%;
+    }
+
+    .loginAdmin>#emailLogin,
+    .loginAdmin>#senhaAdmin {
+        width: 90%;
+        margin-bottom: 8%;
+    }
+
+    #emailUser,
+    #senhaUser {
+        width: 100%;
+        font-size: 1.9rem;
+        background-color: transparent;
+        margin-left: -2%;
+    }
+
+    label>img {
+        margin-left: -30%;
+        width: 2rem;
+        height: 2rem;
+    }
+
+    #Entrar {
+        font-size: 1.9rem;
+        width: 40%;
+    }
+
+    .Imagens>img {
+        height: 300%;
+    }
+}
+
+@media (max-width: 780px) {
+    .boiAdmin {
+        left: 57%;
+    }
+
+    .Imagens {
+        margin-right: 8.6%;
+    }
+}
+
+@media (max-width: 768px) {
+    .site-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .menu-btn {
+        display: block;
+        position: relative;
+        right: -6vw;
+        top: 0.2vh;
+        font-size: 1.5rem;
+    }
+
+    .nav {
+        position: absolute;
+        top: 8vh;
+        right: 3vw;
+        background: #fff;
+        border: 1px solid #ddd;
+        gap: 15px;
+        padding-left: 15px;
+        padding-right: 15px;
+        display: none;
+    }
+
+    .nav-list {
+        flex-direction: column;
+        padding-left: 0;
+    }
+
+    #menu-toggle:checked~.nav {
+        display: flex;
+    }
+}
+
+@media (max-width: 700px) {
+    .Imagens {
+        margin-right: 11.3%;
+    }
+}
+
+@media (max-width: 640px) {
+    #Adm {
+        transition: ease-in 0.25s;
+        color: #0077B6;
+    }
+}
+
+@media (max-width: 620px) {
+    .Imagens {
+        margin-right: 14.8%;
+    }
+}
+
+@media (max-width: 540px) {
+    .admContent {
+        width: 80%;
+        margin: 0 auto;
+        margin-top: 15%;
+    }
+
+    .loginAdmin>#senhaAdmin {
+        width: 85.2%;
+    }
+
+    .loginAdmin>#emailLogin {
+        width: 85.2%;
+    }
+
+    #emailLogin>input {
+        width: 100%;
+    }
+
+    #senhaAdmin>input {
+        width: 100%;
+    }
+
+    .boiAdmin {
+        left: 58%;
+    }
+
+    .Imagens {
+        margin-right: 19.2%;
+        margin-top: 1vh;
+    }
+}
+
+@media (max-width: 428px) {
+    #Adm {
+        font-size: 5rem;
+        font-weight: lighter;
+        margin-bottom: 2vh;
+        transform: translateY(60%);
+        transition: ease 0.25s;
+    }
+
+    .loginAdmin {
+        margin-top: 7vh;
+    }
+
+    #Login {
+        margin-top: 10vh;
+    }
+
+    label>img {
+        height: 20px;
+        width: 25px;
+        align-items: center;
+        margin-top: 8px;
+        margin-left: -100%;
+    }
+
+    label>#senha {
+        position: relative;
+        top: 1px;
+    }
+
+    #emailUser,
+    #senhaUser {
+        align-items: center;
+        border: 0;
+        padding: 10px;
+        font-size: 1.2rem;
+        color: #333;
+        margin-left: -10%;
+    }
+
+    #Login {
+        box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.415);
+        color: black;
+        background-color: white;
+        width: 180px;
+        padding: 10px;
+        border-radius: 30px;
+        border: white solid;
+        font-size: 1.2rem;
+        font-weight: lighter;
+        font-style: initial;
+        font-family: 'Poppins', serif;
+        letter-spacing: 2px;
+    }
+
+    #Entrar {
+        background-color: #0077B6;
+        color: white;
+        margin-top: 5vh;
+        width: 150px;
+        padding: 10px;
+        border-radius: 30px;
+        border: #0077B6 solid;
+        font-family: 'Poppins', serif;
+        font-size: 1.1rem;
+        font-weight: lighter;
+        font-style: initial;
+        letter-spacing: 2px;
+        transition: 0.5s;
+        cursor: pointer;
+    }
+
+    .boiAdmin {
+        top: -30vh;
+    }
+
+    .Imagens {
+        position: fixed;
+        top: 58vh;
+        right: 3%;
+        margin-right: -2vw;
+        z-index: 50;
+        transition: ease 0.25s;
+    }
+
+    .admContent {
+        margin-top: 10%;
+    }
+}
+
+@media (max-width: 320px) {
+    .nav {
+        top: 70%;
+    }
+
+    .admContent {
+        margin-top: 2%;
+    }
+
+    #Adm {
+        font-size: 4rem;
+    }
+
+    #Login {
+        width: 50%;
+        height: 10vh;
+        padding-top: 2vw;
+    }
+
+    .loginAdmin>#senhaAdmin {
+        width: 80%;
+        height: 7vh;
+        margin-top: -2%;
+    }
+
+    .loginAdmin>#emailLogin {
+        width: 80%;
+        height: 7vh;
+        margin-top: -7%;
+    }
+
+    label>img {
+        margin-left: -80%;
+        width: 1.6rem;
+        height: 1rem;
+    }
+
+    input {
+        margin-left: -10%;
+        font-size: 1rem;
+    }
+
+    #Entrar {
+        font-size: 1rem;
+        width: 40%;
+        margin-top: -1vh;
+    }
+
+    .Imagens {
+        opacity: 0.2;
+        transition: ease-in 0.25s;
+    }
+}

@@ -14,7 +14,7 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(value = "/AlterarAtividade")
+@WebServlet("/AlterarAtividade")
 public class AlterarAtividade extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -50,9 +50,9 @@ public class AlterarAtividade extends HttpServlet {
             Pergunta perguntaParaAtualizar = null;
 
             for (Pergunta p : todasPerguntas) {
-                if (p.getId_atividade() == id) {
+                if (p.getIdAtividade() == id) {
                     perguntaParaAtualizar = p;
-                    System.out.println("✓ Pergunta encontrada - ID: " + p.getId() +
+                    System.out.println("Pergunta encontrada - ID: " + p.getId() +
                             ", Texto atual: '" + p.getPergunta() + "'" +
                             ", Novo texto: '" + textoPergunta + "'");
                     break;

@@ -12,36 +12,36 @@
     <nav class="nav-bar">
         <img src="/assets/LOGO%20ZETA%20-%205.png" alt="Logo" id="logoMenu">
         <ul>
-            <li><a href="home.html"><img src="/assets/crudHome.svg" alt="Home">Home</a></li>
-            <li><a href="../ADMINISTRADOR/menuAdministrador.html"><img src="/assets/crudAdm.svg" alt="Adm">Administrador</a></li> 
-            <li><a href="menuAssinatura.html"><img src="/assets/crudAss.svg" alt="Assinatura">Assinatura</a></li>
-            <li><a href="menuProdutor.html"><img src="/assets/crudProd.svg" alt="Produtor">Produtor</a></li>
-            <li><a href="menuAtividade.html"><img src="/assets/crudAtiv.svg" alt="Atividade">Atividade</a></li>
-            <li><a href="/html/menuAula.html"><img src="/assets/crudAula.svg" alt="Aula">Aula</a></li>
-            <li><a href=".."><img src="/assets/crudDash.svg" alt="Dashboards">Dashboards</a></li>
-            <li><a href="#"><img src="/assets/exit.svg" alt="exit">Sair</a></li>
+            <li><form action="../home" method="post"><button type="submit"><img src="../assets/crudHome.svg" alt="home">Home</button></form></li>
+            <li><form action="../menuAdm" method="post"><button type="submit"><img src="../assets/crudAdm.svg" alt="Adm">Administrador</button></form></li>
+            <li><form action="../menuAss" method="post"><button type="submit"><img src="../assets/crudAss.svg" alt="Assinatura">Assinatura</button></form></li>
+            <li><form action="../menuProdutor" method="post"><button type="submit"><img src="../assets/crudProd.svg" alt="Produtor">Produtor</button></form></li>
+            <li><form action="../menuAtividade" method="post"><button type="submit"><img src="../assets/crudAtiv.svg" alt="Atividade">Atividade</button></form></li>
+            <li><form action="../menuAula" method="post"><button type="submit"><img src="../assets/crudAula.svg" alt="Assinatura">Aula</button></form></li>
+            <li><a href=""><img src="../assets/crudDash.svg" alt="Dashboards">Dashboards</a></li>
+            <li><form action="logout" method="post" id="fAdm"><button type="submit"><img src="../assets/exit.svg" alt="exit">Sair</button></form></li>
         </ul>
     </nav>
     <form action="">
         <h1>Produtor</h1>
-        <label for="">Email</label>
-        <input type="mailto" name="email" id="email" placeholder="Digite o email">
-        <label for="">Senha</label>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="Digite o email">
+        <label for="senha">Senha</label>
         <input type="password" name="senha" id="senha" placeholder="Digite a senha">
-        <label for="">Pontos</label>
+        <label for="pontos">Pontos</label>
         <input type="number" name="pontos" id="pontos" placeholder="Digite os pontos">
 
         <div class="campos">
-            <label for="">Nome<input type="text" name="nome" id="nome" placeholder="Digite o nome"></label>
+            <label for="nome">Nome<input type="text" name="nome" id="nome" placeholder="Digite o nome"></label>
             
-            <label for="">Sobrenome <input type="text" name="sobrenome" id="sobrenome" placeholder="Digite o sobrenome"></label>
+            <label for="sobrenome">Sobrenome <input type="text" name="sobrenome" id="sobrenome" placeholder="Digite o sobrenome"></label>
         </div>
 
         <div class="campos2">
-            <label for="">Aulas<input type="number" name="aulas" id="aulas" placeholder="Digite as aulas"></label>
+            <label for="aulas">Aulas<input type="number" name="aulas" id="aulas" placeholder="Digite as aulas"></label>
             
-            <label for="">Id fornecedor <input type="number" name="idFornecedor" id="idFornecedor" placeholder="Digite o ID do Fornecedor"></label>
-            <label for="">Id Assinatura <input type="number" name="idAssinatura" id="idAssinatura" placeholder="Digite o ID da Assinatura"></label>
+            <label for="idFornecedor">Id fornecedor <input type="number" name="idFornecedor" id="idFornecedor" placeholder="Digite o ID do Fornecedor"></label>
+            <label for="idAssinatura">Id Assinatura <input type="number" name="idAssinatura" id="idAssinatura" placeholder="Digite o ID da Assinatura"></label>
         </div>
 
         <button type="submit">Alterar</button>

@@ -111,7 +111,7 @@
 
   <a href="${pageContext.request.contextPath}/html/adicionarAtividade.html">
     <div id="adicionar" style="margin-top: 20px; padding-right: 10px">
-      <p>+ Adicionar Atividade</p>
+      <p>+ Adicionar Atv</p>
     </div>
   </a>
 </div>

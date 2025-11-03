@@ -92,7 +92,7 @@
 
     <a href="${pageContext.request.contextPath}/html/adicionarAssinatura.html">
         <div id="adicionar" style="margin-top: 20px">
-            <p>+Adicionar</p>
+            <p>+Adicionar Ass</p>
         </div>
     </a>
 </div>

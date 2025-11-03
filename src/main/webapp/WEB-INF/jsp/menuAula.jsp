@@ -110,7 +110,7 @@
 
     <a href="${pageContext.request.contextPath}/html/adicionarAula.html">
         <div id="adicionar" style="margin-top: 20px">
-            <p>+Adicionar</p>
+            <p>+Adicionar Aula</p>
         </div>
     </a>
 </div>
